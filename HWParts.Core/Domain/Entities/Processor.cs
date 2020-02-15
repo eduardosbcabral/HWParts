@@ -1,6 +1,7 @@
-﻿using System;
+﻿using HWParts.Core.Domain.Enums;
+using System;
 
-namespace HWParts.Crawler
+namespace HWParts.Core.Domain.Entities
 {
     public class Processor
     {
@@ -58,5 +59,32 @@ namespace HWParts.Crawler
             Platform = EPlatform.NewEgg;
         }
 
+        public void Update(
+            string name,
+            string brand,
+            string series,
+            string l3Cache,
+            string l2Cache,
+            string coolingDevice,
+            string manufacturingTech,
+            string model,
+            string item,
+            decimal price,
+            string imageUrl,
+            string url)
+        {
+            Name = name;
+            Brand = brand;
+            Series = series;
+            L3Cache = l3Cache;
+            L2Cache = l2Cache;
+            CoolingDevice = coolingDevice;
+            ManufacturingTech = manufacturingTech;
+            Model = model;
+            Item = item;
+            Price = price;
+            ImageUrl = imageUrl;
+            Url = url;
+        }
     }
 }

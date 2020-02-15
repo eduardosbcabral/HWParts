@@ -1,20 +1,46 @@
 ﻿using AngleSharp;
+using HWParts.Core.Domain.Entities;
+using HWParts.Core.Domain.Services;
+using HWParts.Core.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HWParts.Crawler
+namespace HWParts.Api.Controllers
 {
-    class Program
+    [ApiController]
+    [Route("/api/processors")]
+    public class ProcessorController : ControllerBase
     {
-        static void Main()
+        private readonly HWPartsDbContext _db;
+        private readonly IService<SyncronizeProcessorsByPlatform> _syncronizeProcessorsByPlatform;
+
+        public ProcessorController(
+            HWPartsDbContext db,
+            IService<SyncronizeProcessorsByPlatform> syncronizeProcessorsByPlatform)
         {
-            MainAsync().Wait();
+            _db = db ?? throw new ArgumentNullException(nameof(db));
+            _syncronizeProcessorsByPlatform = syncronizeProcessorsByPlatform;
         }
 
-        static async Task MainAsync()
+        [HttpGet]
+        public async Task SaveProcessors()
+        {
+            await _syncronizeProcessorsByPlatform.Execute();
+        }
+
+        [HttpGet]
+        [Route("all")]
+        public async Task<IList<Processor>> GetAll()
+        {
+            var processors = _db.Set<Processor>().AsQueryable();
+            return processors.ToList();
+        }
+
+        private async Task<IList<Processor>> GetProcessors()
         {
             var config = Configuration.Default
                 .WithDefaultLoader();
@@ -39,7 +65,7 @@ namespace HWParts.Crawler
                 // Image Url
                 var imageElementTag = processorImageElement.Children.Where(x => x.TagName == "IMG").FirstOrDefault();
                 var processorImageUrl = imageElementTag.GetAttribute("src");
-                
+
                 var processorUrlSplitted = processorUrl.Split('/');
                 // PlatformId
                 var processorPlatformId = processorUrlSplitted[processorUrlSplitted.Length - 1];
@@ -56,7 +82,7 @@ namespace HWParts.Crawler
                 // Series
                 var processorSeriesElement = processorFeaturesElement.Children.Where(x => x.InnerHtml.Contains("Series:")).FirstOrDefault();
                 var processorSeries = string.Empty;
-                if(processorSeriesElement != null)
+                if (processorSeriesElement != null)
                 {
                     var splittedProcessorSeriesContent = processorSeriesElement.InnerHtml.Split(">");
                     processorSeries = splittedProcessorSeriesContent[2].Remove(0, 1);
@@ -65,7 +91,7 @@ namespace HWParts.Crawler
                 //L3 Cache
                 var processorL3CacheElement = processorFeaturesElement.Children.Where(x => x.InnerHtml.Contains("L3 Cache:")).FirstOrDefault();
                 var processorL3Cache = string.Empty;
-                if(processorL3CacheElement != null)
+                if (processorL3CacheElement != null)
                 {
                     var splittedProcessorL3CacheContent = processorL3CacheElement.InnerHtml.Split(">");
                     processorL3Cache = splittedProcessorL3CacheContent[2].Remove(0, 1);
@@ -104,7 +130,7 @@ namespace HWParts.Crawler
                 if (processorModelElement != null)
                 {
                     var splittedProcessorModelContent = processorModelElement.InnerHtml.Split(">");
-                    processorModel = splittedProcessorModelContent[2].Remove(0, 1);
+                    processorModel = string.IsNullOrEmpty(splittedProcessorModelContent[2]) ? splittedProcessorModelContent[2] : splittedProcessorModelContent[2].Remove(0, 1);
                 }
 
                 // Item
@@ -146,7 +172,7 @@ namespace HWParts.Crawler
                 processorsList.Add(processor);
             }
 
-            Console.WriteLine("Finished");
+            return processorsList;
         }
     }
 }
