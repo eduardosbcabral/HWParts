@@ -3,9 +3,8 @@ using System;
 
 namespace HWParts.Core.Domain.Entities
 {
-    public class Processor
+    public class Processor : EntityBase
     {
-        public string Id { get; protected set; }
         public string PlatformId { get; protected set; }
         public string Name { get; protected set; }
         public string Brand { get; protected set; }
@@ -19,8 +18,6 @@ namespace HWParts.Core.Domain.Entities
         public decimal Price { get; protected set; }
         public string ImageUrl { get; protected set; }
         public string Url { get; protected set; }
-        public DateTime CreatedAt { get; protected set; }
-        public DateTime UpdatedAt { get; protected set; }
         public EPlatform Platform { get; protected set; }
 
         public Processor(
@@ -53,9 +50,6 @@ namespace HWParts.Core.Domain.Entities
             Url = url;
 
             // New Product Default Values
-            Id = Guid.NewGuid().ToString();
-            CreatedAt = DateTime.Now;
-            UpdatedAt = DateTime.Now;
             Platform = EPlatform.NewEgg;
         }
 
@@ -85,6 +79,7 @@ namespace HWParts.Core.Domain.Entities
             Price = price;
             ImageUrl = imageUrl;
             Url = url;
+            UpdatedAt = DateTime.Now;
         }
     }
 }

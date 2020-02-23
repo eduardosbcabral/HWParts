@@ -3,6 +3,7 @@ using HWParts.Core.Domain.Entities;
 using HWParts.Core.Domain.Queries;
 using HWParts.Core.Infrastructure;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -37,7 +38,8 @@ namespace HWParts.Core.Domain.Services
                 var splitedPaginationElement = paginationElement.FirstElementChild.InnerHtml.Split('/');
                 maximumPage = Convert.ToInt32(splitedPaginationElement[1]);
             }
-            
+
+            var processorsList = new List<Processor>();
 
             for (int i = 1; i <= maximumPage; i++)
             {
@@ -171,20 +173,22 @@ namespace HWParts.Core.Domain.Services
                             processorImageUrl,
                             processorUrl);
 
-                        var exists = _db.Processors
-                            .Local
+                        var existsOnDb = _db.Processors
                             .Any(x => x.PlatformId == processor.PlatformId);
 
-                        if (!exists)
+                        if (!existsOnDb)
                         {
-                            _db.Processors.Local.Add(processor);
+                            var existsOnCurrentList = processorsList.Any(x => x.PlatformId == processor.PlatformId);
+
+                            if (!existsOnCurrentList)
+                            {
+                                processorsList.Add(processor);
+                            }
                         }
                         else
                         {
                             var processorFromDb = _db.Processors
-                                .Local
-                                .Where(x => x.PlatformId == processor.PlatformId)
-                                .First();
+                                .SingleOrDefault(x => x.PlatformId == processor.PlatformId);
 
                             processorFromDb.Update(
                                 processorName,
@@ -208,6 +212,7 @@ namespace HWParts.Core.Domain.Services
                 Thread.Sleep(5000);
             }
 
+            await _db.AddRangeAsync(processorsList);
             await _db.SaveChangesAsync();
         }
     }
