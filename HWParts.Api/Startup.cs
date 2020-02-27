@@ -1,5 +1,7 @@
+using HWParts.Core.Domain.Repositories;
 using HWParts.Core.Domain.Services;
 using HWParts.Core.Infrastructure;
+using HWParts.Core.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -23,9 +25,10 @@ namespace HWParts.Api
             services.AddDbContext<HWPartsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("HWParts")));
 
-            services.AddScoped<IService<SyncronizeProcessorsByPlatform>, SyncronizeProcessorsByPlatform>();
             services.AddScoped<HWPartsDbContext>();
-            services.AddControllers();
+            services.AddTransient<IService<SyncronizeProcessorsByPlatform>, SyncronizeProcessorsByPlatform>();
+            services.AddTransient<IProcessorRepository, ProcessorRepository>();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,7 +38,7 @@ namespace HWParts.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {

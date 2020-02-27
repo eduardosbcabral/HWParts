@@ -1,0 +1,105 @@
+﻿@using HWParts.Core.Domain.ViewModels.Processor;
+@using HWParts.Core.Infrastructure.Common.Pagination;
+@model PaginationObject<ListProcessorViewModel>
+
+@{
+    ViewData["Title"] = "Listar Processadores";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@Html.DisplayFor(x => x.TotalPages);
+@Html.DisplayFor(x => x.FirstPage);
+@Html.DisplayFor(x => x.LastPage);
+@Html.DisplayFor(x => x.PreviousPage);
+@Html.DisplayFor(x => x.NextPage);
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.Series)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.L3Cache)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.L2Cache)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.CoolingDevice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.ManufacturingTech)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.Item)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.Platform)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Result)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Series)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.L3Cache)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.L2Cache)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CoolingDevice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManufacturingTech)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Platform)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
