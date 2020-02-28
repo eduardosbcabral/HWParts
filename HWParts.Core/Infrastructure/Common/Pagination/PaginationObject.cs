@@ -6,6 +6,7 @@ namespace HWParts.Core.Infrastructure.Common.Pagination
 {
     public class PaginationObject<T>
     {
+        public int CurrentPage { get; private set; }
         public int TotalPages { get; private set; }
         public int FirstPage { get; private set; }
         public int LastPage { get; private set; }
@@ -14,6 +15,7 @@ namespace HWParts.Core.Infrastructure.Common.Pagination
         public List<T> Result { get; private set; }
 
         public PaginationObject(
+            int currentPage,
             int totalPages, 
             int firstPage, 
             int lastPage, 
@@ -21,6 +23,7 @@ namespace HWParts.Core.Infrastructure.Common.Pagination
             int nextPage,
             List<T> result)
         {
+            CurrentPage = currentPage;
             TotalPages = totalPages;
             FirstPage = firstPage;
             LastPage = lastPage;

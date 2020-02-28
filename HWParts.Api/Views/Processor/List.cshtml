@@ -11,11 +11,15 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-@Html.DisplayFor(x => x.TotalPages);
-@Html.DisplayFor(x => x.FirstPage);
-@Html.DisplayFor(x => x.LastPage);
-@Html.DisplayFor(x => x.PreviousPage);
-@Html.DisplayFor(x => x.NextPage);
+@Html.DisplayFor(x => x.TotalPages)
+@Html.DisplayFor(x => x.FirstPage)
+@Html.DisplayFor(x => x.LastPage)
+@Html.DisplayFor(x => x.PreviousPage)
+@Html.DisplayFor(x => x.NextPage)
+
+<br />
+
+@Html.PaginationElement(Model)
 
 
 <table class="table">
