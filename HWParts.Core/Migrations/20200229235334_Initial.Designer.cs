@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HWParts.Core.Migrations
 {
     [DbContext(typeof(HWPartsDbContext))]
-    [Migration("20200223024154_FixProcessorEntity")]
-    partial class FixProcessorEntity
+    [Migration("20200229235334_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
