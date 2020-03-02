@@ -9,6 +9,7 @@ namespace HWParts.Core.Infrastructure
     public class HWPartsDbContext : DbContext
     {
         public DbSet<Processor> Processors { get; set; }
+        public DbSet<Motherboard> Motherboards { get; set; }
 
         public HWPartsDbContext(DbContextOptions<HWPartsDbContext> options) : base(options)
         {
