@@ -27,12 +27,18 @@ namespace HWParts.Core.Domain.Services
 
             var context = BrowsingContext.New(config);
 
-            var motherBoardList = new List<Motherboard>();
+            var amdMotherBoardList = new List<Motherboard>();
 
-            motherBoardList.AddRange(await GetAmdMotherboards(context));
-            motherBoardList.AddRange(await GetIntelMotherboards(context));
+            amdMotherBoardList.AddRange(await GetAmdMotherboards(context));
 
-            await _db.AddRangeAsync(motherBoardList);
+            await _db.AddRangeAsync(amdMotherBoardList);
+            await _db.SaveChangesAsync();
+
+            var intelMotherBoardList = new List<Motherboard>();
+
+            intelMotherBoardList.AddRange(await GetIntelMotherboards(context));
+
+            await _db.AddRangeAsync(intelMotherBoardList);
             await _db.SaveChangesAsync();
         }
 
@@ -66,16 +72,8 @@ namespace HWParts.Core.Domain.Services
                 using (var document = await context.OpenAsync(url))
                 {
                     var paginationElement = document.QuerySelector("span.list-tool-pagination-text");
-                    try
-                    {
-                        var splitedPaginationElement = paginationElement.FirstElementChild.InnerHtml.Split('/');
-                        maximumPage = Convert.ToInt32(splitedPaginationElement[1]);
-                    }
-                    catch(Exception e)
-                    {
-                        throw e;
-                    }
-                    
+                    var splitedPaginationElement = paginationElement.FirstElementChild.InnerHtml.Split('/');
+                    maximumPage = Convert.ToInt32(splitedPaginationElement[1]);
 
                     var motherboardsElementList = document.QuerySelectorAll(".items-view>.item-container");
                     document.Close();

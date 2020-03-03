@@ -13,7 +13,7 @@ namespace HWParts.Core.Infrastructure.Config.Maps
             DefaultMapping(builder, "TB_MOTHERBOARDS");
 
             builder.Property(x => x.Price)
-                .HasColumnType("decimal(6, 2)");
+                .HasColumnType("decimal(10, 4)");
 
             builder.Property(e => e.Platform)
                 .HasConversion(
