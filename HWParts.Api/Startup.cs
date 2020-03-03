@@ -28,6 +28,7 @@ namespace HWParts.Api
             services.AddScoped<HWPartsDbContext>();
             services.AddTransient<IService<SyncronizeProcessorsByPlatform>, SyncronizeProcessorsByPlatform>();
             services.AddTransient<IService<SyncronizeMotherboardsByPlatform>, SyncronizeMotherboardsByPlatform>();
+            services.AddTransient<IService<SyncronizeGraphicsCardsByPlatform>, SyncronizeGraphicsCardsByPlatform>();
             services.AddTransient<IProcessorRepository, ProcessorRepository>();
             services.AddMvc();
         }

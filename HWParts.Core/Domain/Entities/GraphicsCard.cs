@@ -3,17 +3,19 @@ using System;
 
 namespace HWParts.Core.Domain.Entities
 {
-    public class Motherboard : EntityBase
+    public class GraphicsCard : EntityBase
     {
         public string PlatformId { get; protected set; }
         public string Name { get; protected set; }
         public string Brand { get; protected set; }
-        public string ProcessorBrand { get; protected set; }
-        public string NumberOfMemorySlots { get; protected set; }
-        public string MemoryStandard { get; protected set; }
-        public string OnboardVideoChipset { get; protected set; }
-        public string AudioChipset { get; protected set; }
-        public string AudioChannels { get; protected set; }
+        public int Order { get; protected set; }
+        public string ChipsetManufacturer { get; protected set; }
+        public string CoreClock { get; protected set; }
+        public string MaxResolution { get; protected set; }
+        public string DisplayPort { get; protected set; }
+        public string Hdmi { get; protected set; }
+        public string Dvi { get; protected set; }
+        public string CardDimensions { get; protected set; }
         public string Model { get; protected set; }
         public string Item { get; protected set; }
         public decimal Price { get; protected set; }
@@ -21,16 +23,18 @@ namespace HWParts.Core.Domain.Entities
         public string Url { get; protected set; }
         public EPlatform Platform { get; protected set; }
 
-        public Motherboard(
+        public GraphicsCard(
             string platformId,
             string name,
             string brand,
-            string processorBrand,
-            string numberOfMemorySlots,
-            string memoryStandard,
-            string onboardVideoChipset,
-            string audioChipset,
-            string audioChannels,
+            int order,
+            string chipsetManufacturer,
+            string coreClock,
+            string maxResolution,
+            string displayPort,
+            string hdmi,
+            string dvi,
+            string cardDimensions,
             string model,
             string item,
             decimal price,
@@ -40,12 +44,14 @@ namespace HWParts.Core.Domain.Entities
             PlatformId = platformId;
             Name = name;
             Brand = brand;
-            ProcessorBrand = processorBrand;
-            NumberOfMemorySlots = numberOfMemorySlots;
-            MemoryStandard = memoryStandard;
-            OnboardVideoChipset = onboardVideoChipset;
-            AudioChipset = audioChipset;
-            AudioChannels = audioChannels;
+            Order = order;
+            ChipsetManufacturer = chipsetManufacturer;
+            CoreClock = coreClock;
+            MaxResolution = maxResolution;
+            DisplayPort = displayPort;
+            Hdmi = hdmi;
+            Dvi = dvi;
+            CardDimensions = cardDimensions;
             Model = model;
             Item = item;
             Price = price;
@@ -60,11 +66,14 @@ namespace HWParts.Core.Domain.Entities
             string platformId,
             string name,
             string brand,
-            string numberOfMemorySlots,
-            string memoryStandard,
-            string onboardVideoChipset,
-            string audioChipset,
-            string audioChannels,
+            int order,
+            string chipsetManufacturer,
+            string coreClock,
+            string maxResolution,
+            string displayPort,
+            string hdmi,
+            string dvi,
+            string cardDimensions,
             string model,
             string item,
             decimal price,
@@ -74,11 +83,14 @@ namespace HWParts.Core.Domain.Entities
             PlatformId = platformId;
             Name = name;
             Brand = brand;
-            NumberOfMemorySlots = numberOfMemorySlots;
-            MemoryStandard = memoryStandard;
-            OnboardVideoChipset = onboardVideoChipset;
-            AudioChipset = audioChipset;
-            AudioChannels = audioChannels;
+            Order = order;
+            ChipsetManufacturer = chipsetManufacturer;
+            CoreClock = coreClock;
+            MaxResolution = maxResolution;
+            DisplayPort = displayPort;
+            Hdmi = hdmi;
+            Dvi = dvi;
+            CardDimensions = cardDimensions;
             Model = model;
             Item = item;
             Price = price;
