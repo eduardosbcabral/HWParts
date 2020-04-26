@@ -26,10 +26,6 @@ namespace HWParts.Api
                 options.UseSqlServer(Configuration.GetConnectionString("HWParts")));
 
             services.AddScoped<HWPartsDbContext>();
-            services.AddTransient<IService<SyncronizeProcessorsByPlatform>, SyncronizeProcessorsByPlatform>();
-            services.AddTransient<IService<SyncronizeMotherboardsByPlatform>, SyncronizeMotherboardsByPlatform>();
-            services.AddTransient<IService<SyncronizeGraphicsCardsByPlatform>, SyncronizeGraphicsCardsByPlatform>();
-            services.AddTransient<IService<SyncronizeMemoriesByPlatform>, SyncronizeMemoriesByPlatform>();
             services.AddTransient<IProcessorRepository, ProcessorRepository>();
             services.AddMvc();
         }
