@@ -19,23 +19,7 @@ namespace HWParts.Core.Infrastructure.Repositories
         public async Task<PaginationObject<ListProcessorViewModel>> PaginatedList(int pageNumber, int pageSize)
         {
             var processorsQuery = await _context.Processors
-                .Select(x => new ListProcessorViewModel
-                {
-                    PlatformId = x.PlatformId,
-                    Name = x.Name,
-                    Brand = x.Brand,
-                    Series = x.Series,
-                    L3Cache = x.L3Cache,
-                    L2Cache = x.L2Cache,
-                    CoolingDevice = x.CoolingDevice,
-                    ManufacturingTech = x.ManufacturingTech,
-                    Model = x.Model,
-                    Item = x.Item,
-                    Price = x.Price,
-                    ImageUrl = x.ImageUrl,
-                    Url = x.Url,
-                    Platform = x.Platform.ToString()
-                })
+                .Select(x => new ListProcessorViewModel())
                 .AsNoTracking()
                 .PaginationAsync(pageNumber, pageSize);
 

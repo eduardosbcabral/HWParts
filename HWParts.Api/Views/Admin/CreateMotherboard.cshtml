@@ -1,0 +1,63 @@
+﻿@model HWParts.Core.Domain.ViewModels.Admin.Motherboard.CreateMotherboardViewModel
+
+@{
+    ViewData["Title"] = "Criar Placa-Mãe";
+}
+
+<h4>Motherboard</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-route="/Admin/Create" method="post">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <p>
+                <strong>
+                    Informações do componente
+                </strong>
+            </p>
+            <hr />
+            <div class="form-group">
+                <label asp-for="PlatformId" class="control-label"></label>
+                <input asp-for="PlatformId" class="form-control" />
+                <span asp-validation-for="PlatformId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Url" class="control-label"></label>
+                <input asp-for="Url" class="form-control" />
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Platform" class="control-label"></label>
+                <input asp-for="Platform" class="form-control" readonly />
+                <span asp-validation-for="Platform" class="text-danger"></span>
+            </div>
+
+            <p>
+                <strong>
+                    Especificações
+                </strong>
+            </p>
+            <hr />
+            <div class="form-group">
+                <label asp-for="Brand" class="control-label"></label>
+                <input asp-for="Brand" class="form-control" />
+                <span asp-validation-for="Brand" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model" class="control-label"></label>
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Motherboards">Back to List</a>
+</div>

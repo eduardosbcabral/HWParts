@@ -1,11 +1,13 @@
-﻿using HWParts.Core.Domain.ViewModels.Motherboard;
+﻿using HWParts.Core.Domain.Entities;
+using HWParts.Core.Domain.ViewModels.Admin.Motherboard;
+using HWParts.Core.Infrastructure.Common;
 using HWParts.Core.Infrastructure.Common.Pagination;
 using System.Threading.Tasks;
 
 namespace HWParts.Core.Domain.Repositories
 {
-    public interface IMotherboardRepository
+    public interface IMotherboardRepository : IRepositoryBase<Motherboard>
     {
-        Task<PaginationObject<ListMotherboardViewModel>> PaginatedList(int pageNumber, int pageSize);
+        Task<PaginationObject<ListMotherboardViewModelAdmin>> PaginatedList(int pageNumber, int pageSize);
     }
 }

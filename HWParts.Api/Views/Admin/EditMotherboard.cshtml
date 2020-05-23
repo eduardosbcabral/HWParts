@@ -1,0 +1,86 @@
+﻿@model HWParts.Core.Domain.ViewModels.Admin.Motherboard.EditMotherboardViewModel
+
+@{
+    ViewData["Title"] = "Editar Placa-Mãe";
+}
+
+<h4>Motherboard</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-route="/Admin/Edit/@Model.Id" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <p>
+                <strong>
+                    Informações internas
+                </strong>
+            </p>
+            <hr />
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" readonly />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedAt" class="control-label"></label>
+                <input asp-for="CreatedAt" class="form-control" readonly />
+                <span asp-validation-for="CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdatedAt" class="control-label"></label>
+                <input asp-for="UpdatedAt" class="form-control" readonly />
+                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+            </div>
+
+            <p>
+                <strong>
+                    Informações do componente
+                </strong>
+            </p>
+            <hr />
+            <div class="form-group">
+                <label asp-for="PlatformId" class="control-label"></label>
+                <input asp-for="PlatformId" class="form-control" readonly />
+                <span asp-validation-for="PlatformId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Url" class="control-label"></label>
+                <a href="@Url">Link</a>
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Platform" class="control-label"></label>
+                <input asp-for="Platform" class="form-control" readonly />
+                <span asp-validation-for="Platform" class="text-danger"></span>
+            </div>
+
+            <p>
+                <strong>
+                    Especificações
+                </strong>
+            </p>
+            <hr />
+            <div class="form-group">
+                <label asp-for="Brand" class="control-label"></label>
+                <input asp-for="Brand" class="form-control" />
+                <span asp-validation-for="Brand" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model" class="control-label"></label>
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Motherboards">Back to List</a>
+</div>

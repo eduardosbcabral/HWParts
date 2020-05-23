@@ -1,38 +1,33 @@
-﻿using HWParts.Core.Domain.Repositories;
-using HWParts.Core.Domain.ViewModels.Motherboard;
+﻿using HWParts.Core.Domain.Entities;
+using HWParts.Core.Domain.Repositories;
+using HWParts.Core.Domain.ViewModels.Admin.Motherboard;
+using HWParts.Core.Infrastructure.Common;
 using HWParts.Core.Infrastructure.Common.Pagination;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace HWParts.Core.Infrastructure.Repositories
 {
-    public class MotherboardRepository : IMotherboardRepository
+    public class MotherboardRepository : RepositoryBase<Motherboard>, IMotherboardRepository
     {
         private readonly HWPartsDbContext _context;
 
         public MotherboardRepository(HWPartsDbContext context)
+            : base(context)
         {
             _context = context;
         }
 
-        public async Task<PaginationObject<ListMotherboardViewModel>> PaginatedList(int pageNumber, int pageSize)
+        public async Task<PaginationObject<ListMotherboardViewModelAdmin>> PaginatedList(int pageNumber, int pageSize)
         {
             var motherboardsQuery = await _context.Motherboards
-                .Select(x => new ListMotherboardViewModel
+                .OrderBy(x => x.Order)
+                .Select(x => new ListMotherboardViewModelAdmin
                 {
-                    PlatformId = x.PlatformId,
-                    Name = x.Name,
+                    Id = x.Id,
                     Brand = x.Brand,
-                    Model = x.Model,
-                    Item = x.Item,
-                    Price = x.Price,
-                    ImageUrl = x.ImageUrl,
-                    Url = x.Url,
-                    Platform = x.Platform.ToString()
+                    Model = x.Model
                 })
                 .AsNoTracking()
                 .PaginationAsync(pageNumber, pageSize);

@@ -1,6 +1,4 @@
-﻿using HWParts.Core.Domain.Enums;
-
-namespace HWParts.Core.Domain.ViewModels.Processor
+﻿namespace HWParts.Core.Domain.ViewModels.Processor
 {
     public class ListProcessorViewModel
     {

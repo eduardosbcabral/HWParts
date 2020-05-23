@@ -1,0 +1,42 @@
+﻿@using HWParts.Core.Infrastructure.Common.Pagination;
+@using HWParts.Core.Domain.ViewModels.Admin.Motherboard;
+
+@model PaginationObject<ListMotherboardViewModelAdmin>
+
+@{
+    ViewData["Title"] = "List Motherboards";
+}
+
+<h1>Placas-Mãe</h1>
+
+<p>
+    <a href="/Admin/Motherboards/Create">Criar Novo</a>
+</p>
+
+<p>
+    <a href="/Admin/Motherboards/Import">Importar Placas-Mãe</a>
+</p>
+
+@Html.PaginationElement(Model)
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.Name)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Result)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Admin" asp-action="EditMotherboardView" asp-route-id="@item.Id">
+                        @item.Name
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

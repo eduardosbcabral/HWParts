@@ -4,14 +4,16 @@ using HWParts.Core.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HWParts.Core.Migrations
 {
     [DbContext(typeof(HWPartsDbContext))]
-    partial class HWPartsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200426225758_New-Data-Processor-Entity")]
+    partial class NewDataProcessorEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,6 +156,12 @@ namespace HWParts.Core.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AudioChannels")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AudioChipset")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
@@ -163,17 +171,35 @@ namespace HWParts.Core.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Item")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MemoryStandard")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumberOfMemorySlots")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OnboardVideoChipset")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Platform")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PlatformId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(10, 4)");
+
+                    b.Property<string>("ProcessorBrand")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -192,34 +218,85 @@ namespace HWParts.Core.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AudioChannels")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AudioChipset")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BackIOPorts")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CoolingDevice")
+                    b.Property<string>("ChannelSupported")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Chipset")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CpuSocketType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CpuType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CrawledAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Dimensions")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FirstAvailable")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FormFactor")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Item")
+                    b.Property<string>("LanChipset")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("L2Cache")
+                    b.Property<string>("M2")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("L3Cache")
+                    b.Property<string>("MaxLanSpeed")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ManufacturingTech")
+                    b.Property<string>("MaximumMemorySupported")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MemoryStandard")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NumberOfMemorySlots")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OnboardUsb")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OnboardVideoChipset")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OtherConnectors")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PciExpress30x16")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PciExpressx1")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Platform")
@@ -229,10 +306,10 @@ namespace HWParts.Core.Migrations
                     b.Property<string>("PlatformId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(6, 2)");
+                    b.Property<string>("PowerPin")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Series")
+                    b.Property<string>("Sata6Gbs")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
