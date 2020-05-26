@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Html;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -30,6 +32,37 @@ namespace HWParts.Core.Infrastructure.Common.Pagination
             var nextPage = Math.Min(pageNumber + 1, lastPage);
 
             return new PaginationObject<T>(
+                currentPage,
+                totalPages,
+                firstPage,
+                lastPage,
+                prevPage,
+                nextPage,
+                results);
+        }
+
+        public static PaginationObject<TDestination> Pagination<T, TDestination>(this IQueryable<T> query, IMapper mapper, int? page, int pageSize = 30)
+        {
+            var pageNumber = (page ?? 1);
+            var skip = (pageNumber - 1) * pageSize;
+            var take = pageSize;
+
+            var results = query
+                .Skip(skip)
+                .Take(take)
+                .ProjectTo<TDestination>(mapper.ConfigurationProvider)
+                .ToList();
+
+            var count = query.Count();
+
+            var currentPage = pageNumber;
+            var totalPages = (int)Math.Ceiling(decimal.Divide(count, pageSize));
+            var firstPage = 1;
+            var lastPage = totalPages;
+            var prevPage = Math.Max(pageNumber - 1, firstPage);
+            var nextPage = Math.Min(pageNumber + 1, lastPage);
+
+            return new PaginationObject<TDestination>(
                 currentPage,
                 totalPages,
                 firstPage,

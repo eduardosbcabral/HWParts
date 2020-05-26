@@ -1,38 +1,44 @@
-﻿using HWParts.Core.Domain.Entities;
+﻿using AutoMapper;
+using HWParts.Core.Application.ViewModels.Motherboard;
+using HWParts.Core.Domain.Entities;
 using HWParts.Core.Domain.Repositories;
-using HWParts.Core.Domain.ViewModels.Admin.Motherboard;
-using HWParts.Core.Infrastructure.Common;
 using HWParts.Core.Infrastructure.Common.Pagination;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace HWParts.Core.Infrastructure.Repositories
 {
-    public class MotherboardRepository : RepositoryBase<Motherboard>, IMotherboardRepository
+    public class MotherboardRepository : Repository<Motherboard>, IMotherboardRepository
     {
-        private readonly HWPartsDbContext _context;
+        private readonly IMapper _mapper;
 
-        public MotherboardRepository(HWPartsDbContext context)
+        public MotherboardRepository(HWPartsDbContext context, IMapper mapper)
             : base(context)
+        => _mapper = mapper;
+
+        public Motherboard GetByPlatformId(string platformId)
         {
-            _context = context;
+            return DbSet
+                .AsNoTracking()
+                .FirstOrDefault(x => x.PlatformId == platformId);
         }
 
-        public async Task<PaginationObject<ListMotherboardViewModelAdmin>> PaginatedList(int pageNumber, int pageSize)
+        public PaginationObject<MotherboardViewModel> ListPaginated(int? page)
         {
-            var motherboardsQuery = await _context.Motherboards
-                .OrderBy(x => x.Order)
-                .Select(x => new ListMotherboardViewModelAdmin
-                {
-                    Id = x.Id,
-                    Brand = x.Brand,
-                    Model = x.Model
-                })
+            var motherboardsQuery = DbSet
                 .AsNoTracking()
-                .PaginationAsync(pageNumber, pageSize);
+                .Pagination<Motherboard, MotherboardViewModel>(_mapper, page);
 
             return motherboardsQuery;
+        }
+
+        public bool Exists(Guid id)
+        {
+            return DbSet
+                .AsNoTracking()
+                .Where(x => x.Id == id)
+                .Any();
         }
     }
 }

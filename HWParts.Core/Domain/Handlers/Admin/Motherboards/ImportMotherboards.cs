@@ -70,7 +70,6 @@ namespace HWParts.Core.Domain.Handlers.Admin
                         platformId,
                         imageUrl,
                         url,
-                        itemOrder,
                         platform);
 
                     var existsOnDb = _context.Motherboards

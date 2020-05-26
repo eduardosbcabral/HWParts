@@ -1,13 +1,15 @@
-﻿using HWParts.Core.Domain.Entities;
-using HWParts.Core.Domain.ViewModels.Admin.Motherboard;
-using HWParts.Core.Infrastructure.Common;
+﻿using HWParts.Core.Application.ViewModels.Motherboard;
+using HWParts.Core.Domain.Entities;
+using HWParts.Core.Domain.Interfaces;
 using HWParts.Core.Infrastructure.Common.Pagination;
-using System.Threading.Tasks;
+using System;
 
 namespace HWParts.Core.Domain.Repositories
 {
-    public interface IMotherboardRepository : IRepositoryBase<Motherboard>
+    public interface IMotherboardRepository : IRepository<Motherboard>
     {
-        Task<PaginationObject<ListMotherboardViewModelAdmin>> PaginatedList(int pageNumber, int pageSize);
+        Motherboard GetByPlatformId(string platformId);
+        PaginationObject<MotherboardViewModel> ListPaginated(int? page);
+        bool Exists(Guid id);
     }
 }

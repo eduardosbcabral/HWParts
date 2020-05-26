@@ -14,9 +14,8 @@ namespace HWParts.Core.Domain.Entities
             string platformId,
             string imageUrl,
             string url,
-            int order,
             EPlatform platform)
-            : base(platformId, imageUrl, url, order, platform)
+            : base(platformId, imageUrl, url, platform)
         {
             Brand = brand;
             Model = model;

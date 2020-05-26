@@ -21,50 +21,21 @@ namespace HWParts.Core.Migrations
 
             modelBuilder.Entity("HWParts.Core.Domain.Entities.GraphicsCard", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Brand")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CardDimensions")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ChipsetManufacturer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CoreClock")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DisplayPort")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Dvi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Hdmi")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Item")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaxResolution")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
 
                     b.Property<string>("Platform")
                         .IsRequired()
@@ -72,9 +43,6 @@ namespace HWParts.Core.Migrations
 
                     b.Property<string>("PlatformId")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(10, 4)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -89,8 +57,9 @@ namespace HWParts.Core.Migrations
 
             modelBuilder.Entity("HWParts.Core.Domain.Entities.Memory", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
@@ -151,8 +120,9 @@ namespace HWParts.Core.Migrations
 
             modelBuilder.Entity("HWParts.Core.Domain.Entities.Motherboard", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
@@ -165,9 +135,6 @@ namespace HWParts.Core.Migrations
 
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
 
                     b.Property<string>("Platform")
                         .IsRequired()
@@ -189,8 +156,9 @@ namespace HWParts.Core.Migrations
 
             modelBuilder.Entity("HWParts.Core.Domain.Entities.Processor", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
