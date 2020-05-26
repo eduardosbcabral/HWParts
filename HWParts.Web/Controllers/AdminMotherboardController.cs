@@ -20,9 +20,7 @@ namespace HWParts.Web.Controllers
             _motherboardAppService = motherboardAppService;
         }
 
-        [HttpGet]
-        [Route("/")]
-        [Route("")]
+        [HttpGet("list")]
         public IActionResult Index(int? page)
         {
             var paginationObject = _motherboardAppService.ListPaginated(page);

@@ -1,5 +1,5 @@
 ﻿using HWParts.Core.Application.Interfaces;
-using HWParts.Core.Application.ViewModels.GraphicsCard;
+using HWParts.Core.Application.ViewModels.Memory;
 using HWParts.Core.Domain.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -7,23 +7,23 @@ using System;
 
 namespace HWParts.Web.Controllers
 {
-    [Route("admin/graphics-card")]
-    public class AdminGraphicsCardController : BaseController
+    [Route("admin/memory")]
+    public class AdminMemoryController : BaseController
     {
-        private readonly IGraphicsCardAppService _graphicsCardAppService;
+        private readonly IMemoryAppService _memoryAppService;
 
-        public AdminGraphicsCardController(
+        public AdminMemoryController(
             INotificationHandler<DomainNotification> notifications,
-            IGraphicsCardAppService graphicsCardAppService) 
+            IMemoryAppService memoryAppService)
             : base(notifications)
         {
-            _graphicsCardAppService = graphicsCardAppService;
+            _memoryAppService = memoryAppService;
         }
 
         [HttpGet("list")]
         public IActionResult Index(int? page)
         {
-            var paginationObject = _graphicsCardAppService.ListPaginated(page);
+            var paginationObject = _memoryAppService.ListPaginated(page);
             return View(paginationObject);
         }
 
@@ -34,21 +34,21 @@ namespace HWParts.Web.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Create(GraphicsCardViewModel graphicsCardViewModel)
+        public IActionResult Create(MemoryViewModel memoryViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(graphicsCardViewModel);
+                return View(memoryViewModel);
             }
 
-            _graphicsCardAppService.Register(graphicsCardViewModel);
+            _memoryAppService.Register(memoryViewModel);
 
             if (IsValidOperation())
             {
-                ViewBag.Success = "Placa de Vídeo registrada.";
+                ViewBag.Success = "Memória RAM registrada.";
             }
 
-            return View(graphicsCardViewModel);
+            return View(memoryViewModel);
         }
 
         [HttpGet("edit/{id:guid}")]
@@ -59,32 +59,32 @@ namespace HWParts.Web.Controllers
                 return NotFound();
             }
 
-            var graphicsCardViewModel = _graphicsCardAppService.GetById(id.Value);
+            var memoryViewModel = _memoryAppService.GetById(id.Value);
 
-            if (graphicsCardViewModel is null)
+            if (memoryViewModel is null)
             {
                 return NotFound();
             }
 
-            return View(graphicsCardViewModel);
+            return View(memoryViewModel);
         }
 
         [HttpPost("edit/{id:guid}")]
-        public IActionResult Edit(GraphicsCardViewModel graphicsCardViewModel)
+        public IActionResult Edit(MemoryViewModel memoryViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(graphicsCardViewModel);
+                return View(memoryViewModel);
             }
 
-            _graphicsCardAppService.Update(graphicsCardViewModel);
+            _memoryAppService.Update(memoryViewModel);
 
             if (IsValidOperation())
             {
-                ViewBag.Success = "Placa de Vídeo atualizada.";
+                ViewBag.Success = "Memória RAM atualizada.";
             }
 
-            return View(graphicsCardViewModel);
+            return View(memoryViewModel);
         }
 
         [HttpGet("remove/{id:guid}")]
@@ -95,27 +95,27 @@ namespace HWParts.Web.Controllers
                 return NotFound();
             }
 
-            var graphicsCardViewModel = _graphicsCardAppService.GetById(id.Value);
+            var memoryViewModel = _memoryAppService.GetById(id.Value);
 
-            if (graphicsCardViewModel is null)
+            if (memoryViewModel is null)
             {
                 return NotFound();
             }
 
-            return View(graphicsCardViewModel);
+            return View(memoryViewModel);
         }
 
         [HttpPost("remove/{id:guid}")]
         public IActionResult DeleteConfirmed(Guid id)
         {
-            _graphicsCardAppService.Remove(id);
+            _memoryAppService.Remove(id);
 
             if (!IsValidOperation())
             {
                 return Delete(id);
             }
 
-            ViewBag.Success = "Placa de Vídeo removida.";
+            ViewBag.Success = "Memória RAM removida.";
 
             return RedirectToAction(nameof(Index));
         }

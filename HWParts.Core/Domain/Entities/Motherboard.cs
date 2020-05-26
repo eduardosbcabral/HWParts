@@ -5,9 +5,6 @@ namespace HWParts.Core.Domain.Entities
 {
     public class Motherboard : ComponentBase
     {
-        public string Brand { get; protected set; }
-        public string Model { get; protected set; }
-
         public Motherboard(
             string brand,
             string model,
@@ -15,10 +12,8 @@ namespace HWParts.Core.Domain.Entities
             string imageUrl,
             string url,
             EPlatform platform)
-            : base(platformId, imageUrl, url, platform)
+            : base(brand, model, platformId, imageUrl, url, platform)
         {
-            Brand = brand;
-            Model = model;
         }
 
         public void Update(

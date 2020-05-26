@@ -8,7 +8,6 @@ namespace HWParts.Web.Controllers
     public class AdminController : Controller
     {
         [Route("")]
-        [Route("/")]
         public IActionResult Index()
         {
             return View();
