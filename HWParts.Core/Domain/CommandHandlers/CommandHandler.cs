@@ -1,10 +1,10 @@
-﻿using HWParts.Core.Domain.Bus;
-using HWParts.Core.Domain.Commands;
+﻿using HWParts.Core.Domain.Core.Bus;
+using HWParts.Core.Domain.Core.Commands;
+using HWParts.Core.Domain.Core.Notifications;
 using HWParts.Core.Domain.Interfaces;
-using HWParts.Core.Domain.Notifications;
 using MediatR;
 
-namespace HWParts.Core.Domain.Handlers
+namespace HWParts.Core.Domain.CommandHandlers
 {
     public class CommandHandler
     {
