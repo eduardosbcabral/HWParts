@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace HWParts.Core.Domain.Services
+namespace HWParts.Core.Domain.Interfaces
 {
     public interface IService<T>
     {
