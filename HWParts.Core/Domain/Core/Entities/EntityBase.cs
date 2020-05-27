@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HWParts.Core.Domain.Entities
+namespace HWParts.Core.Domain.Core.Entities
 {
     public abstract class EntityBase
     {
@@ -21,20 +21,18 @@ namespace HWParts.Core.Domain.Entities
 
         public override bool Equals(object obj)
         {
-            var compareTo = obj as EntityBase;
-
-            if (ReferenceEquals(this, compareTo)) return true;
-            if (ReferenceEquals(null, compareTo)) return false;
+            if (!(obj is EntityBase compareTo)) return true;
+            if (compareTo is null) return false;
 
             return Id.Equals(compareTo.Id);
         }
 
         public static bool operator ==(EntityBase a, EntityBase b)
         {
-            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
+            if (a is null && b is null)
                 return true;
 
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+            if (a is null || b is null)
                 return false;
 
             return a.Equals(b);

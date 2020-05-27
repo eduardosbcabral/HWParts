@@ -1,4 +1,4 @@
-﻿namespace HWParts.Core.Domain.Events
+﻿namespace HWParts.Core.Domain.Core.Events
 {
     public interface IEventStore
     {

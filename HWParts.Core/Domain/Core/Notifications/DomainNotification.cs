@@ -1,9 +1,7 @@
-﻿using HWParts.Core.Domain.Events;
+﻿using HWParts.Core.Domain.Core.Events;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace HWParts.Core.Domain.Notifications
+namespace HWParts.Core.Domain.Core.Notifications
 {
     public class DomainNotification : Event
     {

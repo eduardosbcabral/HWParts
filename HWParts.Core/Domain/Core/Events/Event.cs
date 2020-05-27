@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System;
 
-namespace HWParts.Core.Domain.Events
+namespace HWParts.Core.Domain.Core.Events
 {
     public abstract class Event : Message, INotification
     {

@@ -1,8 +1,8 @@
-﻿using HWParts.Core.Domain.Commands;
-using HWParts.Core.Domain.Events;
+﻿using HWParts.Core.Domain.Core.Commands;
+using HWParts.Core.Domain.Core.Events;
 using System.Threading.Tasks;
 
-namespace HWParts.Core.Domain.Bus
+namespace HWParts.Core.Domain.Core.Bus
 {
     public interface IMediatorHandler
     {

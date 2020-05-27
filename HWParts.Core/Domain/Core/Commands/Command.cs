@@ -1,8 +1,8 @@
 ﻿using FluentValidation.Results;
-using HWParts.Core.Domain.Events;
+using HWParts.Core.Domain.Core.Events;
 using System;
 
-namespace HWParts.Core.Domain.Commands
+namespace HWParts.Core.Domain.Core.Commands
 {
     public abstract class Command : Message
     {
