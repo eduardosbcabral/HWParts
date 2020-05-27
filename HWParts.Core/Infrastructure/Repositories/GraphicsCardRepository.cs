@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using HWParts.Core.Application.ViewModels.GraphicsCard;
 using HWParts.Core.Domain.Entities;
-using HWParts.Core.Domain.Repositories;
+using HWParts.Core.Domain.Interfaces;
+using HWParts.Core.Domain.Queries;
 using HWParts.Core.Infrastructure.Common.Pagination;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace HWParts.Core.Infrastructure.Repositories
 {
@@ -27,7 +26,7 @@ namespace HWParts.Core.Infrastructure.Repositories
         {
             return DbSet
                 .AsNoTracking()
-                .FirstOrDefault(x => x.PlatformId == platformId);
+                .FirstOrDefault(GraphicsCardQueries.GetByPlatformId(platformId));
         }
 
         public PaginationObject<GraphicsCardViewModel> ListPaginated(int? page)

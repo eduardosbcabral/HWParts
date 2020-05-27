@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using HWParts.Core.Application.ViewModels.Memory;
 using HWParts.Core.Domain.Entities;
-using HWParts.Core.Domain.Repositories;
+using HWParts.Core.Domain.Interfaces;
+using HWParts.Core.Domain.Queries;
 using HWParts.Core.Infrastructure.Common.Pagination;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,7 +22,7 @@ namespace HWParts.Core.Infrastructure.Repositories
         {
             return DbSet
                 .AsNoTracking()
-                .FirstOrDefault(x => x.PlatformId == platformId);
+                .FirstOrDefault(MemoryQueries.GetByPlatformId(platformId));
         }
 
         public PaginationObject<MemoryViewModel> ListPaginated(int? page)
