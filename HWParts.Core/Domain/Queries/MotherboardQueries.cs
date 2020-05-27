@@ -4,9 +4,9 @@ using System.Linq.Expressions;
 
 namespace HWParts.Core.Domain.Queries
 {
-    public static class ProcessorQueries
+    public static class MotherboardQueries
     {
-        public static Expression<Func<Processor, bool>> GetByPlatformId(string platformId) =>
+        public static Expression<Func<Motherboard, bool>> GetByPlatformId(string platformId) =>
             x => x.PlatformId == platformId;
     }
 }
