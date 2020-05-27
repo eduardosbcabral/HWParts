@@ -1,4 +1,5 @@
-﻿using HWParts.Core.Domain.Enums;
+﻿using HWParts.Core.Domain.Core.Entities;
+using HWParts.Core.Domain.Enums;
 using System;
 
 namespace HWParts.Core.Domain.Entities

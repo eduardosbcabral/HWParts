@@ -1,4 +1,5 @@
-﻿using HWParts.Core.Domain.Enums;
+﻿using HWParts.Core.Domain.Core.Commands;
+using HWParts.Core.Domain.Enums;
 using System;
 
 namespace HWParts.Core.Domain.Commands

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.ViewModels.GraphicsCard;
-using HWParts.Core.Domain.Bus;
 using HWParts.Core.Domain.Commands;
-using HWParts.Core.Domain.Repositories;
+using HWParts.Core.Domain.Core.Bus;
+using HWParts.Core.Domain.Interfaces;
 using HWParts.Core.Infrastructure.Common.Pagination;
 using System;
 

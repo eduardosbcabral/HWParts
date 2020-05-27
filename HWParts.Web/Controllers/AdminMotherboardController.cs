@@ -1,6 +1,6 @@
 ﻿using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.ViewModels.Motherboard;
-using HWParts.Core.Domain.Notifications;
+using HWParts.Core.Domain.Core.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;

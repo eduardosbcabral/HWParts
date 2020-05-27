@@ -1,6 +1,4 @@
-﻿using HWParts.Core.Domain.Notifications;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace HWParts.Web.Controllers
 {

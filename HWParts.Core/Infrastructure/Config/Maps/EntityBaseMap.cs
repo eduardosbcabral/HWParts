@@ -1,4 +1,4 @@
-﻿using HWParts.Core.Domain.Entities;
+﻿using HWParts.Core.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

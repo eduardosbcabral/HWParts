@@ -3,7 +3,6 @@ using HWParts.Core.Application.ViewModels.GraphicsCard;
 using HWParts.Core.Application.ViewModels.Memory;
 using HWParts.Core.Application.ViewModels.Motherboard;
 using HWParts.Core.Domain.Commands;
-using System;
 
 namespace HWParts.Core.Application.AutoMapper
 {

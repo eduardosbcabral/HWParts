@@ -1,6 +1,6 @@
-﻿using HWParts.Core.Domain.Bus;
-using HWParts.Core.Domain.Commands;
-using HWParts.Core.Domain.Events;
+﻿using HWParts.Core.Domain.Core.Bus;
+using HWParts.Core.Domain.Core.Commands;
+using HWParts.Core.Domain.Core.Events;
 using MediatR;
 using System.Threading.Tasks;
 
@@ -9,7 +9,7 @@ namespace HWParts.Core.Infrastructure.Bus
     public sealed class InMemoryBus : IMediatorHandler
     {
         private readonly IMediator _mediator;
-        private readonly IEventStore _eventStore;
+        //private readonly IEventStore _eventStore;
 
         //public InMemoryBus(IEventStore eventStore, IMediator mediator)
         //{

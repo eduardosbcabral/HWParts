@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HWParts.Core.Domain.Core.Events;
+using System;
 
 namespace HWParts.Core.Domain.Events
 {
