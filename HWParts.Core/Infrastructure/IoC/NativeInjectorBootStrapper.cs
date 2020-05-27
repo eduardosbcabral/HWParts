@@ -1,13 +1,12 @@
 ﻿using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.Services;
-using HWParts.Core.Domain.Bus;
+using HWParts.Core.Domain.CommandHandlers;
 using HWParts.Core.Domain.Commands;
+using HWParts.Core.Domain.Core.Bus;
+using HWParts.Core.Domain.Core.Notifications;
 using HWParts.Core.Domain.EventHandlers;
 using HWParts.Core.Domain.Events;
-using HWParts.Core.Domain.Handlers;
 using HWParts.Core.Domain.Interfaces;
-using HWParts.Core.Domain.Notifications;
-using HWParts.Core.Domain.Repositories;
 using HWParts.Core.Infrastructure.Bus;
 using HWParts.Core.Infrastructure.Repositories;
 using HWParts.Core.Infrastructure.UoW;
@@ -21,37 +20,37 @@ namespace HWParts.Core.Infrastructure.IoC
         public static void RegisterServices(IServiceCollection services)
         {
             // Domain Bus (Mediator)
-            services.AddScoped<IMediatorHandler, InMemoryBus>();
+            services.AddScoped<IMediatorHandler, InMemoryBus>()
 
             // Application
-            services.AddScoped<IMotherboardAppService, MotherboardAppService>();
-            services.AddScoped<IGraphicsCardAppService, GraphicsCardAppService>();
-            services.AddScoped<IMemoryAppService, MemoryAppService>();
+            .AddScoped<IMotherboardAppService, MotherboardAppService>()
+            .AddScoped<IGraphicsCardAppService, GraphicsCardAppService>()
+            .AddScoped<IMemoryAppService, MemoryAppService>()
 
             // Domain - Events
-            services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
-            services.AddScoped<INotificationHandler<MotherboardRegisteredEvent>, MotherboardEventHandler>();
-            services.AddScoped<INotificationHandler<MotherboardUpdatedEvent>, MotherboardEventHandler>();
+            .AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>()
+            .AddScoped<INotificationHandler<MotherboardRegisteredEvent>, MotherboardEventHandler>()
+            .AddScoped<INotificationHandler<MotherboardUpdatedEvent>, MotherboardEventHandler>()
 
             // Domain - Commands
-            services.AddScoped<IRequestHandler<RegisterMotherboardCommand, bool>, RegisterMotherboardCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdateMotherboardCommand, bool>, UpdateMotherboardCommandHandler>();
-            services.AddScoped<IRequestHandler<RemoveMotherboardCommand, bool>, RemoveMotherboardCommandHandler>();
+            .AddScoped<IRequestHandler<RegisterMotherboardCommand, bool>, MotherboardCommandHandler>()
+            .AddScoped<IRequestHandler<UpdateMotherboardCommand, bool>, MotherboardCommandHandler>()
+            .AddScoped<IRequestHandler<RemoveMotherboardCommand, bool>, MotherboardCommandHandler>()
 
-            services.AddScoped<IRequestHandler<RegisterGraphicsCardCommand, bool>, RegisterGraphicsCardCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdateGraphicsCardCommand, bool>, UpdateGraphicsCardCommandHandler>();
-            services.AddScoped<IRequestHandler<RemoveGraphicsCardCommand, bool>, RemoveGraphicsCardCommandHandler>();
+            .AddScoped<IRequestHandler<RegisterGraphicsCardCommand, bool>, GraphicsCardCommandHandler>()
+            .AddScoped<IRequestHandler<UpdateGraphicsCardCommand, bool>, GraphicsCardCommandHandler>()
+            .AddScoped<IRequestHandler<RemoveGraphicsCardCommand, bool>, GraphicsCardCommandHandler>()
 
-            services.AddScoped<IRequestHandler<RegisterMemoryCommand, bool>, RegisterMemoryCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdateMemoryCommand, bool>, UpdateMemoryCommandHandler>();
-            services.AddScoped<IRequestHandler<RemoveMemoryCommand, bool>, RemoveMemoryCommandHandler>();
+            .AddScoped<IRequestHandler<RegisterMemoryCommand, bool>, MemoryCommandHandler>()
+            .AddScoped<IRequestHandler<UpdateMemoryCommand, bool>, MemoryCommandHandler>()
+            .AddScoped<IRequestHandler<RemoveMemoryCommand, bool>, MemoryCommandHandler>()
 
             // Infra - Data
-            services.AddScoped<IMotherboardRepository, MotherboardRepository>();
-            services.AddScoped<IGraphicsCardRepository, GraphicsCardRepository>();
-            services.AddScoped<IMemoryRepository, MemoryRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<HWPartsDbContext>();
+            .AddScoped<IMotherboardRepository, MotherboardRepository>()
+            .AddScoped<IGraphicsCardRepository, GraphicsCardRepository>()
+            .AddScoped<IMemoryRepository, MemoryRepository>()
+            .AddScoped<IUnitOfWork, UnitOfWork>()
+            .AddScoped<HWPartsDbContext>();
 
             // Infra - Data EventSourcing
 
