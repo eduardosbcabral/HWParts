@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using HWParts.Core.Domain.Interfaces;
+﻿using HWParts.Core.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
