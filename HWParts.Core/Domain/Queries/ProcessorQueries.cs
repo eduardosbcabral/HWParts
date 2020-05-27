@@ -1,4 +1,4 @@
-﻿using HWParts.Core.Domain.Entities;
+using HWParts.Core.Domain.Entities;
 using System;
 using System.Linq.Expressions;
 

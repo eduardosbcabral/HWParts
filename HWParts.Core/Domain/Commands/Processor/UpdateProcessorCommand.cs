@@ -1,22 +1,13 @@
 using HWParts.Core.Domain.Enums;
+using HWParts.Core.Domain.Validations;
 using System;
 
-namespace HWParts.Core.Domain.Entities
+namespace HWParts.Core.Domain.Commands
 {
-    public class Processor : ComponentBase
+    public class UpdateProcessorCommand : ProcessorCommand
     {
-        public Processor(
-            string brand,
-            string model,
-            string platformId,
-            string imageUrl,
-            string url,
-            EPlatform platform)
-            : base(brand, model, platformId, imageUrl, url, platform)
-        {
-        }
-
-        public void Update(
+        public UpdateProcessorCommand(
+            Guid id,
             string platformId,
             string imageUrl,
             string url,
@@ -24,14 +15,19 @@ namespace HWParts.Core.Domain.Entities
             string brand,
             string model)
         {
+            Id = id;
             PlatformId = platformId;
             ImageUrl = imageUrl;
             Url = url;
             Platform = platform;
             Brand = brand;
             Model = model;
+        }
 
-            UpdatedAt = DateTime.Now;
+        public override bool IsValid()
+        {
+            ValidationResult = new UpdateProcessorCommandValidation().Validate(this);
+            return ValidationResult.IsValid;
         }
     }
 }

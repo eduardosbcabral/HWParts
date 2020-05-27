@@ -7,7 +7,8 @@ namespace HWParts.Core.Domain.EventHandlers
 {
     public class MotherboardEventHandler :
         INotificationHandler<MotherboardRegisteredEvent>,
-        INotificationHandler<MotherboardUpdatedEvent>
+        INotificationHandler<MotherboardUpdatedEvent>,
+        INotificationHandler<MotherboardRemovedEvent>
     {
 
         public Task Handle(MotherboardRegisteredEvent message, CancellationToken cancellationToken)
@@ -21,6 +22,11 @@ namespace HWParts.Core.Domain.EventHandlers
         {
             // Send some greetings e-mail
 
+            return Task.CompletedTask;
+        }
+
+        public Task Handle(MotherboardRemovedEvent notification, CancellationToken cancellationToken)
+        {
             return Task.CompletedTask;
         }
     }
