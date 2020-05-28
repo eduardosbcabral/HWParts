@@ -1,13 +1,13 @@
-@model HWParts.Core.Application.ViewModels.Processor.ProcessorViewModel
+@model HWParts.Core.Application.ViewModels.Storage.StorageViewModel;
 @using HWParts.Core.Domain.Enums;
 
 @{
-    ViewData["Title"] = "Cadastrar Processador";
+    ViewData["Title"] = "Editar Storage";
 }
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-action="Create">
+<form asp-action="Edit">
     <div class="form-horizontal">
         <hr />
 
@@ -40,7 +40,7 @@
         <div class="form-group">
             <label asp-for="ImageUrl" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="ImageUrl" class="form-control" />
+                <input asp-for="ImageUrl" type="text" class="form-control" />
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
         </div>
@@ -48,7 +48,7 @@
         <div class="form-group">
             <label asp-for="Url" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Url" class="form-control" />
+                <input asp-for="Url" type="text" class="form-control" />
                 <span asp-validation-for="Url" class="text-danger"></span>
             </div>
         </div>
@@ -65,7 +65,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Registrar" class="btn btn-success">
+                <input type="submit" value="Salvar" class="btn btn-success">
                 <a asp-action="Index" class="btn btn-info">Voltar para a lista</a>
             </div>
         </div>
