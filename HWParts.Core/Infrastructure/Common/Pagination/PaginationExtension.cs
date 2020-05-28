@@ -77,7 +77,7 @@ namespace HWParts.Core.Infrastructure.Common.Pagination
             var element = new StringBuilder()
                 .Append("<ul class=\"pagination\">");
 
-            if (paginationObject.CurrentPage == 1)
+            if(paginationObject.TotalPages == 0)
             {
                 element
                     .Append("<li class=\"page-item disabled\">")
@@ -90,126 +90,153 @@ namespace HWParts.Core.Infrastructure.Common.Pagination
                     .Append(paginationObject.CurrentPage)
                     .Append("</a>")
                     .Append("</li>")
-                    .Append("<li class=\"page-item\">")
+                    .Append("<li class=\"page-item disabled\">")
                     .Append($"<a class=\"page-link\" href=\"?page={paginationObject.NextPage}\">")
-                    .Append(paginationObject.NextPage)
+                    .Append("Próxima")
                     .Append("</a>")
                     .Append("</li>");
-
-                if(paginationObject.TotalPages > 3)
-                {
-                    element
-                        .Append("<li class=\"page-item\">")
-                        .Append($"<a class=\"page-link\" href=\"?page=3\">")
-                        .Append(3)
-                        .Append("</a>")
-                        .Append("</li>");
-                }
             } 
-            else if(paginationObject.CurrentPage != paginationObject.TotalPages)
+            else
             {
-                element
-                    .Append("<li class=\"page-item\">")
-                    .Append($"<a class=\"page-link\" href=\"?page={paginationObject.PreviousPage}\">")
-                    .Append("Anterior")
-                    .Append("</a>")
-                    .Append("</li>");
+                if (paginationObject.CurrentPage == 1)
+                {
+                    element
+                        .Append("<li class=\"page-item disabled\">")
+                        .Append($"<a class=\"page-link\" href=\"?page={paginationObject.PreviousPage}\">")
+                        .Append("Anterior")
+                        .Append("</a>")
+                        .Append("</li>")
+                        .Append("<li class=\"page-item active\">")
+                        .Append($"<a class=\"page-link\" href=\"?page={paginationObject.CurrentPage}\">")
+                        .Append(paginationObject.CurrentPage)
+                        .Append("</a>")
+                        .Append("</li>");
 
-                if ((paginationObject.CurrentPage - 1) > 1)
+                    if(paginationObject.TotalPages > 1)
+                    {
+                        element
+                            .Append("<li class=\"page-item\">")
+                            .Append($"<a class=\"page-link\" href=\"?page={paginationObject.NextPage}\">")
+                            .Append(paginationObject.NextPage)
+                            .Append("</a>")
+                            .Append("</li>");
+
+                        if (paginationObject.TotalPages > 3)
+                        {
+                            element
+                                .Append("<li class=\"page-item\">")
+                                .Append($"<a class=\"page-link\" href=\"?page=3\">")
+                                .Append(3)
+                                .Append("</a>")
+                                .Append("</li>");
+                        }
+                    }
+                } 
+                else if(paginationObject.CurrentPage != paginationObject.TotalPages)
                 {
                     element
                         .Append("<li class=\"page-item\">")
-                        .Append($"<a class=\"page-link\" href=\"?page=1\">")
-                        .Append(1)
+                        .Append($"<a class=\"page-link\" href=\"?page={paginationObject.PreviousPage}\">")
+                        .Append("Anterior")
+                        .Append("</a>")
+                        .Append("</li>");
+
+                    if ((paginationObject.CurrentPage - 1) > 1)
+                    {
+                        element
+                            .Append("<li class=\"page-item\">")
+                            .Append($"<a class=\"page-link\" href=\"?page=1\">")
+                            .Append(1)
+                            .Append("</a>")
+                            .Append("</li>")
+                            .Append("<li>")
+                            .Append("&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;&nbsp;")
+                            .Append("</li>");
+                    }
+
+                    element
+                        .Append("<li class=\"page-item\">")
+                        .Append($"<a class=\"page-link\" href=\"?page={paginationObject.PreviousPage}\">")
+                        .Append(paginationObject.PreviousPage)
                         .Append("</a>")
                         .Append("</li>")
-                        .Append("<li>")
-                        .Append("&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;&nbsp;")
+                        .Append("<li class=\"page-item active\">")
+                        .Append($"<a class=\"page-link\" href=\"?page={paginationObject.CurrentPage}\">")
+                        .Append(paginationObject.CurrentPage)
+                        .Append("</a>")
+                        .Append("</li>")
+                        .Append("<li class=\"page-item\">")
+                        .Append($"<a class=\"page-link\" href=\"?page={paginationObject.NextPage}\">")
+                        .Append(paginationObject.NextPage)
+                        .Append("</a>")
                         .Append("</li>");
                 }
-
-                element
-                    .Append("<li class=\"page-item\">")
-                    .Append($"<a class=\"page-link\" href=\"?page={paginationObject.PreviousPage}\">")
-                    .Append(paginationObject.PreviousPage)
-                    .Append("</a>")
-                    .Append("</li>")
-                    .Append("<li class=\"page-item active\">")
-                    .Append($"<a class=\"page-link\" href=\"?page={paginationObject.CurrentPage}\">")
-                    .Append(paginationObject.CurrentPage)
-                    .Append("</a>")
-                    .Append("</li>")
-                    .Append("<li class=\"page-item\">")
-                    .Append($"<a class=\"page-link\" href=\"?page={paginationObject.NextPage}\">")
-                    .Append(paginationObject.NextPage)
-                    .Append("</a>")
-                    .Append("</li>");
-            }
-            else
-            {
-                element
-                    .Append("<li class=\"page-item\">")
-                    .Append($"<a class=\"page-link\" href=\"?page={paginationObject.PreviousPage}\">")
-                    .Append("Anterior")
-                    .Append("</a>")
-                    .Append("</li>");
-
-                if ((paginationObject.CurrentPage - 1) > 1)
+                else
                 {
                     element
                         .Append("<li class=\"page-item\">")
-                        .Append($"<a class=\"page-link\" href=\"?page=1\">")
-                        .Append(1)
+                        .Append($"<a class=\"page-link\" href=\"?page={paginationObject.PreviousPage}\">")
+                        .Append("Anterior")
+                        .Append("</a>")
+                        .Append("</li>");
+
+                    if ((paginationObject.CurrentPage - 1) > 1)
+                    {
+                        element
+                            .Append("<li class=\"page-item\">")
+                            .Append($"<a class=\"page-link\" href=\"?page=1\">")
+                            .Append(1)
+                            .Append("</a>")
+                            .Append("</li>")
+                            .Append("<li>")
+                            .Append("&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;&nbsp;")
+                            .Append("</li>");
+                    }
+
+                    element
+                        .Append("<li class=\"page-item\">")
+                        .Append($"<a class=\"page-link\" href=\"?page={paginationObject.PreviousPage}\">")
+                        .Append(paginationObject.PreviousPage)
                         .Append("</a>")
                         .Append("</li>")
-                        .Append("<li>")
-                        .Append("&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;&nbsp;")
+                        .Append("<li class=\"page-item active\">")
+                        .Append($"<a class=\"page-link\" href=\"?page={paginationObject.CurrentPage}\">")
+                        .Append(paginationObject.CurrentPage)
+                        .Append("</a>")
                         .Append("</li>");
                 }
 
-                element
-                    .Append("<li class=\"page-item\">")
-                    .Append($"<a class=\"page-link\" href=\"?page={paginationObject.PreviousPage}\">")
-                    .Append(paginationObject.PreviousPage)
-                    .Append("</a>")
-                    .Append("</li>")
-                    .Append("<li class=\"page-item active\">")
-                    .Append($"<a class=\"page-link\" href=\"?page={paginationObject.CurrentPage}\">")
-                    .Append(paginationObject.CurrentPage)
-                    .Append("</a>")
-                    .Append("</li>");
-            }
+                if (paginationObject.CurrentPage != paginationObject.TotalPages && (paginationObject.CurrentPage + 1) != paginationObject.TotalPages)
+                {
+                    element
+                        .Append("<li>")
+                        .Append("&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;&nbsp;")
+                        .Append("</li>")
+                        .Append("<li class=\"page-item\">")
+                        .Append($"<a class=\"page-link\" href=\"?page={paginationObject.TotalPages}\">")
+                        .Append(paginationObject.TotalPages)
+                        .Append("</a>")
+                        .Append("</li>");
+                }
 
-            if (paginationObject.CurrentPage != paginationObject.TotalPages && (paginationObject.CurrentPage + 1) != paginationObject.TotalPages)
-            {
-                element
-                    .Append("<li>")
-                    .Append("&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;&nbsp;")
-                    .Append("</li>")
-                    .Append("<li class=\"page-item\">")
-                    .Append($"<a class=\"page-link\" href=\"?page={paginationObject.TotalPages}\">")
-                    .Append(paginationObject.TotalPages)
-                    .Append("</a>")
-                    .Append("</li>");
-            }
-
-            if(paginationObject.CurrentPage == paginationObject.TotalPages)
-            {
-                element
-                    .Append("<li class=\"page-item disabled\">")
-                    .Append($"<a class=\"page-link\" href=\"?page={paginationObject.NextPage}\">")
-                    .Append("Próxima")
-                    .Append("</a>")
-                    .Append("</li>");
-            }
-            else
-            {
-                element
-                    .Append("<li class=\"page-item\">")
-                    .Append($"<a class=\"page-link\" href=\"?page={paginationObject.NextPage}\">")
-                    .Append("Próxima")
-                    .Append("</a>")
-                    .Append("</li>");
+                if(paginationObject.CurrentPage == paginationObject.TotalPages)
+                {
+                    element
+                        .Append("<li class=\"page-item disabled\">")
+                        .Append($"<a class=\"page-link\" href=\"?page={paginationObject.NextPage}\">")
+                        .Append("Próxima")
+                        .Append("</a>")
+                        .Append("</li>");
+                }
+                else
+                {
+                    element
+                        .Append("<li class=\"page-item\">")
+                        .Append($"<a class=\"page-link\" href=\"?page={paginationObject.NextPage}\">")
+                        .Append("Próxima")
+                        .Append("</a>")
+                        .Append("</li>");
+                }
             }
 
             element.Append("</ul>");
