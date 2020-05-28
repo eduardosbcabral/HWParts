@@ -26,6 +26,8 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<IMotherboardAppService, MotherboardAppService>()
             .AddScoped<IGraphicsCardAppService, GraphicsCardAppService>()
             .AddScoped<IMemoryAppService, MemoryAppService>()
+            .AddScoped<IProcessorAppService, ProcessorAppService>()
+            .AddScoped<IStorageAppService, StorageAppService>()
 
             // Domain - Events
             .AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>()
@@ -45,10 +47,20 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<IRequestHandler<UpdateMemoryCommand, bool>, MemoryCommandHandler>()
             .AddScoped<IRequestHandler<RemoveMemoryCommand, bool>, MemoryCommandHandler>()
 
+            .AddScoped<IRequestHandler<RegisterProcessorCommand, bool>, ProcessorCommandHandler>()
+            .AddScoped<IRequestHandler<UpdateProcessorCommand, bool>, ProcessorCommandHandler>()
+            .AddScoped<IRequestHandler<RemoveProcessorCommand, bool>, ProcessorCommandHandler>()
+
+            .AddScoped<IRequestHandler<RegisterStorageCommand, bool>, StorageCommandHandler>()
+            .AddScoped<IRequestHandler<UpdateStorageCommand, bool>, StorageCommandHandler>()
+            .AddScoped<IRequestHandler<RemoveStorageCommand, bool>, StorageCommandHandler>()
+
             // Infra - Data
             .AddScoped<IMotherboardRepository, MotherboardRepository>()
             .AddScoped<IGraphicsCardRepository, GraphicsCardRepository>()
             .AddScoped<IMemoryRepository, MemoryRepository>()
+            .AddScoped<IProcessorRepository, ProcessorRepository>()
+            .AddScoped<IStorageRepository, StorageRepository>()
             .AddScoped<IUnitOfWork, UnitOfWork>()
             .AddScoped<HWPartsDbContext>();
 

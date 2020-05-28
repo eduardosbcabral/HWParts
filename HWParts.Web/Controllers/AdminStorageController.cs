@@ -1,5 +1,5 @@
 using HWParts.Core.Application.Interfaces;
-using HWParts.Core.Application.ViewModels.Processor;
+using HWParts.Core.Application.ViewModels.Storage;
 using HWParts.Core.Domain.Core.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -7,23 +7,23 @@ using System;
 
 namespace HWParts.Web.Controllers
 {
-    [Route("admin/processors")]
-    public class AdminProcessorController : BaseController
+    [Route("admin/storage")]
+    public class AdminStorageController : BaseController
     {
-        private readonly IProcessorAppService _processorAppService;
+        private readonly IStorageAppService _storageAppService;
 
-        public AdminProcessorController(
+        public AdminStorageController(
             INotificationHandler<DomainNotification> notifications,
-            IProcessorAppService processorAppService) 
+            IStorageAppService storageAppService) 
             : base(notifications)
         {
-            _processorAppService = processorAppService;
+            _storageAppService = storageAppService;
         }
 
         [HttpGet("list")]
         public IActionResult Index(int? page)
         {
-            var paginationObject = _processorAppService.ListPaginated(page);
+            var paginationObject = _storageAppService.ListPaginated(page);
             return View(paginationObject);
         }
 
@@ -34,21 +34,21 @@ namespace HWParts.Web.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Create(ProcessorViewModel processorViewModel)
+        public IActionResult Create(StorageViewModel storageViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(processorViewModel);
+                return View(storageViewModel);
             }
 
-            _processorAppService.Register(processorViewModel);
+            _storageAppService.Register(storageViewModel);
 
             if (IsValidOperation())
             {
-                ViewBag.Success = "Processador registrado.";
+                ViewBag.Success = "Storage registrado.";
             }
 
-            return View(processorViewModel);
+            return View(storageViewModel);
         }
 
         [HttpGet("edit/{id:guid}")]
@@ -59,32 +59,32 @@ namespace HWParts.Web.Controllers
                 return NotFound();
             }
 
-            var processorViewModel = _processorAppService.GetById(id.Value);
+            var storageViewModel = _storageAppService.GetById(id.Value);
 
-            if (processorViewModel is null)
+            if (storageViewModel is null)
             {
                 return NotFound();
             }
 
-            return View(processorViewModel);
+            return View(storageViewModel);
         }
 
         [HttpPost("edit/{id:guid}")]
-        public IActionResult Edit(ProcessorViewModel processorViewModel)
+        public IActionResult Edit(StorageViewModel storageViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(processorViewModel);
+                return View(storageViewModel);
             }
 
-            _processorAppService.Update(processorViewModel);
+            _storageAppService.Update(storageViewModel);
 
             if (IsValidOperation())
             {
-                ViewBag.Success = "Processador atualizada.";
+                ViewBag.Success = "Storage atualizado.";
             }
 
-            return View(processorViewModel);
+            return View(storageViewModel);
         }
 
         [HttpGet("remove/{id:guid}")]
@@ -95,27 +95,27 @@ namespace HWParts.Web.Controllers
                 return NotFound();
             }
 
-            var processorViewModel = _processorAppService.GetById(id.Value);
+            var storageViewModel = _storageAppService.GetById(id.Value);
 
-            if (processorViewModel is null)
+            if (storageViewModel is null)
             {
                 return NotFound();
             }
 
-            return View(processorViewModel);
+            return View(storageViewModel);
         }
 
         [HttpPost("remove/{id:guid}")]
         public IActionResult DeleteConfirmed(Guid id)
         {
-            _processorAppService.Remove(id);
+            _storageAppService.Remove(id);
 
             if (!IsValidOperation())
             {
                 return Delete(id);
             }
 
-            ViewBag.Success = "Processador removido.";
+            ViewBag.Success = "Storage removido.";
 
             return RedirectToAction(nameof(Index));
         }
