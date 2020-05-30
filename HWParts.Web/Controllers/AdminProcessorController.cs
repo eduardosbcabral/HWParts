@@ -2,11 +2,13 @@ using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.ViewModels.Processor;
 using HWParts.Core.Domain.Core.Notifications;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace HWParts.Web.Controllers
 {
+    [Authorize]
     [Route("admin/processors")]
     public class AdminProcessorController : BaseController
     {

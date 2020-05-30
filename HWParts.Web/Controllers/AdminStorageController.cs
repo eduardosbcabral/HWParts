@@ -2,11 +2,13 @@ using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.ViewModels.Storage;
 using HWParts.Core.Domain.Core.Notifications;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace HWParts.Web.Controllers
 {
+    [Authorize]
     [Route("admin/storage")]
     public class AdminStorageController : BaseController
     {

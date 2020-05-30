@@ -2,11 +2,13 @@
 using HWParts.Core.Application.ViewModels.GraphicsCard;
 using HWParts.Core.Domain.Core.Notifications;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace HWParts.Web.Controllers
 {
+    [Authorize]
     [Route("admin/graphics-card")]
     public class AdminGraphicsCardController : BaseController
     {
