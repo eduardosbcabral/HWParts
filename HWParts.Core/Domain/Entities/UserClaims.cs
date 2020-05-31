@@ -9,5 +9,6 @@
     {
         public static string Write => "Write";
         public static string Read => "Read";
+        public static string Remove => "Remove";
     }
 }
