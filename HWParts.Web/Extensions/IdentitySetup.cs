@@ -13,18 +13,17 @@ namespace HWParts.Web.Extensions
         {
             if (services is null) throw new ArgumentNullException(nameof(services));
 
-            services
-                .AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<IdentityUser>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = true;
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
         }
         public static void AddAuthSetup(this IServiceCollection services, IConfiguration configuration)
-    {
-        if (services is null) throw new ArgumentNullException(nameof(services));
+        {
+            if (services is null) throw new ArgumentNullException(nameof(services));
 
-        services.AddAuthentication();
+            services.AddAuthentication();
             //.AddFacebook(o =>
             //{
             //    o.AppId = configuration["Authentication:AppId"];
@@ -36,12 +35,12 @@ namespace HWParts.Web.Extensions
             //    o.ClientSecret = configuration["Authentication:Google:ClientSecret"];
             //});
 
-        services.AddAuthorization(o =>
-        {
-            o.AddPolicy("CanWriteComponentData", policy => policy.Requirements.Add(new ClaimRequirement("Components", "Write")));
-            o.AddPolicy("CanRemoveComponentData", policy => policy.Requirements.Add(new ClaimRequirement("Components", "Remove")));
-        });
-    }
+            services.AddAuthorization(o =>
+            {
+                o.AddPolicy("CanWriteComponentData", policy => policy.Requirements.Add(new ClaimRequirement("Components", "Write")));
+                o.AddPolicy("CanRemoveComponentData", policy => policy.Requirements.Add(new ClaimRequirement("Components", "Remove")));
+            });
+        }
     }
 
 }
