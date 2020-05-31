@@ -8,9 +8,12 @@ using HWParts.Core.Domain.EventHandlers;
 using HWParts.Core.Domain.Events;
 using HWParts.Core.Domain.Interfaces;
 using HWParts.Core.Infrastructure.Bus;
+using HWParts.Core.Infrastructure.Identity.Authorization;
+using HWParts.Core.Infrastructure.Identity.Models;
 using HWParts.Core.Infrastructure.Repositories;
 using HWParts.Core.Infrastructure.UoW;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HWParts.Core.Infrastructure.IoC
@@ -21,6 +24,9 @@ namespace HWParts.Core.Infrastructure.IoC
         {
             // Domain Bus (Mediator)
             services.AddScoped<IMediatorHandler, InMemoryBus>()
+
+            // ASP.NET Authorization Polices
+            .AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>()
 
             // Application
             .AddScoped<IMotherboardAppService, MotherboardAppService>()
@@ -62,11 +68,12 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<IProcessorRepository, ProcessorRepository>()
             .AddScoped<IStorageRepository, StorageRepository>()
             .AddScoped<IUnitOfWork, UnitOfWork>()
-            .AddScoped<HWPartsDbContext>();
+            .AddScoped<HWPartsDbContext>()
 
             // Infra - Data EventSourcing
 
             // Infra - Identity
+            .AddScoped<IUser, AspNetUser>();
         }
     }
 }
