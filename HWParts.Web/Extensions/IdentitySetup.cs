@@ -1,4 +1,5 @@
-﻿using HWParts.Core.Infrastructure.Identity.Authorization;
+﻿using HWParts.Core.Domain.Entities;
+using HWParts.Core.Infrastructure.Identity.Authorization;
 using HWParts.Core.Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -37,8 +38,10 @@ namespace HWParts.Web.Extensions
 
             services.AddAuthorization(o =>
             {
-                o.AddPolicy("CanWriteComponentData", policy => policy.Requirements.Add(new ClaimRequirement("Components", "Write")));
-                o.AddPolicy("CanRemoveComponentData", policy => policy.Requirements.Add(new ClaimRequirement("Components", "Remove")));
+                o.AddPolicy("CanWriteComponentData", policy => 
+                    policy.Requirements.Add(new ClaimRequirement(UserClaims.Components, UserClaimValues.Write)));
+                o.AddPolicy("CanRemoveComponentData", policy => 
+                    policy.Requirements.Add(new ClaimRequirement(UserClaims.Components, UserClaimValues.Remove)));
             });
         }
     }
