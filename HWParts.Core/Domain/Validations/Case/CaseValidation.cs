@@ -30,15 +30,14 @@ namespace HWParts.Core.Domain.Validations
         protected void ValidateImageUrl()
         {
             RuleFor(c => c.ImageUrl)
-                .NotEmpty().WithMessage("A URL da imagem é obrigatória.")
-                .Must(uri => Uri.TryCreate(uri, UriKind.Absolute, out _)).When(x => !string.IsNullOrEmpty(x.ImageUrl));
+                .NotEmpty().WithMessage("A URL da imagem é obrigatória.");
         }
 
         protected void ValidateUrl()
         {
             RuleFor(c => c.Url)
                 .NotEmpty().WithMessage("A URL do componente é obrigatória.")
-                .Must(uri => Uri.TryCreate(uri, UriKind.Absolute, out _)).When(x => !string.IsNullOrEmpty(x.ImageUrl));
+                .Must(uri => Uri.TryCreate(uri, UriKind.Absolute, out _)).When(x => !string.IsNullOrEmpty(x.Url));
         }
 
         protected void ValidatePlatform()
