@@ -1,0 +1,62 @@
+﻿@model HWParts.Core.Application.ViewModels.Base.ComponentBaseViewModel
+
+<div>
+    <div class="form-group">
+        <label asp-for="ImagesUrls" class="col-md-2 control-label"></label>
+        <button type="button" id="add-image-url" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus"></i>
+        </button>
+        <div class="col-md-10">
+            <input type="text" id="input-image-url" class="form-control" />
+            <span asp-validation-for="ImagesUrls" class="text-danger"></span>
+            <div id="images-urls">
+                @for(var i = 0; i < Model.ImagesUrls.Count; i++)
+                {
+                    <input type="hidden"name="ImagesUrls[@i]" id="image-url-input-@i" value="@Model.ImagesUrls[i]" />
+                    <img src="@Model.ImagesUrls[i]" id="image-url-img-@i" style="width:15%" />
+                    <button type="button" style="border-radius:50%; font-size: 0.475rem; line-height: 2.0" class="btn btn-danger btn-sm" id="remove-image-url-@i">
+                        <i class="fas fa-minus" style="pointer-events: none"></i>
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let urlsCount = $('#images-urls input').length;
+
+            $(document).on('click', '#add-image-url',  () => {
+                const input = $('#input-image-url');
+                const url = input.val().trim();
+
+                if (url !== '') {
+                    $('#images-urls').append(`<input type='hidden' id="image-url-input-${urlsCount+1}" name='ImagesUrls[${urlsCount}]' value='${url}' />`);
+                    $('#images-urls').append(`<img src='${url}' id="image-url-img-${urlsCount + 1}" style='width:15%' />`);
+                    $('#images-urls').append(
+                    `<button type="button" style="border-radius:50%; font-size: 0.475rem; line-height: 2.0" class="btn btn-danger btn-sm" id="remove-image-url-${urlsCount+1}">
+                        <i class="fas fa-minus" style="pointer-events: none"></i>
+                    </button>`);
+                    input.val('');
+                    input.next('span').text('');
+
+                    urlsCount++;
+                }
+                else {
+                    input.next('span').text('Digite uma URL.');
+                }
+            });
+
+            $(document).on('click', '#images-urls button', (event) => {
+                const splittedId = event.target.id.split("-");
+                const index = splittedId[splittedId.length-1];
+                console.log(index);
+                $(`#image-url-img-${index}`).remove();
+                $(`#image-url-input-${index}`).remove();
+                $(`#remove-image-url-${index}`).remove();
+
+                urlsCount--;
+            });
+        });
+    </script>
+</div>
