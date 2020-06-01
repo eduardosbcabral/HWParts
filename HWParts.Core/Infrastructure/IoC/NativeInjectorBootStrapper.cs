@@ -34,6 +34,8 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<IMemoryAppService, MemoryAppService>()
             .AddScoped<IProcessorAppService, ProcessorAppService>()
             .AddScoped<IStorageAppService, StorageAppService>()
+            .AddScoped<ICaseAppService, CaseAppService>()
+            .AddScoped<IPowerSupplyAppService, PowerSupplyAppService>()
 
             // Domain - Events
             .AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>()
@@ -61,12 +63,18 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<IRequestHandler<UpdateStorageCommand, bool>, StorageCommandHandler>()
             .AddScoped<IRequestHandler<RemoveStorageCommand, bool>, StorageCommandHandler>()
 
+            .AddScoped<IRequestHandler<RegisterCaseCommand, bool>, CaseCommandHandler>()
+            .AddScoped<IRequestHandler<UpdateCaseCommand, bool>, CaseCommandHandler>()
+            .AddScoped<IRequestHandler<RemoveCaseCommand, bool>, CaseCommandHandler>()
+
             // Infra - Data
             .AddScoped<IMotherboardRepository, MotherboardRepository>()
             .AddScoped<IGraphicsCardRepository, GraphicsCardRepository>()
             .AddScoped<IMemoryRepository, MemoryRepository>()
             .AddScoped<IProcessorRepository, ProcessorRepository>()
             .AddScoped<IStorageRepository, StorageRepository>()
+            .AddScoped<ICaseRepository, CaseRepository>()
+            .AddScoped<IPowerSupplyRepository, PowerSupplyRepository>()
             .AddScoped<IUnitOfWork, UnitOfWork>()
             .AddScoped<HWPartsDbContext>()
 
