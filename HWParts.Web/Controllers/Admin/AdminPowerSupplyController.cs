@@ -32,7 +32,7 @@ namespace HWParts.Web.Controllers
         [HttpGet("register")]
         public IActionResult Create()
         {
-            return View();
+            return View(new PowerSupplyViewModel());
         }
 
         [HttpPost("register")]
