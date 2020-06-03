@@ -33,7 +33,7 @@ namespace HWParts.Web.Controllers
         [Authorize(Policy = "CanWriteComponentData")]
         public IActionResult Create()
         {
-            return View();
+            return View(new MotherboardViewModel());
         }
 
         [HttpPost("register")]
