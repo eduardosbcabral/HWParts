@@ -1,5 +1,6 @@
 ﻿using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.ViewModels.GraphicsCard;
+using HWParts.Core.Domain.Commands;
 using HWParts.Core.Domain.Core.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -32,7 +33,7 @@ namespace HWParts.Web.Controllers
         [HttpGet("register")]
         public IActionResult Create()
         {
-            return View();
+            return View(new GraphicsCardViewModel());
         }
 
         [HttpPost("register")]
