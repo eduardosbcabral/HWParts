@@ -15,14 +15,26 @@ namespace HWParts.Core.Application.AutoMapper
     {
         public DomainToViewModelMappingProfile()
         {
-            CreateMap<Motherboard, MotherboardViewModel>();
-            CreateMap<GraphicsCard, GraphicsCardViewModel>();
-            CreateMap<Memory, MemoryViewModel>();
-            CreateMap<Processor, ProcessorViewModel>();
-            CreateMap<Storage, StorageViewModel>();
+            CreateMap<Motherboard, MotherboardViewModel>()
+                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ImageUrl.Split(";"));
+
+            CreateMap<GraphicsCard, GraphicsCardViewModel>()
+                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ImageUrl.Split(";"));
+
+            CreateMap<Memory, MemoryViewModel>()
+                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ImageUrl.Split(";"));
+
+            CreateMap<Processor, ProcessorViewModel>()
+                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ImageUrl.Split(";"));
+
+            CreateMap<Storage, StorageViewModel>()
+                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ImageUrl.Split(";"));
+
             CreateMap<Case, CaseViewModel>()
                 .AfterMap((opt, dest) => dest.ImagesUrls = opt.ImageUrl.Split(";"));
-            CreateMap<PowerSupply, PowerSupplyViewModel>();
+
+            CreateMap<PowerSupply, PowerSupplyViewModel>()
+                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ImageUrl.Split(";"));
         }
     }
 }
