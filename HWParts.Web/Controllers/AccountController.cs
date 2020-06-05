@@ -180,7 +180,6 @@ namespace HWParts.Web.Controllers
                 return View("Error");
             }
 
-            // TODO: SEND USER CODE EMAIL
             //var message = "Your security code is: " + code;
             //if (model.SelectedProvider == "Email")
             //{
