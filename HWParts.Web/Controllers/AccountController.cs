@@ -199,6 +199,42 @@ namespace HWParts.Web.Controllers
             });
         }
 
+        [HttpGet("reset-password")]
+        [AllowAnonymous]
+        public ActionResult ResetPassword(string code)
+        {
+            if(code is null)
+            {
+                return View("Error");
+            }
+            
+            return View(new ResetPasswordViewModel(code));
+        }
+
+        [HttpPost("reset-password")]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await _userManager.FindByNameAsync(model.Email);
+            if (user == null)
+            {
+                // Don't reveal that the user does not exist
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+            AddErrors(result);
+            return View();
+        }
+
         //[HttpGet("account/confirm-email")]
         //public async Task<IActionResult> ConfirmEmail(string userId, string code)
         //{
@@ -222,6 +258,15 @@ namespace HWParts.Web.Controllers
         //    return View("ConfirmEmail");
         //}
 
+        #region Helpers
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+        }
+
         private IActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
@@ -233,5 +278,6 @@ namespace HWParts.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        #endregion
     }
 }
