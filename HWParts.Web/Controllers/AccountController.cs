@@ -3,6 +3,7 @@ using HWParts.Core.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -131,6 +132,71 @@ namespace HWParts.Web.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet("reset-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> SendCode(bool rememberMe, string returnUrl = null)
+        {
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            if(user is null)
+            {
+                return View("Error");
+            }
+
+            var userFactors = await _userManager.GetValidTwoFactorProvidersAsync(user);
+            var factorOptions = userFactors
+                .Select(p => new SelectListItem { Text = p, Value = p })
+                .ToList();
+
+            return View(new SendCodeViewModel
+            {
+                Providers = factorOptions,
+                ReturnUrl = returnUrl,
+                RememberMe = rememberMe
+            });
+        }
+
+        [HttpPost("reset-password")]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SendCode(SendCodeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            if (user == null)
+            {
+                return View("Error");
+            }
+
+            // Generate the token and send it
+            var code = await _userManager.GenerateTwoFactorTokenAsync(user, model.SelectedProvider);
+            if (string.IsNullOrWhiteSpace(code))
+            {
+                return View("Error");
+            }
+
+            // TODO: SEND USER CODE EMAIL
+            //var message = "Your security code is: " + code;
+            //if (model.SelectedProvider == "Email")
+            //{
+            //    await .SendEmailAsync(await UserManager.GetEmailAsync(user), "Security Code", message);
+            //}
+            //else if (model.SelectedProvider == "Phone")
+            //{
+            //    await .SendSmsAsync(await UserManager.GetPhoneNumberAsync(user), message);
+            //}
+
+            return RedirectToAction("VerifyCode", new 
+            { 
+                Provider = model.SelectedProvider, 
+                model.ReturnUrl, 
+                model.RememberMe 
+            });
         }
 
         //[HttpGet("account/confirm-email")]
