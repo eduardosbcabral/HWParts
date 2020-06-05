@@ -134,7 +134,7 @@ namespace HWParts.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet("reset-password")]
+        [HttpGet("send-code")]
         [AllowAnonymous]
         public async Task<IActionResult> SendCode(bool rememberMe, string returnUrl = null)
         {
@@ -157,7 +157,7 @@ namespace HWParts.Web.Controllers
             });
         }
 
-        [HttpPost("reset-password")]
+        [HttpPost("send-code")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SendCode(SendCodeViewModel model)
