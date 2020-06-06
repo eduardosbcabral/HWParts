@@ -234,6 +234,13 @@ namespace HWParts.Web.Controllers
             return View();
         }
 
+        [HttpGet("reset-password-confirmation")]
+        [AllowAnonymous]
+        public IActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
+
         [HttpGet("forgot-password")]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
