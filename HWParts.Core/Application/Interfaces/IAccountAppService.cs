@@ -1,9 +1,10 @@
 ﻿using HWParts.Core.Application.ViewModels.Account;
+using System.Threading.Tasks;
 
 namespace HWParts.Core.Application.Interfaces
 {
     public interface IAccountAppService
     {
-        void Register(RegisterAccountViewModel registerAccountViewModel);
+        Task Register(RegisterAccountViewModel registerAccountViewModel);
     }
 }

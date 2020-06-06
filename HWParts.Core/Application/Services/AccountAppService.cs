@@ -6,6 +6,7 @@ using HWParts.Core.Domain.Core.Bus;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace HWParts.Core.Application.Services
 {
@@ -21,10 +22,10 @@ namespace HWParts.Core.Application.Services
             _mapper = mapper;
             Bus = mediatorHandler;
         }
-        public void Register(RegisterAccountViewModel registerAccountViewModel)
+        public Task Register(RegisterAccountViewModel registerAccountViewModel)
         {
             var command = _mapper.Map<RegisterAccountCommand>(registerAccountViewModel);
-            Bus.SendCommand(command);
+            return Bus.SendCommand(command);
         }
     }
 }
