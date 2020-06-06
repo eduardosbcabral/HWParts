@@ -3,9 +3,6 @@ using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.ViewModels.Account;
 using HWParts.Core.Domain.Commands;
 using HWParts.Core.Domain.Core.Bus;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace HWParts.Core.Application.Services
@@ -25,6 +22,12 @@ namespace HWParts.Core.Application.Services
         public Task Register(RegisterAccountViewModel registerAccountViewModel)
         {
             var command = _mapper.Map<RegisterAccountCommand>(registerAccountViewModel);
+            return Bus.SendCommand(command);
+        }
+
+        public Task Login(LoginAccountViewModel loginAccountViewModel)
+        {
+            var command = _mapper.Map<LoginAccountCommand>(loginAccountViewModel);
             return Bus.SendCommand(command);
         }
     }
