@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HWParts.Core.Application.ViewModels.Account
 {
-    public class RegisterViewModel
+    public class RegisterAccountViewModel
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [Display(Name = "Username")]
