@@ -45,6 +45,7 @@ namespace HWParts.Core.Application.AutoMapper
                 .ConstructUsing(c => new UpdateCaseCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
 
             CreateMap<RegisterAccountViewModel, RegisterAccountCommand>();
+            CreateMap<LoginAccountViewModel, LoginAccountCommand>();
         }
     }
 }
