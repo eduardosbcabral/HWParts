@@ -234,28 +234,45 @@ namespace HWParts.Web.Controllers
             return View();
         }
 
-        //[HttpGet("account/confirm-email")]
-        //public async Task<IActionResult> ConfirmEmail(string userId, string code)
-        //{
-        //    if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(code))
-        //    {
-        //        return View("Error");
-        //    }
+        [HttpGet("forgot-password")]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
 
-        //    var user = await _userManager.FindByIdAsync(userId);
-        //    if (user is null)
-        //    {
-        //        return View("Error");
-        //    }
-        //    var result = await _userManager.ConfirmEmailAsync(user, code);
+        [HttpPost("forgot-password")]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-        //    if (!result.Succeeded)
-        //    {
-        //        return View("Error");
-        //    }
+            var user = await _userManager.FindByNameAsync(model.Email);
+            if(user is null || !(await _userManager.IsEmailConfirmedAsync(user)))
+            {
+                // Don't reveal that user does not exists or is not confirmed
+                return View("ForgotPasswordConfirmation");
+            }
 
-        //    return View("ConfirmEmail");
-        //}
+            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
+            // Send an email with this link
+            //var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            //var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+            //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
+            //   "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
+            return View("ForgotPasswordConfirmation");
+        }
+
+        [HttpGet("forgot-password-confirmation")]
+        [AllowAnonymous]
+        public IActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
 
         #region Helpers
         private void AddErrors(IdentityResult result)
