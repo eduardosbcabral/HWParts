@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HWParts.Core.Application.ViewModels.Account;
 using HWParts.Core.Application.ViewModels.Case;
 using HWParts.Core.Application.ViewModels.GraphicsCard;
 using HWParts.Core.Application.ViewModels.Memory;
@@ -42,6 +43,8 @@ namespace HWParts.Core.Application.AutoMapper
                 .ConstructUsing(c => new RegisterCaseCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
             CreateMap<CaseViewModel, UpdateCaseCommand>()
                 .ConstructUsing(c => new UpdateCaseCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+
+            CreateMap<RegisterAccountViewModel, RegisterAccountCommand>();
         }
     }
 }
