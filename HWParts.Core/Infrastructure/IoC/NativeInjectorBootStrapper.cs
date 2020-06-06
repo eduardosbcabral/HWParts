@@ -36,6 +36,7 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<IStorageAppService, StorageAppService>()
             .AddScoped<ICaseAppService, CaseAppService>()
             .AddScoped<IPowerSupplyAppService, PowerSupplyAppService>()
+            .AddScoped<IAccountAppService, AccountAppService>()
 
             // Domain - Events
             .AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>()
@@ -66,6 +67,9 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<IRequestHandler<RegisterCaseCommand, bool>, CaseCommandHandler>()
             .AddScoped<IRequestHandler<UpdateCaseCommand, bool>, CaseCommandHandler>()
             .AddScoped<IRequestHandler<RemoveCaseCommand, bool>, CaseCommandHandler>()
+
+            .AddScoped<IRequestHandler<RegisterAccountCommand, bool>, AccountCommandHandler>()
+
 
             // Infra - Data
             .AddScoped<IMotherboardRepository, MotherboardRepository>()
