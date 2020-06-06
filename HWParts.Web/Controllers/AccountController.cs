@@ -1,5 +1,8 @@
-﻿using HWParts.Core.Application.ViewModels.Account;
+﻿using HWParts.Core.Application.Interfaces;
+using HWParts.Core.Application.ViewModels.Account;
+using HWParts.Core.Domain.Core.Notifications;
 using HWParts.Core.Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,24 +15,30 @@ namespace HWParts.Web.Controllers
 {
     [Authorize]
     [Route("account")]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
 
+        private readonly IAccountAppService _accountAppService;
+
         public AccountController(
+            INotificationHandler<DomainNotification> notifications,
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            IAccountAppService accountAppService)
+            : base(notifications)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _accountAppService = accountAppService;
         }
 
         [HttpGet("register")]
         [AllowAnonymous]
         public async Task<IActionResult> Register(string returnUrl = null)
         {
-            var registerViewModel = new RegisterViewModel
+            var registerViewModel = new RegisterAccountViewModel
             {
                 ReturnUrl = returnUrl,
                 ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync())
@@ -42,7 +51,7 @@ namespace HWParts.Web.Controllers
         [HttpPost("register")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        public async Task<IActionResult> Register(RegisterAccountViewModel registerViewModel)
         {
             registerViewModel.ReturnUrl ??= Url.Content("~/");
 
@@ -51,38 +60,24 @@ namespace HWParts.Web.Controllers
                 return View(registerViewModel);
             }
 
-            var user = new IdentityUser
+            await _accountAppService.Register(registerViewModel);
+
+            if (HasNotification("CreateUser"))
             {
-                UserName = registerViewModel.Username,
-                Email = registerViewModel.Email
-            };
-
-            var result = await _userManager.CreateAsync(user, registerViewModel.Password);
-
-            if (!result.Succeeded)
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-
                 return View(registerViewModel);
             }
 
-            await _userManager.AddClaimAsync(
-                user,
-                new Claim(UserClaims.Components, UserClaimValues.Write)
-            );
-
-            if (_userManager.Options.SignIn.RequireConfirmedAccount)
+            if (HasNotification("RequireConfirmedAccount"))
             {
                 return RedirectToPage("RegisterConfirmation", new { email = registerViewModel.Email });
             }
-            else
+
+            if (!IsValidOperation())
             {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return LocalRedirect(registerViewModel.ReturnUrl);
+                return View(registerViewModel);
             }
+
+            return LocalRedirect(registerViewModel.ReturnUrl);
         }
 
         [HttpGet("login")]
