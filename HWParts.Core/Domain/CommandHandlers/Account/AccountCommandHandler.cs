@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 namespace HWParts.Core.Domain.CommandHandlers
 {
     public class AccountCommandHandler : CommandHandler,
-        IRequestHandler<RegisterAccountCommand, bool>
+        IRequestHandler<RegisterAccountCommand, bool>,
+        IRequestHandler<LoginAccountCommand, bool>
     {
         private readonly IMediatorHandler Bus;
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -32,6 +33,7 @@ namespace HWParts.Core.Domain.CommandHandlers
             _signInManager = signInManager;
         }
 
+        // Register
         public async Task<bool> Handle(RegisterAccountCommand request, CancellationToken cancellationToken)
         {
             if (!request.IsValid())
@@ -70,6 +72,42 @@ namespace HWParts.Core.Domain.CommandHandlers
             }
 
             await _signInManager.SignInAsync(user, isPersistent: false);
+            return true;
+        }
+
+        // Login
+        public async Task<bool> Handle(LoginAccountCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return false;
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(
+                request.Email, 
+                request.Password, 
+                request.RememberMe, 
+                lockoutOnFailure: false);
+
+            if (!result.Succeeded)
+            {
+                await Bus.RaiseEvent(new DomainNotification("Login", "Tentativa de login inválida."));
+                return false;
+            }
+
+            if (result.RequiresTwoFactor)
+            {
+                await Bus.RaiseEvent(new DomainNotification("RequiresTwoFactor", string.Empty));
+                return true;
+            }
+
+            if (result.IsLockedOut)
+            {
+                await Bus.RaiseEvent(new DomainNotification("IsLockedOut", string.Empty));
+                return true;
+            }
+
             return true;
         }
     }
