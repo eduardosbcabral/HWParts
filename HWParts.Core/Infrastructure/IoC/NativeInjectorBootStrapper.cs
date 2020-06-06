@@ -69,6 +69,7 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<IRequestHandler<RemoveCaseCommand, bool>, CaseCommandHandler>()
 
             .AddScoped<IRequestHandler<RegisterAccountCommand, bool>, AccountCommandHandler>()
+            .AddScoped<IRequestHandler<LoginAccountCommand, bool>, AccountCommandHandler>()
 
 
             // Infra - Data
