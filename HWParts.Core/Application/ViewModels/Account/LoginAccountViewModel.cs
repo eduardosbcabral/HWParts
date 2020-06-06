@@ -2,7 +2,7 @@
 
 namespace HWParts.Core.Application.ViewModels.Account
 {
-    public class LoginViewModel
+    public class LoginAccountViewModel
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [EmailAddress(ErrorMessage = "O campo {0} está em um formato inválido.")]
@@ -19,5 +19,12 @@ namespace HWParts.Core.Application.ViewModels.Account
         public bool RememberMe { get; set; }
 
         public string ReturnUrl { get; set; }
+
+        public LoginAccountViewModel()
+        {
+
+        }
+
+        public LoginAccountViewModel(string returnUrl) => ReturnUrl = returnUrl;
     }
 }
