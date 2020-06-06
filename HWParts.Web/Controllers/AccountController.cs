@@ -38,14 +38,8 @@ namespace HWParts.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register(string returnUrl = null)
         {
-            var registerViewModel = new RegisterAccountViewModel
-            {
-                ReturnUrl = returnUrl,
-                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync())
-                    .ToList()
-            };
-
-            return View(registerViewModel);
+            var externalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            return View(new RegisterAccountViewModel(returnUrl, externalLogins));
         }
 
         [HttpPost("register")]
@@ -84,41 +78,38 @@ namespace HWParts.Web.Controllers
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
         {
-            var loginViewModel = new LoginViewModel
-            {
-                ReturnUrl = returnUrl
-            };
-            return View(loginViewModel);
+            returnUrl ??= Url.Content("~/");
+            return View(new LoginAccountViewModel(returnUrl));
         }
 
         [HttpPost("login")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        public async Task<IActionResult> Login(LoginAccountViewModel loginViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return View(loginViewModel);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(loginViewModel.Email, loginViewModel.Password, loginViewModel.RememberMe, lockoutOnFailure: false);
-            if (result.Succeeded)
-            {
-                return RedirectToLocal(loginViewModel.ReturnUrl);
-            }
-            if (result.RequiresTwoFactor)
+            await _accountAppService.Login(loginViewModel);
+
+            if (HasNotification("RequiresTwoFactor"))
             {
                 return RedirectToAction("SendCode", new { loginViewModel.ReturnUrl, loginViewModel.RememberMe });
             }
-            if (result.IsLockedOut)
+
+            if (HasNotification("IsLockedOut"))
             {
                 return View("Lockout");
             }
-            else
+
+            if(!IsValidOperation())
             {
-                ModelState.AddModelError(string.Empty, "Tentativa de login inválida.");
                 return View(loginViewModel);
             }
+
+            return RedirectToLocal(loginViewModel.ReturnUrl);
         }
 
         [HttpPost("logout")]
