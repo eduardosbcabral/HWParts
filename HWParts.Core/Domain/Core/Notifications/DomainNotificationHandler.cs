@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -30,6 +31,11 @@ namespace HWParts.Core.Domain.Core.Notifications
         public virtual bool HasNotifications()
         {
             return GetNotifications().Any();
+        }
+
+        public virtual bool HasNotification(string key)
+        {
+            return GetNotifications().Any(x => x.Key == key);
         }
 
         public void Dispose()
