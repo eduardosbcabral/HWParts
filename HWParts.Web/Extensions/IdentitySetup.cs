@@ -1,7 +1,7 @@
 ﻿using HWParts.Core.Domain.Entities;
+using HWParts.Core.Infrastructure;
 using HWParts.Core.Infrastructure.Identity.Authorization;
 using HWParts.Core.Infrastructure.Identity.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,16 +14,16 @@ namespace HWParts.Web.Extensions
         {
             if (services is null) throw new ArgumentNullException(nameof(services));
 
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<Account>(options =>
                 {
-                    options.SignIn.RequireConfirmedAccount = true;
+                    options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireDigit = false;
                     options.Password.RequiredLength = 4;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                     options.Password.RequireLowercase = false;
                 })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<HWPartsDbContext>();
         }
         public static void AddAuthSetup(this IServiceCollection services, IConfiguration configuration)
         {
