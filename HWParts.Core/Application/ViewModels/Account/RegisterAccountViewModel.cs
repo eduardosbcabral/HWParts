@@ -29,6 +29,11 @@ namespace HWParts.Core.Application.ViewModels.Account
         public string ReturnUrl { get; set; }
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
+        public RegisterAccountViewModel()
+        {
+
+        }
+
         public RegisterAccountViewModel(string returnUrl, IList<AuthenticationScheme> externalLogins)
         {
             ReturnUrl = returnUrl;
