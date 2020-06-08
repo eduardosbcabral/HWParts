@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HWParts.Core.Application.ViewModels.Account;
 using HWParts.Core.Application.ViewModels.Case;
 using HWParts.Core.Application.ViewModels.GraphicsCard;
 using HWParts.Core.Application.ViewModels.Memory;
@@ -35,6 +36,9 @@ namespace HWParts.Core.Application.AutoMapper
 
             CreateMap<PowerSupply, PowerSupplyViewModel>()
                 .AfterMap((opt, dest) => dest.ImagesUrls = opt.ImageUrl.Split(";"));
+
+
+            CreateMap<Account, AccountViewModel>();
         }
     }
 }
