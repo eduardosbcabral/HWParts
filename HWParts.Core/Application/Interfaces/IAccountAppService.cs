@@ -1,4 +1,5 @@
 ﻿using HWParts.Core.Application.ViewModels.Account;
+using HWParts.Core.Infrastructure.Common.Pagination;
 using System.Threading.Tasks;
 
 namespace HWParts.Core.Application.Interfaces
@@ -7,5 +8,7 @@ namespace HWParts.Core.Application.Interfaces
     {
         Task Register(RegisterAccountViewModel registerAccountViewModel);
         Task Login(LoginAccountViewModel loginAccountViewModel);
+
+        PaginationObject<AccountViewModel> ListPaginated(int? page);
     }
 }
