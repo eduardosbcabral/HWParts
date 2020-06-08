@@ -80,6 +80,8 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<IStorageRepository, StorageRepository>()
             .AddScoped<ICaseRepository, CaseRepository>()
             .AddScoped<IPowerSupplyRepository, PowerSupplyRepository>()
+            .AddScoped<IAccountRepository, AccountRepository>()
+
             .AddScoped<IUnitOfWork, UnitOfWork>()
             .AddScoped<HWPartsDbContext>()
 
