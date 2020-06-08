@@ -16,15 +16,15 @@ namespace HWParts.Core.Domain.CommandHandlers
         IRequestHandler<LoginAccountCommand, bool>
     {
         private readonly IMediatorHandler Bus;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<Account> _signInManager;
+        private readonly UserManager<Account> _userManager;
 
         public AccountCommandHandler(
             IUnitOfWork uow,
             IMediatorHandler bus,
             INotificationHandler<DomainNotification> notifications,
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager) 
+            UserManager<Account> userManager,
+            SignInManager<Account> signInManager) 
             : base(uow, bus, notifications)
         {
             Bus = bus;
@@ -42,7 +42,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                 return false;
             }
 
-            var user = new IdentityUser
+            var user = new Account
             {
                 UserName = request.Username,
                 Email = request.Email
@@ -85,7 +85,7 @@ namespace HWParts.Core.Domain.CommandHandlers
             }
 
             var result = await _signInManager.PasswordSignInAsync(
-                request.Email, 
+                request.Username, 
                 request.Password, 
                 request.RememberMe, 
                 lockoutOnFailure: false);

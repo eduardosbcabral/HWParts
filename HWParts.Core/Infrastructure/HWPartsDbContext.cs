@@ -1,12 +1,13 @@
 ﻿using HWParts.Core.Domain.Entities;
 using HWParts.Core.Infrastructure.Config;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
 namespace HWParts.Core.Infrastructure
 {
-    public class HWPartsDbContext : DbContext
+    public class HWPartsDbContext : IdentityDbContext<Account>
     {
         public DbSet<Processor> Processors { get; set; }
         public DbSet<Motherboard> Motherboards { get; set; }
@@ -19,6 +20,8 @@ namespace HWParts.Core.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             var typesToRegister = AppDomain.CurrentDomain
                 .GetAssemblies()
                 .SelectMany(x => x.GetTypes())
