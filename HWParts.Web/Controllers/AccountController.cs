@@ -17,15 +17,15 @@ namespace HWParts.Web.Controllers
     [Route("account")]
     public class AccountController : BaseController
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<Account> _signInManager;
+        private readonly UserManager<Account> _userManager;
 
         private readonly IAccountAppService _accountAppService;
 
         public AccountController(
             INotificationHandler<DomainNotification> notifications,
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<Account> userManager,
+            SignInManager<Account> signInManager,
             IAccountAppService accountAppService)
             : base(notifications)
         {
