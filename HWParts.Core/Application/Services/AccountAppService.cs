@@ -37,9 +37,17 @@ namespace HWParts.Core.Application.Services
             return Bus.SendCommand(command);
         }
 
+        public Task ConfirmEmail(ConfirmEmailAccountViewModel confirmEmailAccountViewModel)
+        {
+            var command = _mapper.Map<ConfirmEmailAccountCommand>(confirmEmailAccountViewModel);
+            return Bus.SendCommand(command);
+        }
+
+        #region Queries
         public PaginationObject<AccountViewModel> ListPaginated(int? page)
         {
             return _accountRepository.ListPaginated(page);
         }
+        #endregion
     }
 }
