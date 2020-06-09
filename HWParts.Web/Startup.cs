@@ -50,6 +50,9 @@ namespace HWParts.Web
 
             // .NET Native DI Abstraction
             services.AddDependencyInjectionSetup();
+
+            // Email Sender
+            services.AddEmail(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
