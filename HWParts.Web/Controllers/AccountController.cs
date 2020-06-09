@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace HWParts.Web.Controllers
@@ -34,6 +33,7 @@ namespace HWParts.Web.Controllers
             _accountAppService = accountAppService;
         }
 
+        #region Register/Related Endpoints
         [HttpGet("register")]
         [AllowAnonymous]
         public async Task<IActionResult> Register(string returnUrl = null)
@@ -63,7 +63,7 @@ namespace HWParts.Web.Controllers
 
             if (HasNotification("RequireConfirmedAccount"))
             {
-                return RedirectToPage("RegisterConfirmation", new { email = registerViewModel.Email });
+                return RedirectToAction(nameof(RegisterConfirmation), new { email = registerViewModel.Email });
             }
 
             if (!IsValidOperation())
@@ -73,6 +73,38 @@ namespace HWParts.Web.Controllers
 
             return LocalRedirect(registerViewModel.ReturnUrl);
         }
+
+        [HttpGet("register-confirmation")]
+        [AllowAnonymous]
+        public IActionResult RegisterConfirmation(string email)
+        {
+            return View("RegisterConfirmation", email);
+        }
+
+        [HttpGet("confirm-email")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(ConfirmEmailAccountViewModel model)
+        {
+            if (model == null)
+            {
+                return View("Error");
+            }
+
+            await _accountAppService.ConfirmEmail(model);
+
+            if (HasNotification("AccountNotFound"))
+            {
+                return View("Error");
+            }
+
+            if (HasNotification("ConfirmEmail"))
+            {
+                return View("Error");
+            }
+
+            return View("ConfirmEmail", model.Email);
+        }
+        #endregion
 
         [HttpGet("login")]
         [AllowAnonymous]
