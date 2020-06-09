@@ -46,6 +46,7 @@ namespace HWParts.Core.Application.AutoMapper
 
             CreateMap<RegisterAccountViewModel, RegisterAccountCommand>();
             CreateMap<LoginAccountViewModel, LoginAccountCommand>();
+            CreateMap<ConfirmEmailAccountViewModel, ConfirmEmailAccountCommand>();
         }
     }
 }
