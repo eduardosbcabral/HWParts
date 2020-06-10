@@ -21,7 +21,8 @@ namespace HWParts.Core.Domain.CommandHandlers
     public class AccountCommandHandler : CommandHandler,
         IRequestHandler<RegisterAccountCommand, bool>,
         IRequestHandler<LoginAccountCommand, bool>,
-        IRequestHandler<ConfirmEmailAccountCommand, bool>
+        IRequestHandler<ConfirmEmailAccountCommand, bool>,
+        IRequestHandler<ForgotPasswordAccountCommand, bool>
     {
         private readonly IMediatorHandler Bus;
         private readonly SignInManager<Account> _signInManager;
@@ -168,6 +169,39 @@ namespace HWParts.Core.Domain.CommandHandlers
                 await Bus.RaiseEvent(new DomainNotification("ConfirmEmail", "Ocorreu um erro ao confirmar o e-mail."));
                 return false;
             }
+
+            return true;
+        }
+
+        public async Task<bool> Handle(ForgotPasswordAccountCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return false;
+            }
+
+            var user = await _userManager.FindByEmailAsync(request.Email);
+
+            if (user is null || !(await _userManager.IsEmailConfirmedAsync(user)))
+            {
+                await Bus.RaiseEvent(new DomainNotification("ErrorForgotPassword", string.Empty));
+                return false;
+            }
+
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+            var link = _linkGenerator.GetUriByAction(
+                    _httpContextAccessor.HttpContext,
+                    "ResetPassword",
+                    "Account",
+                    values: new ResetPasswordAccountViewModel(user.Id, code),
+                    _httpContextAccessor.HttpContext.Request.Scheme,
+                    _httpContextAccessor.HttpContext.Request.Host);
+
+            await _emailSender.SendEmailAsync(request.Email, "Resetar Senha",
+               $"Por favor, troque sua senha clicando aqui: <a href='{HtmlEncoder.Default.Encode(link)}'>link</a>");
 
             return true;
         }
