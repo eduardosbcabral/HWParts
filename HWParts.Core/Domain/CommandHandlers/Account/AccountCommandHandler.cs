@@ -22,7 +22,8 @@ namespace HWParts.Core.Domain.CommandHandlers
         IRequestHandler<RegisterAccountCommand, bool>,
         IRequestHandler<LoginAccountCommand, bool>,
         IRequestHandler<ConfirmEmailAccountCommand, bool>,
-        IRequestHandler<ForgotPasswordAccountCommand, bool>
+        IRequestHandler<ForgotPasswordAccountCommand, bool>,
+        IRequestHandler<ResetPasswordAccountCommand, bool>
     {
         private readonly IMediatorHandler Bus;
         private readonly SignInManager<Account> _signInManager;
@@ -202,6 +203,34 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             await _emailSender.SendEmailAsync(request.Email, "Resetar Senha",
                $"Por favor, troque sua senha clicando aqui: <a href='{HtmlEncoder.Default.Encode(link)}'>link</a>");
+
+            return true;
+        }
+
+        public async Task<bool> Handle(ResetPasswordAccountCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return false;
+            }
+
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null)
+            {
+                await Bus.RaiseEvent(new DomainNotification("AccountNotFound", string.Empty));
+                return false;
+            }
+
+            var decodedCode = WebEncoders.Base64UrlDecode(request.Code);
+            var code = Encoding.Default.GetString(decodedCode);
+
+            var result = await _userManager.ResetPasswordAsync(user, code, request.Password);
+            if (!result.Succeeded)
+            {
+                await Bus.RaiseEvent(new DomainNotification("ErrorResetPasswordAccount", string.Empty));
+                return false;
+            }
 
             return true;
         }

@@ -218,6 +218,7 @@ namespace HWParts.Web.Controllers
             });
         }
 
+        #region ResetPassword/Related Endpoints
         [HttpGet("reset-password")]
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
@@ -227,31 +228,32 @@ namespace HWParts.Web.Controllers
                 return View("Error");
             }
             
-            return View(new ResetPasswordViewModel(code));
+            return View(new ResetPasswordAccountViewModel(code));
         }
 
         [HttpPost("reset-password")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<ActionResult> ResetPassword(ResetPasswordAccountViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            var user = await _userManager.FindByNameAsync(model.Email);
-            if (user == null)
+
+            await _accountAppService.ResetPassword(model);
+
+            if (HasNotification("AccountNotFound"))
             {
-                // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                return RedirectToAction(nameof(ResetPasswordConfirmation));
             }
-            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
-            if (result.Succeeded)
+
+            if (HasNotification("ErrorResetPasswordAccount"))
             {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                return View();
             }
-            AddErrors(result);
-            return View();
+
+            return RedirectToAction(nameof(ResetPasswordConfirmation));
         }
 
         [HttpGet("reset-password-confirmation")]
@@ -290,6 +292,7 @@ namespace HWParts.Web.Controllers
         {
             return View();
         }
+        #endregion
 
         #region Helpers
         private void AddErrors(IdentityResult result)

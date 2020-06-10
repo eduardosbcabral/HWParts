@@ -48,6 +48,7 @@ namespace HWParts.Core.Application.AutoMapper
             CreateMap<LoginAccountViewModel, LoginAccountCommand>();
             CreateMap<ConfirmEmailAccountViewModel, ConfirmEmailAccountCommand>();
             CreateMap<ForgotPasswordAccountViewModel, ForgotPasswordAccountCommand>();
+            CreateMap<ResetPasswordAccountViewModel, ResetPasswordAccountCommand>();
         }
     }
 }

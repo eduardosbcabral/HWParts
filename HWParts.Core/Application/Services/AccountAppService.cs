@@ -50,6 +50,12 @@ namespace HWParts.Core.Application.Services
             return Bus.SendCommand(command);
         }
 
+        public Task ResetPassword(ResetPasswordAccountViewModel resetPasswordAccountViewModel)
+        {
+            var command = _mapper.Map<ResetPasswordAccountCommand>(resetPasswordAccountViewModel);
+            return Bus.SendCommand(command);
+        }
+
         #region Queries
         public PaginationObject<AccountViewModel> ListPaginated(int? page)
         {

@@ -72,6 +72,7 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<IRequestHandler<LoginAccountCommand, bool>, AccountCommandHandler>()
             .AddScoped<IRequestHandler<ConfirmEmailAccountCommand, bool>, AccountCommandHandler>()
             .AddScoped<IRequestHandler<ForgotPasswordAccountCommand, bool>, AccountCommandHandler>()
+            .AddScoped<IRequestHandler<ResetPasswordAccountCommand, bool>, AccountCommandHandler>()
 
 
             // Infra - Data
