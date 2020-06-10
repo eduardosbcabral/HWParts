@@ -25,6 +25,7 @@ namespace HWParts.Core.Application.Services
             Bus = mediatorHandler;
             _accountRepository = accountRepository;
         }
+
         public Task Register(RegisterAccountViewModel registerAccountViewModel)
         {
             var command = _mapper.Map<RegisterAccountCommand>(registerAccountViewModel);
@@ -40,6 +41,12 @@ namespace HWParts.Core.Application.Services
         public Task ConfirmEmail(ConfirmEmailAccountViewModel confirmEmailAccountViewModel)
         {
             var command = _mapper.Map<ConfirmEmailAccountCommand>(confirmEmailAccountViewModel);
+            return Bus.SendCommand(command);
+        }
+
+        public Task ForgotPassword(ForgotPasswordAccountViewModel forgotPasswordAccountViewModel)
+        {
+            var command = _mapper.Map<ForgotPasswordAccountCommand>(forgotPasswordAccountViewModel);
             return Bus.SendCommand(command);
         }
 
