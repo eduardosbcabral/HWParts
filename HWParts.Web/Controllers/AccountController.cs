@@ -278,19 +278,9 @@ namespace HWParts.Web.Controllers
                 return View(model);
             }
 
-            var user = await _userManager.FindByNameAsync(model.Email);
-            if(user is null || !(await _userManager.IsEmailConfirmedAsync(user)))
-            {
-                // Don't reveal that user does not exists or is not confirmed
-                return View("ForgotPasswordConfirmation");
-            }
+            await _accountAppService.ForgotPassword(model);
 
-            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
-            // Send an email with this link
-            //var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            //var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-            //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-            //   "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
+            // Don't reveal that user does not exists or is not confirmed
             return View("ForgotPasswordConfirmation");
         }
 
