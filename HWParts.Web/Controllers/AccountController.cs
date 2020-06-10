@@ -106,6 +106,7 @@ namespace HWParts.Web.Controllers
         }
         #endregion
 
+        #region Login/Related Endpoints
         [HttpGet("login")]
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
@@ -151,6 +152,7 @@ namespace HWParts.Web.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+        #endregion
 
         [HttpGet("send-code")]
         [AllowAnonymous]
@@ -269,7 +271,7 @@ namespace HWParts.Web.Controllers
         [HttpPost("forgot-password")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordAccountViewModel model)
         {
             if (!ModelState.IsValid)
             {

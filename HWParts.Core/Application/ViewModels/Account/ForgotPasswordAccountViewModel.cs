@@ -2,7 +2,7 @@
 
 namespace HWParts.Core.Application.ViewModels.Account
 {
-    public class ForgotPasswordViewModel
+    public class ForgotPasswordAccountViewModel
     {
         [Required]
         [EmailAddress]
