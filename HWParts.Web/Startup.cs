@@ -37,7 +37,9 @@ namespace HWParts.Web
 
             // MVC Settings
             services.AddControllersWithViews();
-            services.AddRazorPages();
+            services
+                .AddRazorPages()
+                .AddRazorRuntimeCompilation();
 
             // Authentication & Authorization
             services.AddAuthSetup(Configuration);
