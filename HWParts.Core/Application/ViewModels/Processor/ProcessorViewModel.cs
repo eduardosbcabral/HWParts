@@ -21,5 +21,7 @@ namespace HWParts.Core.Application.ViewModels.Processor
         [MaxLength(100)]
         [DisplayName("Modelo")]
         public string Model { get; set; }
+
+        public string FullName => $"{Brand} {Model}";
     }
 }
