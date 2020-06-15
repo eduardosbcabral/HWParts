@@ -43,6 +43,7 @@ namespace HWParts.Core.Application.AutoMapper
                 .ConstructUsing(c => new RegisterCaseCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
             CreateMap<CaseViewModel, UpdateCaseCommand>()
                 .ConstructUsing(c => new UpdateCaseCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+            CreateMap<ImportCasesViewModel, ImportCasesCommand>();
 
             CreateMap<RegisterAccountViewModel, RegisterAccountCommand>();
             CreateMap<LoginAccountViewModel, LoginAccountCommand>();
