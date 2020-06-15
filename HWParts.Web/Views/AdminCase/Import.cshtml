@@ -1,0 +1,17 @@
+﻿@model HWParts.Core.Application.ViewModels.Case.ImportCasesViewModel
+@{
+    ViewData["Title"] = "Importar Gabinetes";
+}
+
+@using (@Html.BeginForm(
+    "Import",
+    "AdminCase",
+    FormMethod.Post,
+    new { enctype = "multipart/form-data" }))
+{
+    @Html.TextBoxFor(x => x.File, new { type = "file" })
+
+    <button type="submit" class="btn btn-block btn-primary">
+        Importar
+    </button>
+}
