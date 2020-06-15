@@ -1,0 +1,45 @@
+﻿@using HWParts.Core.Application.ViewModels.GraphicsCard;
+@using HWParts.Core.Infrastructure.Common.Pagination;
+@model PaginationObject<GraphicsCardViewModel>
+
+@{
+    ViewData["Title"] = "Placas de Vídeo";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<br />
+
+@Html.PaginationElement(Model)
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelObject.Model)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Result)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    <a asp-action="Detail" asp-route-id="@item.Id" class="btn btn-primary">
+                        <span class="fas fa-search"></span>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
