@@ -13,6 +13,10 @@ namespace HWParts.Core.Infrastructure
         public DbSet<Motherboard> Motherboards { get; set; }
         public DbSet<GraphicsCard> GraphicsCards { get; set; }
         public DbSet<Memory> Memories { get; set; }
+        public DbSet<Case> Cases { get; set; }
+        public DbSet<PowerSupply> PowerSupply { get; set; }
+        public DbSet<Storage> Storage { get; set; }
+
 
         public HWPartsDbContext(DbContextOptions<HWPartsDbContext> options) : base(options)
         {
