@@ -47,27 +47,37 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<IRequestHandler<RegisterMotherboardCommand, bool>, MotherboardCommandHandler>()
             .AddScoped<IRequestHandler<UpdateMotherboardCommand, bool>, MotherboardCommandHandler>()
             .AddScoped<IRequestHandler<RemoveMotherboardCommand, bool>, MotherboardCommandHandler>()
+            .AddScoped<IRequestHandler<ImportMotherboardsCommand, bool>, MotherboardCommandHandler>()
 
             .AddScoped<IRequestHandler<RegisterGraphicsCardCommand, bool>, GraphicsCardCommandHandler>()
             .AddScoped<IRequestHandler<UpdateGraphicsCardCommand, bool>, GraphicsCardCommandHandler>()
             .AddScoped<IRequestHandler<RemoveGraphicsCardCommand, bool>, GraphicsCardCommandHandler>()
+            .AddScoped<IRequestHandler<ImportGraphicsCardsCommand, bool>, GraphicsCardCommandHandler>()
 
             .AddScoped<IRequestHandler<RegisterMemoryCommand, bool>, MemoryCommandHandler>()
             .AddScoped<IRequestHandler<UpdateMemoryCommand, bool>, MemoryCommandHandler>()
             .AddScoped<IRequestHandler<RemoveMemoryCommand, bool>, MemoryCommandHandler>()
+            .AddScoped<IRequestHandler<ImportMemoriesCommand, bool>, MemoryCommandHandler>()
 
             .AddScoped<IRequestHandler<RegisterProcessorCommand, bool>, ProcessorCommandHandler>()
             .AddScoped<IRequestHandler<UpdateProcessorCommand, bool>, ProcessorCommandHandler>()
             .AddScoped<IRequestHandler<RemoveProcessorCommand, bool>, ProcessorCommandHandler>()
+            .AddScoped<IRequestHandler<ImportProcessorsCommand, bool>, ProcessorCommandHandler>()
 
             .AddScoped<IRequestHandler<RegisterStorageCommand, bool>, StorageCommandHandler>()
             .AddScoped<IRequestHandler<UpdateStorageCommand, bool>, StorageCommandHandler>()
             .AddScoped<IRequestHandler<RemoveStorageCommand, bool>, StorageCommandHandler>()
+            .AddScoped<IRequestHandler<ImportStoragesCommand, bool>, StorageCommandHandler>()
 
             .AddScoped<IRequestHandler<RegisterCaseCommand, bool>, CaseCommandHandler>()
             .AddScoped<IRequestHandler<UpdateCaseCommand, bool>, CaseCommandHandler>()
             .AddScoped<IRequestHandler<RemoveCaseCommand, bool>, CaseCommandHandler>()
             .AddScoped<IRequestHandler<ImportCasesCommand, bool>, CaseCommandHandler>()
+
+            .AddScoped<IRequestHandler<RegisterPowerSupplyCommand, bool>, PowerSupplyCommandHandler>()
+            .AddScoped<IRequestHandler<UpdatePowerSupplyCommand, bool>, PowerSupplyCommandHandler>()
+            .AddScoped<IRequestHandler<RemovePowerSupplyCommand, bool>, PowerSupplyCommandHandler>()
+            .AddScoped<IRequestHandler<ImportPowerSuppliesCommand, bool>, PowerSupplyCommandHandler>()
 
             .AddScoped<IRequestHandler<RegisterAccountCommand, bool>, AccountCommandHandler>()
             .AddScoped<IRequestHandler<LoginAccountCommand, bool>, AccountCommandHandler>()
