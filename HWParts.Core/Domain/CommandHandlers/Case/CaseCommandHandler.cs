@@ -5,7 +5,6 @@ using HWParts.Core.Domain.Core.Notifications;
 using HWParts.Core.Domain.Entities;
 using HWParts.Core.Domain.Enums;
 using HWParts.Core.Domain.Events;
-using HWParts.Core.Domain.Events.Case;
 using HWParts.Core.Domain.Interfaces;
 using HWParts.Core.Infrastructure;
 using MediatR;

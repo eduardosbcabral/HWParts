@@ -47,7 +47,7 @@ namespace HWParts.Core.Application.Services
             Bus.SendCommand(removeCommand);
         }
 
-        public Task ImportCases(ImportCasesViewModel viewModel)
+        public Task Import(ImportCasesViewModel viewModel)
         {
             var command = _mapper.Map<ImportCasesCommand>(viewModel);
             return Bus.SendCommand(command);

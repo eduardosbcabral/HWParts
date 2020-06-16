@@ -10,7 +10,7 @@ namespace HWParts.Core.Application.Interfaces
         void Register(CaseViewModel caseViewModel);
         void Update(CaseViewModel caseViewModel);
         void Remove(Guid id);
-        Task ImportCases(ImportCasesViewModel viewModel);
+        Task Import(ImportCasesViewModel viewModel);
 
         CaseViewModel GetById(Guid id);
         PaginationObject<CaseViewModel> ListPaginated(int? page);
