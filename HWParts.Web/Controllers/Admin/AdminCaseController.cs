@@ -138,7 +138,7 @@ namespace HWParts.Web.Controllers
                 return View(viewModel);
             }
 
-            await _caseAppService.ImportCases(viewModel);
+            await _caseAppService.Import(viewModel);
 
 
             if(!IsValidOperation())
