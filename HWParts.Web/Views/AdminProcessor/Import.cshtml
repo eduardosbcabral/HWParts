@@ -1,0 +1,17 @@
+﻿@model HWParts.Core.Application.ViewModels.Processor.ImportProcessorsViewModel
+@{
+    ViewData["Title"] = "Importar Processadores";
+}
+
+@using (@Html.BeginForm(
+    "Import",
+    "AdminProcessor",
+    FormMethod.Post,
+    new { enctype = "multipart/form-data" }))
+{
+    @Html.TextBoxFor(x => x.File, new { type = "file" })
+
+    <button type="submit" class="btn btn-block btn-primary">
+        Importar
+    </button>
+}

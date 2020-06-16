@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace HWParts.Web.Controllers
 {
@@ -118,6 +119,33 @@ namespace HWParts.Web.Controllers
             }
 
             ViewBag.Success = "Processador removido.";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet("import")]
+        public IActionResult Import()
+        {
+            return View();
+        }
+
+        [HttpPost("import")]
+        public async Task<IActionResult> Import(ImportProcessorsViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            await _processorAppService.Import(viewModel);
+
+
+            if (!IsValidOperation())
+            {
+                return View(viewModel);
+            }
+
+            ViewBag.Success = "Processadores Importados.";
 
             return RedirectToAction(nameof(Index));
         }
