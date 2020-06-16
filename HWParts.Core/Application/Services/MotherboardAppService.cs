@@ -6,6 +6,7 @@ using HWParts.Core.Domain.Core.Bus;
 using HWParts.Core.Domain.Interfaces;
 using HWParts.Core.Infrastructure.Common.Pagination;
 using System;
+using System.Threading.Tasks;
 
 namespace HWParts.Core.Application.Services
 {
@@ -44,6 +45,12 @@ namespace HWParts.Core.Application.Services
         {
             var removeCommand = new RemoveMotherboardCommand(id);
             Bus.SendCommand(removeCommand);
+        }
+
+        public Task Import(ImportMotherboardsViewModel viewModel)
+        {
+            var command = _mapper.Map<ImportMotherboardsCommand>(viewModel);
+            return Bus.SendCommand(command);
         }
         #endregion
 

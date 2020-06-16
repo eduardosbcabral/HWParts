@@ -1,6 +1,7 @@
 ﻿using HWParts.Core.Application.ViewModels.Motherboard;
 using HWParts.Core.Infrastructure.Common.Pagination;
 using System;
+using System.Threading.Tasks;
 
 namespace HWParts.Core.Application.Interfaces
 {
@@ -9,6 +10,7 @@ namespace HWParts.Core.Application.Interfaces
         void Register(MotherboardViewModel motherboardViewModel);
         void Update(MotherboardViewModel motherboardViewModel);
         void Remove(Guid id);
+        Task Import(ImportMotherboardsViewModel viewModel);
 
         MotherboardViewModel GetById(Guid id);
         PaginationObject<MotherboardViewModel> ListPaginated(int? page);
