@@ -1,0 +1,17 @@
+﻿@model HWParts.Core.Application.ViewModels.Motherboard.ImportMotherboardsViewModel
+@{
+    ViewData["Title"] = "Importar Placas-Mãe";
+}
+
+@using (@Html.BeginForm(
+    "Import",
+    "AdminPowerSupply",
+    FormMethod.Post,
+    new { enctype = "multipart/form-data" }))
+{
+    @Html.TextBoxFor(x => x.File, new { type = "file" })
+
+    <button type="submit" class="btn btn-block btn-primary">
+        Importar
+    </button>
+}

@@ -1,6 +1,7 @@
 using HWParts.Core.Application.ViewModels.PowerSupply;
 using HWParts.Core.Infrastructure.Common.Pagination;
 using System;
+using System.Threading.Tasks;
 
 namespace HWParts.Core.Application.Interfaces
 {
@@ -9,6 +10,7 @@ namespace HWParts.Core.Application.Interfaces
         void Register(PowerSupplyViewModel powerSupplyViewModel);
         void Update(PowerSupplyViewModel powerSupplyViewModel);
         void Remove(Guid id);
+        Task Import(ImportPowerSuppliesViewModel viewModel);
 
         PowerSupplyViewModel GetById(Guid id);
         PaginationObject<PowerSupplyViewModel> ListPaginated(int? page);
