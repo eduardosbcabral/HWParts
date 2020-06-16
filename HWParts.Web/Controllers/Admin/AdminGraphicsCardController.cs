@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace HWParts.Web.Controllers
 {
@@ -119,6 +120,33 @@ namespace HWParts.Web.Controllers
             }
 
             ViewBag.Success = "Placa de Vídeo removida.";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet("import")]
+        public IActionResult Import()
+        {
+            return View();
+        }
+
+        [HttpPost("import")]
+        public async Task<IActionResult> Import(ImportGraphicsCardsViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            await _graphicsCardAppService.Import(viewModel);
+
+
+            if (!IsValidOperation())
+            {
+                return View(viewModel);
+            }
+
+            ViewBag.Success = "Placas de Vídeo Importadas.";
 
             return RedirectToAction(nameof(Index));
         }
