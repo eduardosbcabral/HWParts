@@ -7,6 +7,6 @@ namespace HWParts.Core.Domain.Queries
     public static class MotherboardQueries
     {
         public static Expression<Func<Motherboard, bool>> GetByPlatformId(string platformId) =>
-            x => x.PlatformId == platformId;
+            x => x.ComponentBase.PlatformId == platformId;
     }
 }

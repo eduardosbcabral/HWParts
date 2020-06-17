@@ -58,7 +58,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                 request.Url,
                 request.Platform);
 
-            if (_graphicsCardRepository.GetByPlatformId(graphicsCard.PlatformId) != null)
+            if (_graphicsCardRepository.GetByPlatformId(graphicsCard.ComponentBase.PlatformId) != null)
             {
                 Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
                 return Task.FromResult(false);
@@ -68,7 +68,7 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new GraphicsCardRegisteredEvent(graphicsCard.Id, graphicsCard.Brand, graphicsCard.Model));
+                Bus.RaiseEvent(new GraphicsCardRegisteredEvent(graphicsCard.Id, graphicsCard.ComponentBase.Brand, graphicsCard.ComponentBase.Model));
             }
 
             return Task.FromResult(true);
@@ -108,7 +108,7 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new GraphicsCardUpdatedEvent(graphicsCard.Id, graphicsCard.Brand, graphicsCard.Model));
+                Bus.RaiseEvent(new GraphicsCardUpdatedEvent(graphicsCard.Id, graphicsCard.ComponentBase.Brand, graphicsCard.ComponentBase.Model));
             }
 
             return Task.FromResult(true);
@@ -168,11 +168,11 @@ namespace HWParts.Core.Domain.CommandHandlers
                         platform);
 
                     var existsOnDb = _context.GraphicsCards
-                            .Any(x => x.PlatformId == graphicsCardEntity.PlatformId);
+                            .Any(x => x.ComponentBase.PlatformId == graphicsCardEntity.ComponentBase.PlatformId);
 
                     if (!existsOnDb)
                     {
-                        var existsOnCurrentList = cases.Any(x => x.PlatformId == graphicsCardEntity.PlatformId);
+                        var existsOnCurrentList = cases.Any(x => x.ComponentBase.PlatformId == graphicsCardEntity.ComponentBase.PlatformId);
 
                         if (!existsOnCurrentList)
                         {
@@ -184,7 +184,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                         try
                         {
                             var graphicsCardsFromDb = _context.GraphicsCards
-                                .SingleOrDefault(x => x.PlatformId == graphicsCardEntity.PlatformId);
+                                .SingleOrDefault(x => x.ComponentBase.PlatformId == graphicsCardEntity.ComponentBase.PlatformId);
 
                             graphicsCardsFromDb.Update(platformId, imageUrlString, url, platform, brand, model);
                         }

@@ -9,6 +9,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200302001432_Add-Motherboard-Field.cs" />
     <Compile Remove="Migrations\20200302001432_Add-Motherboard-Field.Designer.cs" />
+    <Compile Remove="Migrations\20200617041638_Change-Entities.cs" />
+    <Compile Remove="Migrations\20200617041638_Change-Entities.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

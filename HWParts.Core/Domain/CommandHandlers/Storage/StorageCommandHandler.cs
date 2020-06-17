@@ -57,7 +57,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                 request.Url,
                 request.Platform);
 
-            if (_storageRepository.GetByPlatformId(storage.PlatformId) != null)
+            if (_storageRepository.GetByPlatformId(storage.ComponentBase.PlatformId) != null)
             {
                 Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
                 return Task.FromResult(false);
@@ -67,7 +67,7 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new StorageRegisteredEvent(storage.Id, storage.Brand, storage.Model));
+                Bus.RaiseEvent(new StorageRegisteredEvent(storage.Id, storage.ComponentBase.Brand, storage.ComponentBase.Model));
             }
 
             return Task.FromResult(true);
@@ -107,7 +107,7 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new StorageUpdatedEvent(storage.Id, storage.Brand, storage.Model));
+                Bus.RaiseEvent(new StorageUpdatedEvent(storage.Id, storage.ComponentBase.Brand, storage.ComponentBase.Model));
             }
 
             return Task.FromResult(true);
@@ -167,11 +167,11 @@ namespace HWParts.Core.Domain.CommandHandlers
                         platform);
 
                     var existsOnDb = _context.Storages
-                            .Any(x => x.PlatformId == storageEntity.PlatformId);
+                            .Any(x => x.ComponentBase.PlatformId == storageEntity.ComponentBase.PlatformId);
 
                     if (!existsOnDb)
                     {
-                        var existsOnCurrentList = cases.Any(x => x.PlatformId == storageEntity.PlatformId);
+                        var existsOnCurrentList = cases.Any(x => x.ComponentBase.PlatformId == storageEntity.ComponentBase.PlatformId);
 
                         if (!existsOnCurrentList)
                         {
@@ -183,7 +183,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                         try
                         {
                             var storageFromDb = _context.Storages
-                                .SingleOrDefault(x => x.PlatformId == storageEntity.PlatformId);
+                                .SingleOrDefault(x => x.ComponentBase.PlatformId == storageEntity.ComponentBase.PlatformId);
 
                             storageFromDb.Update(platformId, imageUrlString, url, platform, brand, model);
                         }

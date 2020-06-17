@@ -7,6 +7,6 @@ namespace HWParts.Core.Domain.Queries
     public static class GraphicsCardQueries
     {
         public static Expression<Func<GraphicsCard, bool>> GetByPlatformId(string platformId) =>
-            x => x.PlatformId == platformId;
+            x => x.ComponentBase.PlatformId == platformId;
     }
 }

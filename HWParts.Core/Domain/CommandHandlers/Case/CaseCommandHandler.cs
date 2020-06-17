@@ -58,7 +58,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                 request.Url,
                 request.Platform);
 
-            if (_caseRepository.GetByPlatformId(caseEntity.PlatformId) != null)
+            if (_caseRepository.GetByPlatformId(caseEntity.ComponentBase.PlatformId) != null)
             {
                 Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
                 return Task.FromResult(false);
@@ -68,7 +68,7 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new CaseRegisteredEvent(caseEntity.Id, caseEntity.Brand, caseEntity.Model));
+                Bus.RaiseEvent(new CaseRegisteredEvent(caseEntity.Id, caseEntity.ComponentBase.Brand, caseEntity.ComponentBase.Model));
             }
 
             return Task.FromResult(true);
@@ -108,7 +108,7 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new CaseUpdatedEvent(caseEntity.Id, caseEntity.Brand, caseEntity.Model));
+                Bus.RaiseEvent(new CaseUpdatedEvent(caseEntity.Id, caseEntity.ComponentBase.Brand, caseEntity.ComponentBase.Model));
             }
 
             return Task.FromResult(true);
@@ -168,11 +168,11 @@ namespace HWParts.Core.Domain.CommandHandlers
                         platform);
 
                     var existsOnDb = _context.Cases
-                            .Any(x => x.PlatformId == caseEntity.PlatformId);
+                            .Any(x => x.ComponentBase.PlatformId == caseEntity.ComponentBase.PlatformId);
 
                     if (!existsOnDb)
                     {
-                        var existsOnCurrentList = cases.Any(x => x.PlatformId == caseEntity.PlatformId);
+                        var existsOnCurrentList = cases.Any(x => x.ComponentBase.PlatformId == caseEntity.ComponentBase.PlatformId);
 
                         if (!existsOnCurrentList)
                         {
@@ -184,7 +184,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                         try
                         {
                             var caseFromDb = _context.Cases
-                                .SingleOrDefault(x => x.PlatformId == caseEntity.PlatformId);
+                                .SingleOrDefault(x => x.ComponentBase.PlatformId == caseEntity.ComponentBase.PlatformId);
 
                             caseFromDb.Update(platformId, imageUrlString, url, platform, brand, model);
                         }

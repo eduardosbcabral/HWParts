@@ -6,16 +6,16 @@ using System;
 
 namespace HWParts.Core.Infrastructure.Config.Maps
 {
-    class ProcessorMap : EntityBaseMap<Processor>, IEntityTypeConfiguration<Processor>, IEntityMap
-    {
-        public void Configure(EntityTypeBuilder<Processor> builder)
-        {
-            DefaultMapping(builder, "TB_PROCESSORS");
+    //class ProcessorMap : EntityBaseMap<Processor>, IEntityTypeConfiguration<Processor>, IEntityMap
+    //{
+    //    public void Configure(EntityTypeBuilder<Processor> builder)
+    //    {
+    //        DefaultMapping(builder, "TB_PROCESSORS");
 
-            builder.Property(e => e.Platform)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (EPlatform)Enum.Parse(typeof(EPlatform), v));
-        }
-    }
+    //        builder.Property(e => e.Platform)
+    //            .HasConversion(
+    //                v => v.ToString(),
+    //                v => (EPlatform)Enum.Parse(typeof(EPlatform), v));
+    //    }
+    //}
 }

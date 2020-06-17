@@ -6,16 +6,19 @@ using System;
 
 namespace HWParts.Core.Infrastructure.Config.Maps
 {
-    class CaseMap : EntityBaseMap<Case>, IEntityTypeConfiguration<Case>, IEntityMap
-    {
-        public void Configure(EntityTypeBuilder<Case> builder)
-        {
-            DefaultMapping(builder, "TB_CASES");
+    //class CaseMap : IEntityTypeConfiguration<Case>, IEntityMap
+    //{
+    //    public void Configure(EntityTypeBuilder<Case> builder)
+    //    {
+    //        //DefaultMapping(builder, "TB_CASES");
 
-            builder.Property(e => e.Platform)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (EPlatform)Enum.Parse(typeof(EPlatform), v));
-        }
-    }
+    //        builder.ToTable("TB_CASES");
+    //        builder.HasKey(x => x.Id);
+
+    //        builder.Property(e => e.Platform)
+    //            .HasConversion(
+    //                v => v.ToString(),
+    //                v => (EPlatform)Enum.Parse(typeof(EPlatform), v));
+    //    }
+    //}
 }

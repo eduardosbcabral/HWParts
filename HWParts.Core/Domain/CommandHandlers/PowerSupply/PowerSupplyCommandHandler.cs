@@ -57,7 +57,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                 request.Url,
                 request.Platform);
 
-            if (_powerSupplyRepository.GetByPlatformId(powerSupply.PlatformId) != null)
+            if (_powerSupplyRepository.GetByPlatformId(powerSupply.ComponentBase.PlatformId) != null)
             {
                 Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
                 return Task.FromResult(false);
@@ -67,7 +67,7 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new PowerSupplyRegisteredEvent(powerSupply.Id, powerSupply.Brand, powerSupply.Model));
+                Bus.RaiseEvent(new PowerSupplyRegisteredEvent(powerSupply.Id, powerSupply.ComponentBase.Brand, powerSupply.ComponentBase.Model));
             }
 
             return Task.FromResult(true);
@@ -107,7 +107,7 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new PowerSupplyUpdatedEvent(powerSupply.Id, powerSupply.Brand, powerSupply.Model));
+                Bus.RaiseEvent(new PowerSupplyUpdatedEvent(powerSupply.Id, powerSupply.ComponentBase.Brand, powerSupply.ComponentBase.Model));
             }
 
             return Task.FromResult(true);
@@ -167,11 +167,11 @@ namespace HWParts.Core.Domain.CommandHandlers
                         platform);
 
                     var existsOnDb = _context.PowerSupplies
-                            .Any(x => x.PlatformId == powerSupplyEntity.PlatformId);
+                            .Any(x => x.ComponentBase.PlatformId == powerSupplyEntity.ComponentBase.PlatformId);
 
                     if (!existsOnDb)
                     {
-                        var existsOnCurrentList = cases.Any(x => x.PlatformId == powerSupplyEntity.PlatformId);
+                        var existsOnCurrentList = cases.Any(x => x.ComponentBase.PlatformId == powerSupplyEntity.ComponentBase.PlatformId);
 
                         if (!existsOnCurrentList)
                         {
@@ -183,7 +183,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                         try
                         {
                             var powerSupplyFromDb = _context.PowerSupplies
-                                .SingleOrDefault(x => x.PlatformId == powerSupplyEntity.PlatformId);
+                                .SingleOrDefault(x => x.ComponentBase.PlatformId == powerSupplyEntity.ComponentBase.PlatformId);
 
                             powerSupplyFromDb.Update(platformId, imageUrlString, url, platform, brand, model);
                         }

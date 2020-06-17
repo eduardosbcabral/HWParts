@@ -7,6 +7,6 @@ namespace HWParts.Core.Domain.Queries
     public static class StorageQueries
     {
         public static Expression<Func<Storage, bool>> GetByPlatformId(string platformId) =>
-            x => x.PlatformId == platformId;
+            x => x.ComponentBase.PlatformId == platformId;
     }
 }

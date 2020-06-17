@@ -57,7 +57,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                 request.Url,
                 request.Platform);
 
-            if (_motherboardRepository.GetByPlatformId(motherboard.PlatformId) != null)
+            if (_motherboardRepository.GetByPlatformId(motherboard.ComponentBase.PlatformId) != null)
             {
                 Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
                 return Task.FromResult(false);
@@ -67,7 +67,7 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new MotherboardRegisteredEvent(motherboard.Id, motherboard.Brand, motherboard.Model));
+                Bus.RaiseEvent(new MotherboardRegisteredEvent(motherboard.Id, motherboard.ComponentBase.Brand, motherboard.ComponentBase.Model));
             }
 
             return Task.FromResult(true);
@@ -107,7 +107,7 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new MotherboardUpdatedEvent(motherboard.Id, motherboard.Brand, motherboard.Model));
+                Bus.RaiseEvent(new MotherboardUpdatedEvent(motherboard.Id, motherboard.ComponentBase.Brand, motherboard.ComponentBase.Model));
             }
 
             return Task.FromResult(true);
@@ -167,11 +167,11 @@ namespace HWParts.Core.Domain.CommandHandlers
                         platform);
 
                     var existsOnDb = _context.Motherboards
-                            .Any(x => x.PlatformId == motherboardEntity.PlatformId);
+                            .Any(x => x.ComponentBase.PlatformId == motherboardEntity.ComponentBase.PlatformId);
 
                     if (!existsOnDb)
                     {
-                        var existsOnCurrentList = cases.Any(x => x.PlatformId == motherboardEntity.PlatformId);
+                        var existsOnCurrentList = cases.Any(x => x.ComponentBase.PlatformId == motherboardEntity.ComponentBase.PlatformId);
 
                         if (!existsOnCurrentList)
                         {
@@ -183,7 +183,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                         try
                         {
                             var motherboardFromDb = _context.Motherboards
-                                .SingleOrDefault(x => x.PlatformId == motherboardEntity.PlatformId);
+                                .SingleOrDefault(x => x.ComponentBase.PlatformId == motherboardEntity.ComponentBase.PlatformId);
 
                             motherboardFromDb.Update(platformId, imageUrlString, url, platform, brand, model);
                         }

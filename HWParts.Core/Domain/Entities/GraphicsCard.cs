@@ -1,10 +1,18 @@
 ﻿using HWParts.Core.Domain.Enums;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HWParts.Core.Domain.Entities
 {
-    public class GraphicsCard : ComponentBase
+    public class GraphicsCard
     {
+        [ForeignKey(nameof(ComponentBase))]
+        public Guid Id { get; protected set; }
+        public ComponentBase ComponentBase { get; private set; }
+        public GraphicsCard()
+        {
+
+        }
         public GraphicsCard(
             string brand,
             string model,
@@ -12,7 +20,6 @@ namespace HWParts.Core.Domain.Entities
             string imageUrl,
             string url,
             EPlatform platform)
-            : base(brand, model, platformId, imageUrl, url, platform)
         {
         }
 
@@ -24,14 +31,6 @@ namespace HWParts.Core.Domain.Entities
             string brand,
             string model)
         {
-            PlatformId = platformId;
-            ImageUrl = imageUrl;
-            Url = url;
-            Platform = platform;
-            Brand = brand;
-            Model = model;
-
-            UpdatedAt = DateTime.Now;
         }
     }
 }

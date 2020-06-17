@@ -57,7 +57,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                 request.Url,
                 request.Platform);
 
-            if (_processorRepository.GetByPlatformId(processor.PlatformId) != null)
+            if (_processorRepository.GetByPlatformId(processor.ComponentBase.PlatformId) != null)
             {
                 Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
                 return Task.FromResult(false);
@@ -67,7 +67,7 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new ProcessorRegisteredEvent(processor.Id, processor.Brand, processor.Model));
+                Bus.RaiseEvent(new ProcessorRegisteredEvent(processor.Id, processor.ComponentBase.Brand, processor.ComponentBase.Model));
             }
 
             return Task.FromResult(true);
@@ -107,7 +107,7 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new ProcessorUpdatedEvent(processor.Id, processor.Brand, processor.Model));
+                Bus.RaiseEvent(new ProcessorUpdatedEvent(processor.Id, processor.ComponentBase.Brand, processor.ComponentBase.Model));
             }
 
             return Task.FromResult(true);
@@ -167,11 +167,11 @@ namespace HWParts.Core.Domain.CommandHandlers
                         platform);
 
                     var existsOnDb = _context.Processors
-                            .Any(x => x.PlatformId == processorEntity.PlatformId);
+                            .Any(x => x.ComponentBase.PlatformId == processorEntity.ComponentBase.PlatformId);
 
                     if (!existsOnDb)
                     {
-                        var existsOnCurrentList = cases.Any(x => x.PlatformId == processorEntity.PlatformId);
+                        var existsOnCurrentList = cases.Any(x => x.ComponentBase.PlatformId == processorEntity.ComponentBase.PlatformId);
 
                         if (!existsOnCurrentList)
                         {
@@ -183,7 +183,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                         try
                         {
                             var processorFromDb = _context.Processors
-                                .SingleOrDefault(x => x.PlatformId == processorEntity.PlatformId);
+                                .SingleOrDefault(x => x.ComponentBase.PlatformId == processorEntity.ComponentBase.PlatformId);
 
                             processorFromDb.Update(platformId, imageUrlString, url, platform, brand, model);
                         }

@@ -7,6 +7,6 @@ namespace HWParts.Core.Domain.Queries
     public static class PowerSupplyQueries
     {
         public static Expression<Func<PowerSupply, bool>> GetByPlatformId(string platformId) =>
-            x => x.PlatformId == platformId;
+            x => x.ComponentBase.PlatformId == platformId;
     }
 }

@@ -17,25 +17,25 @@ namespace HWParts.Core.Application.AutoMapper
         public DomainToViewModelMappingProfile()
         {
             CreateMap<Motherboard, MotherboardViewModel>()
-                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ImageUrl.Split(";"));
+                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ComponentBase.ImageUrl.Split(";"));
 
             CreateMap<GraphicsCard, GraphicsCardViewModel>()
-                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ImageUrl.Split(";"));
+                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ComponentBase.ImageUrl.Split(";"));
 
             CreateMap<Memory, MemoryViewModel>()
-                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ImageUrl.Split(";"));
+                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ComponentBase.ImageUrl.Split(";"));
 
             CreateMap<Processor, ProcessorViewModel>()
-                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ImageUrl.Split(";"));
+                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ComponentBase.ImageUrl.Split(";"));
 
             CreateMap<Storage, StorageViewModel>()
-                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ImageUrl.Split(";"));
+                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ComponentBase.ImageUrl.Split(";"));
 
             CreateMap<Case, CaseViewModel>()
-                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ImageUrl.Split(";"));
+                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ComponentBase.ImageUrl.Split(";"));
 
             CreateMap<PowerSupply, PowerSupplyViewModel>()
-                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ImageUrl.Split(";"));
+                .AfterMap((opt, dest) => dest.ImagesUrls = opt.ComponentBase.ImageUrl.Split(";"));
 
 
             CreateMap<Account, AccountViewModel>();

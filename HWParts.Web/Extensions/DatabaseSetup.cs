@@ -13,8 +13,12 @@ namespace HWParts.Web.Extensions
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 
+#if DEBUG
             services.AddDbContext<HWPartsDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("HWParts")));
+#else
+            services.AddDbContext<HWPartsDbContext>(opt => opt.UseInMemoryDatabase("HWParts"));
+#endif
         }
     }
 }

@@ -57,7 +57,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                 request.Url,
                 request.Platform);
 
-            if (_memoryRepository.GetByPlatformId(memory.PlatformId) != null)
+            if (_memoryRepository.GetByPlatformId(memory.ComponentBase.PlatformId) != null)
             {
                 Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
                 return Task.FromResult(false);
@@ -67,7 +67,7 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new MemoryRegisteredEvent(memory.Id, memory.Brand, memory.Model));
+                Bus.RaiseEvent(new MemoryRegisteredEvent(memory.Id, memory.ComponentBase.Brand, memory.ComponentBase.Model));
             }
 
             return Task.FromResult(true);
@@ -107,7 +107,7 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new MemoryUpdatedEvent(memory.Id, memory.Brand, memory.Model));
+                Bus.RaiseEvent(new MemoryUpdatedEvent(memory.Id, memory.ComponentBase.Brand, memory.ComponentBase.Model));
             }
 
             return Task.FromResult(true);
@@ -167,11 +167,11 @@ namespace HWParts.Core.Domain.CommandHandlers
                         platform);
 
                     var existsOnDb = _context.Memories
-                            .Any(x => x.PlatformId == memoryEntity.PlatformId);
+                            .Any(x => x.ComponentBase.PlatformId == memoryEntity.ComponentBase.PlatformId);
 
                     if (!existsOnDb)
                     {
-                        var existsOnCurrentList = cases.Any(x => x.PlatformId == memoryEntity.PlatformId);
+                        var existsOnCurrentList = cases.Any(x => x.ComponentBase.PlatformId == memoryEntity.ComponentBase.PlatformId);
 
                         if (!existsOnCurrentList)
                         {
@@ -183,7 +183,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                         try
                         {
                             var memoriesFromDb = _context.Memories
-                                .SingleOrDefault(x => x.PlatformId == memoryEntity.PlatformId);
+                                .SingleOrDefault(x => x.ComponentBase.PlatformId == memoryEntity.ComponentBase.PlatformId);
 
                             memoriesFromDb.Update(platformId, imageUrlString, url, platform, brand, model);
                         }

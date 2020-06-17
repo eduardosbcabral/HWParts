@@ -3,6 +3,7 @@ using HWParts.Core.Infrastructure.Config;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Diagnostics;
 using System.Linq;
 
 namespace HWParts.Core.Infrastructure
@@ -26,17 +27,45 @@ namespace HWParts.Core.Infrastructure
         {
             base.OnModelCreating(modelBuilder);
 
-            var typesToRegister = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .SelectMany(x => x.GetTypes())
-                .Where(x => typeof(IEntityMap).IsAssignableFrom(x) && !x.IsAbstract)
-                .ToList();
+            modelBuilder.Entity<Case>()
+                .ToTable("TB_CASES")
+                .HasKey(x => x.Id);
 
-            foreach (var type in typesToRegister)
-            {
-                dynamic instance = Activator.CreateInstance(type);
-                modelBuilder.ApplyConfiguration(instance);
-            }
+            modelBuilder.Entity<GraphicsCard>()
+                .ToTable("TB_GRAPHICS_CARDS")
+                .HasKey(x => x.Id);
+
+            modelBuilder.Entity<Memory>()
+                .ToTable("TB_MEMORIES")
+                .HasKey(x => x.Id);
+
+            modelBuilder.Entity<Motherboard>()
+               .ToTable("TB_MOTHERBOARDS")
+               .HasKey(x => x.Id);
+
+            modelBuilder.Entity<PowerSupply>()
+               .ToTable("TB_POWER_SUPPLIES")
+               .HasKey(x => x.Id);
+
+            modelBuilder.Entity<Processor>()
+              .ToTable("TB_PROCESSORS")
+              .HasKey(x => x.Id);
+
+            modelBuilder.Entity<Storage>()
+              .ToTable("TB_STORAGE")
+              .HasKey(x => x.Id);
+
+            //var typesToRegister = AppDomain.CurrentDomain
+            //    .GetAssemblies()
+            //    .SelectMany(x => x.GetTypes())
+            //    .Where(x => typeof(IEntityMap).IsAssignableFrom(x) && !x.IsAbstract)
+            //    .ToList();
+
+            //foreach (var type in typesToRegister)
+            //{
+            //    dynamic instance = Activator.CreateInstance(type);
+            //    modelBuilder.ApplyConfiguration(instance);
+            //}
         }
     }
 }
