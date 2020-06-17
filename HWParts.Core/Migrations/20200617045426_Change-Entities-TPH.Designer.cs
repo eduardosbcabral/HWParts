@@ -4,14 +4,16 @@ using HWParts.Core.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HWParts.Core.Migrations
 {
     [DbContext(typeof(HWPartsDbContext))]
-    partial class HWPartsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200617045426_Change-Entities-TPH")]
+    partial class ChangeEntitiesTPH
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,7 +123,7 @@ namespace HWParts.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TB_COMPONENTS");
+                    b.ToTable("Components");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("ComponentBase");
                 });
