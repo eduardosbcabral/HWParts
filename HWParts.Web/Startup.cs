@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using HWParts.Web.Extensions;
 using Microsoft.AspNetCore.Http;
+using HWParts.Core.Infrastructure;
 
 namespace HWParts.Web
 {
@@ -85,6 +86,9 @@ namespace HWParts.Web
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            var context = app.ApplicationServices.GetRequiredService<HWPartsDbContext>();
+            context.Database.EnsureCreated();
         }
     }
 }
