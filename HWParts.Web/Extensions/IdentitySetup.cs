@@ -16,7 +16,7 @@ namespace HWParts.Web.Extensions
 
             services.AddDefaultIdentity<Account>(options =>
                 {
-                    options.SignIn.RequireConfirmedAccount = true;
+                    options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireDigit = false;
                     options.Password.RequiredLength = 4;
                     options.Password.RequireNonAlphanumeric = false;
