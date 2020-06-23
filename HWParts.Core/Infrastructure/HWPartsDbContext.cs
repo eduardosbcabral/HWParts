@@ -20,7 +20,7 @@ namespace HWParts.Core.Infrastructure
         public DbSet<Case> Cases { get; set; }
         public DbSet<PowerSupply> PowerSupplies { get; set; }
         public DbSet<Storage> Storages { get; set; }
-
+        public DbSet<ComponentPrice> ComponentsPrices { get; set; }
 
         public HWPartsDbContext(DbContextOptions<HWPartsDbContext> options) : base(options)
         {
@@ -31,6 +31,7 @@ namespace HWParts.Core.Infrastructure
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new ComponentBaseMap());
+            modelBuilder.ApplyConfiguration(new ComponentPriceMap());
         }
     }
 }
