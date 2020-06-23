@@ -14,7 +14,8 @@ namespace HWParts.Web.Extensions
 
             services.AddDbContext<HWPartsDbContext>(opt =>
             {
-                opt.UseSqlite(configuration.GetConnectionString("HWPartsSqlite"));
+                //opt.UseSqlite(configuration.GetConnectionString("HWPartsSqlite"));
+                opt.UseSqlServer(configuration.GetConnectionString("HWParts"));
             });
         }
     }
