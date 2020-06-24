@@ -1,5 +1,6 @@
 ﻿using HWParts.Core.Domain.Core.Entities;
 using HWParts.Core.Domain.Enums;
+using System;
 
 namespace HWParts.Core.Domain.Entities
 {
@@ -12,6 +13,13 @@ namespace HWParts.Core.Domain.Entities
         public ComponentPrice()
         {
 
+        }
+
+        public ComponentPrice(Guid id, decimal price, EPlatform platform)
+        {
+            Id = id;
+            Price = price;
+            Platform = platform;
         }
 
         public ComponentPrice(decimal price, EPlatform platform, ComponentBase component)
