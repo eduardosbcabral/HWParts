@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HWParts.Core.Application.ViewModels.Account;
 using HWParts.Core.Application.ViewModels.Case;
+using HWParts.Core.Application.ViewModels.ComponentPrice;
 using HWParts.Core.Application.ViewModels.GraphicsCard;
 using HWParts.Core.Application.ViewModels.Memory;
 using HWParts.Core.Application.ViewModels.Motherboard;
@@ -39,6 +40,8 @@ namespace HWParts.Core.Application.AutoMapper
 
 
             CreateMap<Account, AccountViewModel>();
+            CreateMap<ComponentPrice, ComponentPriceViewModel>();
+
         }
     }
 }
