@@ -37,6 +37,7 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<ICaseAppService, CaseAppService>()
             .AddScoped<IPowerSupplyAppService, PowerSupplyAppService>()
             .AddScoped<IAccountAppService, AccountAppService>()
+            .AddScoped<IComponentPriceAppService, ComponentPriceAppService>()
 
             // Domain - Events
             .AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>()
@@ -95,6 +96,7 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<ICaseRepository, CaseRepository>()
             .AddScoped<IPowerSupplyRepository, PowerSupplyRepository>()
             .AddScoped<IAccountRepository, AccountRepository>()
+            .AddScoped<IComponentPriceRepository, ComponentPriceRepository>()
 
             .AddScoped<IUnitOfWork, UnitOfWork>()
             .AddScoped<HWPartsDbContext>()
