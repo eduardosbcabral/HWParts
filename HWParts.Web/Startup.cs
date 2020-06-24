@@ -87,8 +87,8 @@ namespace HWParts.Web
                 endpoints.MapRazorPages();
             });
 
-            var context = app.ApplicationServices.GetRequiredService<HWPartsDbContext>();
-            context.Database.EnsureCreated();
+            //var context = app.ApplicationServices.GetRequiredService<HWPartsDbContext>();
+            //context.Database.EnsureCreated();
         }
     }
 }
