@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace HWParts.Web.Controllers
 {
     [Authorize]
-    [Route("admin/processors")]
+    [Route("admin/processor")]
     public class AdminProcessorController : BaseController
     {
         private readonly IProcessorAppService _processorAppService;

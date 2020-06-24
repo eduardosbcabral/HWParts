@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace HWParts.Web.Controllers
 {
     [Authorize]
-    [Route("admin/motherboards")]
+    [Route("admin/motherboard")]
     public class AdminMotherboardController : BaseController
     {
         private readonly IMotherboardAppService _motherboardAppService;
