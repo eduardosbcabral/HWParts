@@ -1,4 +1,5 @@
 ﻿using HWParts.Core.Domain.Entities;
+using HWParts.Core.Domain.Enums;
 using HWParts.Core.Domain.Interfaces;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -25,6 +26,14 @@ namespace HWParts.Core.Infrastructure.Repositories
                     x.Platform)
                 )
                 .ToList();
+        }
+
+        public bool AlreadyRegisteredOnPlatform(Guid id, EPlatform platform)
+        {
+            return DbSet
+                .Where(x => x.Component.Id == id)
+                .Where(x => x.Platform == platform)
+                .Any();
         }
     }
 }
