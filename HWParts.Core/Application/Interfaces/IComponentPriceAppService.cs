@@ -7,5 +7,7 @@ namespace HWParts.Core.Application.Interfaces
     public interface IComponentPriceAppService
     {
         IList<ComponentPriceViewModel> GetAllPricesByComponentId(Guid componentId);
+
+        void Register(ComponentPriceViewModel viewModel);
     }
 }
