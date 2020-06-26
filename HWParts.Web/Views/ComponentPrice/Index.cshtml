@@ -18,7 +18,7 @@
         {
             <tr>
                 <td>
-                    <img src="~/assets/img/@(nameof(item.Platform)).png" style="width: 20%" />
+                    <img src="~/assets/img/@(item.Platform.ToString()).png" style="width: 10%" />
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
@@ -28,4 +28,13 @@
     </tbody>
 </table>
 
-<a href="@ViewData["ReturnUrl"]" class="btn btn-info">Voltar para o produto</a>
+<a href="@ViewData["ReturnUrl"]" id="back-button" class="btn btn-info">Voltar para o produto</a>
+
+@section Scripts {
+    <script>
+        let currentUrl = window.location.href;
+        let previousUrl = currentUrl.replace('/price', '');
+
+        $('#back-button').attr('href', previousUrl);
+    </script>
+}
