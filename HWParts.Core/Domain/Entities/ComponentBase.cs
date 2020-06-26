@@ -14,6 +14,11 @@ namespace HWParts.Core.Domain.Entities
         public string Url { get; protected set; }
         public EPlatform Platform { get; protected set; }
 
+        public ComponentBase(Guid id)
+        {
+            Id = id;
+        }
+
         public ComponentBase(
             string brand,
             string model,
