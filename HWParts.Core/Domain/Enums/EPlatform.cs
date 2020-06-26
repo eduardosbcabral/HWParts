@@ -6,6 +6,9 @@ namespace HWParts.Core.Domain.Enums
     [JsonConverter(typeof(StringEnumConverter))]
     public enum EPlatform
     {
-        NewEgg
+        NewEgg,
+        Kabum,
+        Terabyte,
+        Pichau
     }
 }
