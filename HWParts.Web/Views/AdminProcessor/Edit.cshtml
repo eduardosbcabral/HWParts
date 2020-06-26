@@ -1,4 +1,4 @@
-@model HWParts.Core.Application.ViewModels.Processor.ProcessorViewModel;
+﻿@model HWParts.Core.Application.ViewModels.Processor.ProcessorViewModel;
 @using HWParts.Core.Domain.Enums;
 
 @{
@@ -6,6 +6,8 @@
 }
 
 <h2>@ViewData["Title"]</h2>
+
+<a href="@Model.Id/price">Preços</a>
 
 <form asp-action="Edit">
     <div class="form-horizontal">
