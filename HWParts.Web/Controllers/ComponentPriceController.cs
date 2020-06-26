@@ -38,15 +38,23 @@ namespace HWParts.Web.Controllers
         }
 
         [HttpGet("create")]
-        public IActionResult Create()
+        public IActionResult Create(Guid id)
         {
             ViewData["ReturnUrl"] = PreviousUrl();
-            return View();
+            var viewModel = new ComponentPriceViewModel(id);
+            return View(viewModel);
         }
 
         [HttpPost("create")]
         public IActionResult Create(ComponentPriceViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            _appService.Register(viewModel);
+
             return RedirectToAction(nameof(Index));
         }
 
