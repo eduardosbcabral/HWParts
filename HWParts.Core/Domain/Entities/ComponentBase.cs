@@ -1,6 +1,8 @@
 ﻿using HWParts.Core.Domain.Core.Entities;
 using HWParts.Core.Domain.Enums;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace HWParts.Core.Domain.Entities
 {
@@ -13,6 +15,8 @@ namespace HWParts.Core.Domain.Entities
         public string ImageUrl { get; protected set; }
         public string Url { get; protected set; }
         public EPlatform Platform { get; protected set; }
+
+        public IList<ComponentPrice> Prices { get; protected set; }
 
         public ComponentBase(Guid id)
         {
@@ -53,6 +57,16 @@ namespace HWParts.Core.Domain.Entities
             ImageUrl = imageUrl;
             Url = url;
             Platform = platform;
+        }
+
+        public void AddPrice(ComponentPrice price)
+        {
+            if(Prices is null)
+            {
+                Prices = new List<ComponentPrice>();
+            }
+
+            Prices.Add(price);
         }
     }
 }
