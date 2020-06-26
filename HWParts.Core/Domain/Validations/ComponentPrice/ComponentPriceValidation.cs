@@ -14,7 +14,7 @@ namespace HWParts.Core.Domain.Validations
         public void ValidatePlatform()
         {
             RuleFor(c => c.Platform)
-                .NotEmpty().WithMessage("A plataforma é obrigatória.");
+                .IsInEnum().WithMessage("A plataforma é obrigatória.");
         }
     }
 }
