@@ -26,6 +26,9 @@ namespace HWParts.Core.Infrastructure.Config.Maps
                 .HasConversion(
                     v => v.ToString(),
                     v => (EPlatform)Enum.Parse(typeof(EPlatform), v));
+
+            builder.HasMany(x => x.Prices)
+                .WithOne(x => x.Component);
         }
     }
 }
