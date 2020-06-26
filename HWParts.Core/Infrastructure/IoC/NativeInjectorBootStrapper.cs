@@ -86,6 +86,7 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<IRequestHandler<ForgotPasswordAccountCommand, bool>, AccountCommandHandler>()
             .AddScoped<IRequestHandler<ResetPasswordAccountCommand, bool>, AccountCommandHandler>()
 
+            .AddScoped<IRequestHandler<RegisterComponentPriceCommand, bool>, ComponentPriceCommandHandler>()
 
             // Infra - Data
             .AddScoped<IMotherboardRepository, MotherboardRepository>()
@@ -97,6 +98,7 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<IPowerSupplyRepository, PowerSupplyRepository>()
             .AddScoped<IAccountRepository, AccountRepository>()
             .AddScoped<IComponentPriceRepository, ComponentPriceRepository>()
+            .AddScoped<IComponentBaseRepository, ComponentBaseRepository>()
 
             .AddScoped<IUnitOfWork, UnitOfWork>()
             .AddScoped<HWPartsDbContext>()
