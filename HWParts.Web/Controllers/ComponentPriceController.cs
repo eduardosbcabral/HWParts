@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace HWParts.Web.Controllers
 {
@@ -32,15 +33,12 @@ namespace HWParts.Web.Controllers
 
             var prices = _appService.GetAllPricesByComponentId(id);
 
-            ViewData["ReturnUrl"] = PreviousUrl();
-
             return View(prices);
         }
 
         [HttpGet("create")]
         public IActionResult Create(Guid id)
         {
-            ViewData["ReturnUrl"] = PreviousUrl();
             var viewModel = new ComponentPriceViewModel(id);
             return View(viewModel);
         }
@@ -55,22 +53,12 @@ namespace HWParts.Web.Controllers
 
             _appService.Register(viewModel);
 
-            return RedirectToAction(nameof(Index));
-        }
-
-        private string PreviousUrl()
-        {
-            var currentUrl = Request.Path.Value;
-            var splittedUrl = currentUrl.Split("/");
-
-            var previousUrl = string.Empty;
-
-            for(var i = 1; i < splittedUrl.Length-1; i++)
+            if (IsValidOperation())
             {
-                previousUrl += "/" + splittedUrl[i];
+                ViewBag.Success = "Preço registrado.";
             }
 
-            return previousUrl;
+            return View(viewModel);
         }
     }
 }
