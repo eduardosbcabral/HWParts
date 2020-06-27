@@ -1,4 +1,5 @@
-﻿using HWParts.Core.Domain.Enums;
+﻿using HWParts.Core.Application.ViewModels.ComponentPrice;
+using HWParts.Core.Domain.Enums;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,6 +36,8 @@ namespace HWParts.Core.Application.ViewModels.Base
         [Required(ErrorMessage = "A plataforma é obrigatória.")]
         [DisplayName("Plataforma")]
         public EPlatform Platform { get; set; }
+
+        public IList<ComponentPriceViewModel> Prices { get; set; }
 
         public ComponentBaseViewModel()
         {
