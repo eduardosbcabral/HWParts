@@ -41,5 +41,12 @@ namespace HWParts.Core.Infrastructure.Repositories
                 .Where(x => x.Id == id)
                 .Any();
         }
+
+        public override Motherboard GetById(Guid id)
+        {
+            return DbSet
+                .Include(x => x.Prices)
+                .SingleOrDefault(x => x.Id == id);
+        }
     }
 }
