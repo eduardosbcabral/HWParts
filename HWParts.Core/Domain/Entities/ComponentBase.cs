@@ -21,6 +21,8 @@ namespace HWParts.Core.Domain.Entities
         public ComponentBase(Guid id)
         {
             Id = id;
+
+            Prices = new List<ComponentPrice>();
         }
 
         public ComponentBase(
@@ -39,6 +41,8 @@ namespace HWParts.Core.Domain.Entities
             ImageUrl = imageUrl;
             Url = url;
             Platform = platform;
+
+            Prices = new List<ComponentPrice>();
         }
 
         public ComponentBase(
