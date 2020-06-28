@@ -12,6 +12,10 @@ namespace HWParts.Core.Application.ViewModels.ComponentPrice
         [DisplayName("Preço")]
         public decimal Price { get; set; }
 
+        [Required(ErrorMessage = "URL é obrigatória.")]
+        [DisplayName("URL do produto")]
+        public decimal Url { get; set; }
+
         [Required(ErrorMessage = "Plataforma é obrigatória.")]
         [DisplayName("Plataforma")]
         public EPlatform Platform { get; set; }
