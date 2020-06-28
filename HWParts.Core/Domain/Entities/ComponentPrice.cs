@@ -16,10 +16,11 @@ namespace HWParts.Core.Domain.Entities
 
         }
 
-        public ComponentPrice(Guid id, decimal price, EPlatform platform)
+        public ComponentPrice(Guid id, decimal price, string url, EPlatform platform)
         {
             Id = id;
             Price = price;
+            Url = url;
             Platform = platform;
         }
 
@@ -30,6 +31,13 @@ namespace HWParts.Core.Domain.Entities
             Price = price;
             Platform = platform;
             Component = component;
+        }
+
+        public void Update(decimal price, string url, EPlatform platform)
+        {
+            Price = price;
+            Url = url;
+            Platform = platform;
         }
     }
 }
