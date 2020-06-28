@@ -31,9 +31,21 @@ namespace HWParts.Core.Application.Services
             return _mapper.Map<IList<ComponentPriceViewModel>>(prices);
         }
 
+        public ComponentPriceViewModel GetById(Guid componentPriceId)
+        {
+            var price = _repository.GetById(componentPriceId);
+            return _mapper.Map<ComponentPriceViewModel>(price);
+        }
+
         public void Register(ComponentPriceViewModel viewModel)
         {
             var command = _mapper.Map<RegisterComponentPriceCommand>(viewModel);
+            Bus.SendCommand(command);
+        }
+
+        public void Update(ComponentPriceViewModel viewModel)
+        {
+            var command = _mapper.Map<UpdateComponentPriceCommand>(viewModel);
             Bus.SendCommand(command);
         }
     }
