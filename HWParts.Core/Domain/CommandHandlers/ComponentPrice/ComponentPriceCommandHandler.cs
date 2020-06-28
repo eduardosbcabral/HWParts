@@ -43,6 +43,7 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             var componentPrice = new ComponentPrice(
                 request.Price,
+                request.Url,
                 request.Platform,
                 component);
 
