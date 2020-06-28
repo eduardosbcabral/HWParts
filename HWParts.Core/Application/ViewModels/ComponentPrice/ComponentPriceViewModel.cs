@@ -8,13 +8,15 @@ namespace HWParts.Core.Application.ViewModels.ComponentPrice
 {
     public class ComponentPriceViewModel
     {
+        public Guid Id { get; set; }
+
         [Required(ErrorMessage = "Preço é obrigatório.")]
         [DisplayName("Preço")]
         public decimal Price { get; set; }
 
         [Required(ErrorMessage = "URL é obrigatória.")]
         [DisplayName("URL do produto")]
-        public decimal Url { get; set; }
+        public string Url { get; set; }
 
         [Required(ErrorMessage = "Plataforma é obrigatória.")]
         [DisplayName("Plataforma")]
