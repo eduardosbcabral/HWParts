@@ -25,6 +25,9 @@ namespace HWParts.Core.Infrastructure.Config.Maps
             builder.Property(x => x.Price)
                 .HasColumnType("decimal(19,4)");
 
+            builder.Property(x => x.Url)
+                .IsRequired(true);
+
             var converter = new EnumToStringConverter<Platform>();
             builder
                 .Property(x => x.Platform)
