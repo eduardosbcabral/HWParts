@@ -65,6 +65,7 @@ namespace HWParts.Core.Application.AutoMapper
             CreateMap<ResetPasswordAccountViewModel, ResetPasswordAccountCommand>();
 
             CreateMap<ComponentPriceViewModel, RegisterComponentPriceCommand>();
+            CreateMap<ComponentPriceViewModel, UpdateComponentPriceCommand>();
         }
     }
 }
