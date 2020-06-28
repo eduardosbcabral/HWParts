@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 namespace HWParts.Core.Domain.CommandHandlers
 {
     public class ComponentPriceCommandHandler : CommandHandler,
-        IRequestHandler<RegisterComponentPriceCommand, bool>
+        IRequestHandler<RegisterComponentPriceCommand, bool>,
+        IRequestHandler<UpdateComponentPriceCommand, bool>
     {
         private readonly IMediatorHandler Bus;
         private readonly IComponentPriceRepository _componentPriceRepository;
@@ -47,13 +48,44 @@ namespace HWParts.Core.Domain.CommandHandlers
                 request.Platform,
                 component);
 
-            if (_componentPriceRepository.AlreadyRegisteredOnPlatform(component.Id, componentPrice.Platform))
+            if (_componentPriceRepository.AlreadyRegisteredOnPlatform(component.Id, componentPrice.Id, componentPrice.Platform))
             {
                 Bus.RaiseEvent(new DomainNotification(request.MessageType, "Preço do componente já foi registrado na plataforma."));
                 return Task.FromResult(false);
             }
 
             _componentPriceRepository.Add(componentPrice);
+
+            if (Commit())
+            {
+                Bus.RaiseEvent(new ComponentPriceRegisteredEvent());
+            }
+
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> Handle(UpdateComponentPriceCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return Task.FromResult(false);
+            }
+
+            var componentPrice = _componentPriceRepository.GetById(request.Id);
+
+            componentPrice.Update(
+                request.Price,
+                request.Url,
+                request.Platform);
+
+            if (_componentPriceRepository.AlreadyRegisteredOnPlatform(componentPrice.Component.Id, componentPrice.Id, componentPrice.Platform))
+            {
+                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Preço do componente já foi registrado na plataforma."));
+                return Task.FromResult(false);
+            }
+
+            _componentPriceRepository.Update(componentPrice);
 
             if (Commit())
             {
