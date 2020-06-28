@@ -9,6 +9,7 @@ namespace HWParts.Core.Domain.Commands
         public Guid Id { get; set; }
 
         public decimal Price { get; set; }
+        public string Url { get; set; }
         public EPlatform Platform { get; set; }
 
         public Guid ComponentBaseId { get; set; }
