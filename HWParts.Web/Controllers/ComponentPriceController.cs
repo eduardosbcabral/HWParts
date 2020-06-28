@@ -36,14 +36,14 @@ namespace HWParts.Web.Controllers
             return View(prices);
         }
 
-        [HttpGet("create")]
+        [HttpGet("register")]
         public IActionResult Create(Guid id)
         {
             var viewModel = new ComponentPriceViewModel(id);
             return View(viewModel);
         }
 
-        [HttpPost("create")]
+        [HttpPost("register")]
         public IActionResult Create(ComponentPriceViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -56,6 +56,44 @@ namespace HWParts.Web.Controllers
             if (IsValidOperation())
             {
                 ViewBag.Success = "Preço registrado.";
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpGet("edit/{componentPriceId:guid}")]
+        public IActionResult Edit(Guid? componentPriceId)
+        {
+            if (componentPriceId is null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = _appService.GetById(componentPriceId.Value);
+
+            if (viewModel is null)
+            {
+                return NotFound();
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost("edit/{componentPriceId:guid}")]
+        public IActionResult Edit(ComponentPriceViewModel viewModel, Guid componentPriceId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            viewModel.Id = componentPriceId;
+
+            _appService.Update(viewModel);
+
+            if (IsValidOperation())
+            {
+                ViewBag.Success = "Preço atualizado.";
             }
 
             return View(viewModel);
