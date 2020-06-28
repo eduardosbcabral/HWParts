@@ -7,6 +7,7 @@ namespace HWParts.Core.Domain.Entities
     public class ComponentPrice : EntityBase
     {
         public decimal Price { get; private set; }
+        public string Url { get; private set; }
         public EPlatform Platform { get; private set; }
         public ComponentBase Component { get; private set; }
 
@@ -22,9 +23,10 @@ namespace HWParts.Core.Domain.Entities
             Platform = platform;
         }
 
-        public ComponentPrice(decimal price, EPlatform platform, ComponentBase component)
+        public ComponentPrice(decimal price, string url, EPlatform platform, ComponentBase component)
             : base()
         {
+            Url = url;
             Price = price;
             Platform = platform;
             Component = component;
