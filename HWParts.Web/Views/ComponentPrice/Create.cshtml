@@ -32,7 +32,7 @@
             <label asp-for="Platform" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <select asp-for="Platform" asp-items="@Html.GetEnumSelectList<EPlatform>()" class="form-control">
-                    <option>Selecione a plataforma</option>
+                    <option value="">Selecione a plataforma</option>
                 </select>
                 <span asp-validation-for="Platform" class="text-danger"></span>
             </div>
@@ -49,7 +49,7 @@
 @section Scripts {
     <script>
         let currentUrl = window.location.href;
-        let previousUrl = currentUrl.replace('/create', '');
+        let previousUrl = currentUrl.replace('/register', '');
 
         $('#back-button').attr('href', previousUrl);
     </script>
