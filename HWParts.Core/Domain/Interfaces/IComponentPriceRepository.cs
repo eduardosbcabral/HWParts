@@ -8,6 +8,6 @@ namespace HWParts.Core.Domain.Interfaces
     public interface IComponentPriceRepository : IRepository<ComponentPrice>
     {
         IList<ComponentPrice> GetAllByComponentId(Guid componentId);
-        bool AlreadyRegisteredOnPlatform(Guid id, EPlatform platform);
+        bool AlreadyRegisteredOnPlatform(Guid componentId, Guid componentPriceId, EPlatform platform);
     }
 }
