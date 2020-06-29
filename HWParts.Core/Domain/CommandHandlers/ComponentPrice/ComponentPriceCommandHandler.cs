@@ -13,7 +13,8 @@ namespace HWParts.Core.Domain.CommandHandlers
 {
     public class ComponentPriceCommandHandler : CommandHandler,
         IRequestHandler<RegisterComponentPriceCommand, bool>,
-        IRequestHandler<UpdateComponentPriceCommand, bool>
+        IRequestHandler<UpdateComponentPriceCommand, bool>,
+        IRequestHandler<RemoveComponentPriceCommand, bool>
     {
         private readonly IMediatorHandler Bus;
         private readonly IComponentPriceRepository _componentPriceRepository;
@@ -89,7 +90,25 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             if (Commit())
             {
-                Bus.RaiseEvent(new ComponentPriceRegisteredEvent());
+                Bus.RaiseEvent(new ComponentPriceUpdatedEvent());
+            }
+
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> Handle(RemoveComponentPriceCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return Task.FromResult(false);
+            }
+
+            _componentPriceRepository.Remove(request.Id);
+
+            if (Commit())
+            {
+                Bus.RaiseEvent(new ComponentPriceRemovedEvent(request.Id));
             }
 
             return Task.FromResult(true);
