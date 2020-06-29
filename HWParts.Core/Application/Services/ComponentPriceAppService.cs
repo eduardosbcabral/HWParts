@@ -48,5 +48,11 @@ namespace HWParts.Core.Application.Services
             var command = _mapper.Map<UpdateComponentPriceCommand>(viewModel);
             Bus.SendCommand(command);
         }
+
+        public void Remove(Guid id)
+        {
+            var removeCommand = new RemoveComponentPriceCommand(id);
+            Bus.SendCommand(removeCommand);
+        }
     }
 }

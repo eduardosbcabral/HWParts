@@ -11,5 +11,6 @@ namespace HWParts.Core.Application.Interfaces
 
         void Register(ComponentPriceViewModel viewModel);
         void Update(ComponentPriceViewModel viewModel);
+        void Remove(Guid id);
     }
 }
