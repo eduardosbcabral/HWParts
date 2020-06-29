@@ -48,7 +48,7 @@
 @section Scripts {
     <script>
         let currentUrl = window.location.href;
-        let previousUrl = currentUrl.replace(new RegExp(/\/price\/edit\/.*/g), '/price');
+        let previousUrl = currentUrl.replace(new RegExp(/\/price\/edit\/.*/g), '/price/list');
 
         $('#back-button').attr('href', previousUrl);
     </script>
