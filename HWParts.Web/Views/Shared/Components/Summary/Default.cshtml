@@ -7,10 +7,10 @@
     </div>
 }
 
-@if (!string.IsNullOrEmpty(ViewBag.Success))
+@if (!string.IsNullOrEmpty(ViewBag.Success) || !string.IsNullOrEmpty(TempData["Success"] as string))
 {
     <div class="alert alert-success">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <h3 id="msgRetorno">@ViewBag.Success</h3>
+        <h3 id="msgRetorno">@ViewBag.Success @TempData["Success"]</h3>
     </div>
 }
