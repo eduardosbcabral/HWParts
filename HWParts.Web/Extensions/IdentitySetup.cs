@@ -2,6 +2,7 @@
 using HWParts.Core.Infrastructure;
 using HWParts.Core.Infrastructure.Identity.Authorization;
 using HWParts.Core.Infrastructure.Identity.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,7 +15,7 @@ namespace HWParts.Web.Extensions
         {
             if (services is null) throw new ArgumentNullException(nameof(services));
 
-            services.AddDefaultIdentity<Account>(options =>
+            services.AddIdentity<Account, IdentityRole>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireDigit = false;
@@ -43,10 +44,19 @@ namespace HWParts.Web.Extensions
 
             services.AddAuthorization(o =>
             {
-                o.AddPolicy("CanWriteComponentData", policy => 
-                    policy.Requirements.Add(new ClaimRequirement(UserClaims.Components, UserClaimValues.Write)));
-                o.AddPolicy("CanRemoveComponentData", policy => 
-                    policy.Requirements.Add(new ClaimRequirement(UserClaims.Components, UserClaimValues.Remove)));
+                o.AddPolicy("SuperUserOnly", policy =>
+                    policy.RequireRole("Super"));
+                o.AddPolicy("AdminUserOnly", policy =>
+                    policy.RequireRole("Admin", "Super"));
+                o.AddPolicy("ModeratorUserOnly", policy =>
+                    policy.RequireRole("Moderator", "Admin", "Super"));
+                o.AddPolicy("CommonUserOnly", policy =>
+                    policy.RequireRole("Common", "Moderator", "Admin", "Super"));
+
+                //o.AddPolicy("CanWriteComponentData", policy => 
+                //    policy.Requirements.Add(new ClaimRequirement(UserClaims.Components, UserClaimValues.Write)));
+                //o.AddPolicy("CanRemoveComponentData", policy => 
+                //    policy.Requirements.Add(new ClaimRequirement(UserClaims.Components, UserClaimValues.Remove)));
             });
         }
     }
