@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using HWParts.Web.Extensions;
 using Microsoft.AspNetCore.Http;
 using HWParts.Core.Infrastructure;
+using HWParts.Web.Configurations;
 
 namespace HWParts.Web
 {
@@ -86,6 +87,9 @@ namespace HWParts.Web
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            // Seed DB
+            DataSeeds.Initialize(app.ApplicationServices).Wait();
 
             //var context = app.ApplicationServices.GetRequiredService<HWPartsDbContext>();
             //context.Database.EnsureCreated();
