@@ -22,6 +22,9 @@ namespace HWParts.Core.Infrastructure
         public DbSet<Storage> Storages { get; set; }
         public DbSet<ComponentPrice> ComponentsPrices { get; set; }
 
+        public DbSet<Account> Accounts { get; set; }
+
+
         public HWPartsDbContext(DbContextOptions<HWPartsDbContext> options) : base(options)
         {
         }
