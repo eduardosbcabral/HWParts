@@ -80,10 +80,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                 return false;
             }
 
-            await _userManager.AddClaimAsync(
-                user,
-                new Claim(UserClaims.Components, UserClaimValues.Write)
-            );
+            await _userManager.AddToRoleAsync(user, "Common");
 
             if (_userManager.Options.SignIn.RequireConfirmedAccount)
             {
