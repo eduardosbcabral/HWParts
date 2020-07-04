@@ -1,6 +1,7 @@
 ﻿using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.ViewModels.ComponentPrice;
 using HWParts.Core.Domain.Core.Notifications;
+using HWParts.Core.Infrastructure.Identity.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ using System;
 
 namespace HWParts.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = ApplicationRoles.StaffRoles)]
     [Route("admin/{(case|graphics-card|memory|motherboard|power-supply|processor|storage)}/edit/{id:guid}/price")]
     public class ComponentPriceController : BaseController
     {
