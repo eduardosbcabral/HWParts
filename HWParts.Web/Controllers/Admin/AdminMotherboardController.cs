@@ -1,6 +1,7 @@
 ﻿using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.ViewModels.Motherboard;
 using HWParts.Core.Domain.Core.Notifications;
+using HWParts.Core.Infrastructure.Identity.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HWParts.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = ApplicationRoles.StaffRoles)]
     [Route("admin/motherboard")]
     public class AdminMotherboardController : BaseController
     {
@@ -31,14 +32,12 @@ namespace HWParts.Web.Controllers
         }
 
         [HttpGet("register")]
-        [Authorize(Policy = "CanWriteComponentData")]
         public IActionResult Create()
         {
             return View(new MotherboardViewModel());
         }
 
         [HttpPost("register")]
-        [Authorize(Policy = "CanWriteComponentData")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(MotherboardViewModel motherboardViewModel)
         {
@@ -58,7 +57,6 @@ namespace HWParts.Web.Controllers
         }
 
         [HttpGet("edit/{id:guid}")]
-        [Authorize(Policy = "CanWriteComponentData")]
         public IActionResult Edit(Guid? id)
         {
             if(id is null)
@@ -77,7 +75,6 @@ namespace HWParts.Web.Controllers
         }
 
         [HttpPost("edit/{id:guid}")]
-        [Authorize(Policy = "CanWriteComponentData")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(MotherboardViewModel motherboardViewModel)
         {
@@ -97,7 +94,6 @@ namespace HWParts.Web.Controllers
         }
 
         [HttpGet("remove/{id:guid}")]
-        [Authorize(Policy = "CanRemoveComponentData")]
         public IActionResult Delete(Guid? id)
         {
             if(id is null)
@@ -116,7 +112,6 @@ namespace HWParts.Web.Controllers
         }
 
         [HttpPost("remove/{id:guid}")]
-        [Authorize(Policy = "CanRemoveComponentData")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(Guid id)
         {

@@ -2,6 +2,7 @@ using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.ViewModels.Case;
 using HWParts.Core.Domain.Commands;
 using HWParts.Core.Domain.Core.Notifications;
+using HWParts.Core.Infrastructure.Identity.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace HWParts.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = ApplicationRoles.StaffRoles)]
     [Route("admin/case")]
     public class AdminCaseController : BaseController
     {

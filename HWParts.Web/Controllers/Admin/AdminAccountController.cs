@@ -1,12 +1,13 @@
 ﻿using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Domain.Core.Notifications;
+using HWParts.Core.Infrastructure.Identity.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HWParts.Web.Controllers.Admin
 {
-    [Authorize]
+    [Authorize(Roles = ApplicationRoles.StaffRoles)]
     [Route("admin/account")]
     public class AdminAccountController : BaseController
     {
