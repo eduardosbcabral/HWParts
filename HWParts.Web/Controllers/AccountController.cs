@@ -2,6 +2,7 @@
 using HWParts.Core.Application.ViewModels.Account;
 using HWParts.Core.Domain.Core.Notifications;
 using HWParts.Core.Domain.Entities;
+using HWParts.Core.Infrastructure.Identity.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace HWParts.Web.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [Route("account")]
     public class AccountController : BaseController
     {
@@ -35,7 +36,6 @@ namespace HWParts.Web.Controllers
 
         #region Register/Related Endpoints
         [HttpGet("register")]
-        [AllowAnonymous]
         public async Task<IActionResult> Register(string returnUrl = null)
         {
             var externalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -43,7 +43,6 @@ namespace HWParts.Web.Controllers
         }
 
         [HttpPost("register")]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterAccountViewModel registerViewModel)
         {
@@ -75,14 +74,12 @@ namespace HWParts.Web.Controllers
         }
 
         [HttpGet("register-confirmation")]
-        [AllowAnonymous]
         public IActionResult RegisterConfirmation(string email)
         {
             return View("RegisterConfirmation", email);
         }
 
         [HttpGet("confirm-email")]
-        [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailAccountViewModel model)
         {
             if (model == null)
@@ -108,7 +105,6 @@ namespace HWParts.Web.Controllers
 
         #region Login/Related Endpoints
         [HttpGet("login")]
-        [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -116,7 +112,6 @@ namespace HWParts.Web.Controllers
         }
 
         [HttpPost("login")]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginAccountViewModel loginViewModel)
         {
@@ -146,6 +141,7 @@ namespace HWParts.Web.Controllers
         }
 
         [HttpPost("logout")]
+        [Authorize(Roles = ApplicationRoles.AllRoles)]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
@@ -156,7 +152,6 @@ namespace HWParts.Web.Controllers
 
         #region ResetPassword/Related Endpoints
         [HttpGet("reset-password")]
-        [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
             if(code is null)
@@ -168,7 +163,6 @@ namespace HWParts.Web.Controllers
         }
 
         [HttpPost("reset-password")]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordAccountViewModel model)
         {
@@ -193,21 +187,18 @@ namespace HWParts.Web.Controllers
         }
 
         [HttpGet("reset-password-confirmation")]
-        [AllowAnonymous]
         public IActionResult ResetPasswordConfirmation()
         {
             return View();
         }
 
         [HttpGet("forgot-password")]
-        [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
             return View();
         }
 
         [HttpPost("forgot-password")]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordAccountViewModel model)
         {
@@ -223,7 +214,6 @@ namespace HWParts.Web.Controllers
         }
 
         [HttpGet("forgot-password-confirmation")]
-        [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -231,14 +221,6 @@ namespace HWParts.Web.Controllers
         #endregion
 
         #region Helpers
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error.Description);
-            }
-        }
-
         private IActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
