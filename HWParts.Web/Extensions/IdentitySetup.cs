@@ -47,16 +47,13 @@ namespace HWParts.Web.Extensions
                 o.AddPolicy("SuperUserOnly", policy =>
                     policy.RequireRole("Super"));
                 o.AddPolicy("AdminUserOnly", policy =>
-                    policy.RequireRole("Admin", "Super"));
+                    policy.RequireRole("Admin"));
                 o.AddPolicy("ModeratorUserOnly", policy =>
-                    policy.RequireRole("Moderator", "Admin", "Super"));
+                    policy.RequireRole("Moderator"));
                 o.AddPolicy("CommonUserOnly", policy =>
-                    policy.RequireRole("Common", "Moderator", "Admin", "Super"));
-
-                //o.AddPolicy("CanWriteComponentData", policy => 
-                //    policy.Requirements.Add(new ClaimRequirement(UserClaims.Components, UserClaimValues.Write)));
-                //o.AddPolicy("CanRemoveComponentData", policy => 
-                //    policy.Requirements.Add(new ClaimRequirement(UserClaims.Components, UserClaimValues.Remove)));
+                    policy.RequireRole("Common"));
+                o.AddPolicy("IsAuthenticated", policy =>
+                    policy.RequireAuthenticatedUser());
             });
         }
     }
