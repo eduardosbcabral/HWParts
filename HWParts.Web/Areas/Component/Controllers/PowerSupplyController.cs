@@ -5,26 +5,27 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
-namespace HWParts.Web.Controllers
+namespace HWParts.Web.Controllers.Components
 {
-    [Route("component/case")]
+    [Area("Component")]
+    [Route("component/power-supply")]
     [AllowAnonymous]
-    public class CaseController : BaseController
+    public class PowerSupplyController : BaseController
     {
-        private readonly ICaseAppService _caseAppService;
+        private readonly IPowerSupplyAppService _appService;
 
-        public CaseController(
+        public PowerSupplyController(
             INotificationHandler<DomainNotification> notifications,
-            ICaseAppService caseAppService) 
+            IPowerSupplyAppService appService)
             : base(notifications)
         {
-            _caseAppService = caseAppService;
+            _appService = appService;
         }
 
         [HttpGet]
         public IActionResult Index(int? page)
         {
-            var paginationObject = _caseAppService.ListPaginated(page);
+            var paginationObject = _appService.ListPaginated(page);
             return View(paginationObject);
         }
 
@@ -36,14 +37,14 @@ namespace HWParts.Web.Controllers
                 return NotFound();
             }
 
-            var caseViewModel = _caseAppService.GetById(id.Value);
+            var viewModel = _appService.GetById(id.Value);
 
-            if (caseViewModel is null)
+            if (viewModel is null)
             {
                 return NotFound();
             }
 
-            return View(caseViewModel);
+            return View(viewModel);
         }
     }
 }

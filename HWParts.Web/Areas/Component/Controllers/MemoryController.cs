@@ -7,6 +7,7 @@ using System;
 
 namespace HWParts.Web.Controllers.Components
 {
+    [Area("Component")]
     [Route("component/memory")]
     [AllowAnonymous]
     public class MemoryController : BaseController

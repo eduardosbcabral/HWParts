@@ -7,15 +7,16 @@ using System;
 
 namespace HWParts.Web.Controllers.Components
 {
-    [Route("component/power-supply")]
+    [Area("Component")]
+    [Route("component/processor")]
     [AllowAnonymous]
-    public class PowerSupplyController : BaseController
+    public class ProcessorController : BaseController
     {
-        private readonly IPowerSupplyAppService _appService;
+        private readonly IProcessorAppService _appService;
 
-        public PowerSupplyController(
+        public ProcessorController(
             INotificationHandler<DomainNotification> notifications,
-            IPowerSupplyAppService appService)
+            IProcessorAppService appService)
             : base(notifications)
         {
             _appService = appService;

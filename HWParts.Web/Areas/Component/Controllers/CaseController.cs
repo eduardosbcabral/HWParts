@@ -5,26 +5,27 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
-namespace HWParts.Web.Controllers.Components
+namespace HWParts.Web.Controllers
 {
-    [Route("component/storage")]
+    [Area("Component")]
+    [Route("component/case")]
     [AllowAnonymous]
-    public class StorageController : BaseController
+    public class CaseController : BaseController
     {
-        private readonly IStorageAppService _appService;
+        private readonly ICaseAppService _caseAppService;
 
-        public StorageController(
+        public CaseController(
             INotificationHandler<DomainNotification> notifications,
-            IStorageAppService appService)
+            ICaseAppService caseAppService) 
             : base(notifications)
         {
-            _appService = appService;
+            _caseAppService = caseAppService;
         }
 
         [HttpGet]
         public IActionResult Index(int? page)
         {
-            var paginationObject = _appService.ListPaginated(page);
+            var paginationObject = _caseAppService.ListPaginated(page);
             return View(paginationObject);
         }
 
@@ -36,14 +37,14 @@ namespace HWParts.Web.Controllers.Components
                 return NotFound();
             }
 
-            var viewModel = _appService.GetById(id.Value);
+            var caseViewModel = _caseAppService.GetById(id.Value);
 
-            if (viewModel is null)
+            if (caseViewModel is null)
             {
                 return NotFound();
             }
 
-            return View(viewModel);
+            return View(caseViewModel);
         }
     }
 }

@@ -7,15 +7,16 @@ using System;
 
 namespace HWParts.Web.Controllers.Components
 {
-    [Route("component/motherboard")]
+    [Area("Component")]
+    [Route("component/storage")]
     [AllowAnonymous]
-    public class MotherboardController : BaseController
+    public class StorageController : BaseController
     {
-        private readonly IMotherboardAppService _appService;
+        private readonly IStorageAppService _appService;
 
-        public MotherboardController(
+        public StorageController(
             INotificationHandler<DomainNotification> notifications,
-            IMotherboardAppService appService)
+            IStorageAppService appService)
             : base(notifications)
         {
             _appService = appService;

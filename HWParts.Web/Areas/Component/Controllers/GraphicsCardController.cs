@@ -5,17 +5,19 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
+
 namespace HWParts.Web.Controllers.Components
 {
-    [Route("component/processor")]
+    [Area("Component")]
+    [Route("component/graphics-card")]
     [AllowAnonymous]
-    public class ProcessorController : BaseController
+    public class GraphicsCardController : BaseController
     {
-        private readonly IProcessorAppService _appService;
+        private readonly IGraphicsCardAppService _appService;
 
-        public ProcessorController(
+        public GraphicsCardController(
             INotificationHandler<DomainNotification> notifications,
-            IProcessorAppService appService)
+            IGraphicsCardAppService appService)
             : base(notifications)
         {
             _appService = appService;
