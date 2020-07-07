@@ -4,8 +4,9 @@ using HWParts.Core.Infrastructure.Identity.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using HWParts.Web.Controllers;
 
-namespace HWParts.Web.Controllers.Admin
+namespace HWParts.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = ApplicationRoles.StaffRoles)]

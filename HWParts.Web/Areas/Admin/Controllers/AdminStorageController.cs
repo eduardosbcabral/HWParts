@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using HWParts.Web.Controllers;
 
-namespace HWParts.Web.Controllers
+namespace HWParts.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = ApplicationRoles.StaffRoles)]
