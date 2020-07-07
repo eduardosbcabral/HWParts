@@ -90,6 +90,17 @@ namespace HWParts.Web
                    name: "AdminArea",
                    areaName: "Admin",
                    pattern: "{controller=Admin}/{action=Index}/{id?}");
+
+                endpoints.MapAreaControllerRoute(
+                   name: "AccountArea",
+                   areaName: "Account",
+                   pattern: "{controller}/{action}");
+
+                endpoints.MapAreaControllerRoute(
+                   name: "ComponentArea",
+                   areaName: "Component",
+                   pattern: "{controller}/{action}");
+
                 endpoints.MapRazorPages();
             });
 
