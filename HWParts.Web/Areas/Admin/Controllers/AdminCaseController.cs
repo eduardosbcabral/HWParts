@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace HWParts.Web.Controllers
 {
+    [Area("Admin")]
     [Authorize(Roles = ApplicationRoles.StaffRoles)]
     [Route("admin/case")]
     public class AdminCaseController : BaseController

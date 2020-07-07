@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HWParts.Web.Controllers
 {
+    [Area("Admin")]
     [Authorize(Roles = ApplicationRoles.StaffRoles)]
     public class AdminController : Controller
     {

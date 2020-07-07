@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace HWParts.Web.Controllers
 {
+    [Area("Admin")]
     [Authorize(Roles = ApplicationRoles.StaffRoles)]
     [Route("admin/power-supply")]
     public class AdminPowerSupplyController : BaseController

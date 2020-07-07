@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HWParts.Web.Controllers.Admin
 {
+    [Area("Admin")]
     [Authorize(Roles = ApplicationRoles.StaffRoles)]
     [Route("admin/account")]
     public class AdminAccountController : BaseController
