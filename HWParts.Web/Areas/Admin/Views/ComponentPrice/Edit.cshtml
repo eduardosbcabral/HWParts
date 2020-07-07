@@ -1,0 +1,55 @@
+﻿@using HWParts.Core.Application.ViewModels.ComponentPrice;
+@using HWParts.Core.Domain.Enums;
+
+@model ComponentPriceViewModel
+
+@{
+    ViewData["Title"] = "Editar Preço";
+}
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <hr />
+
+        <vc:summary />
+
+        <div class="form-group">
+            <label asp-for="Price" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Url" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Url" class="form-control" />
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Platform" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="Platform" asp-items="@Html.GetEnumSelectList<EPlatform>()" class="form-control">
+                    <option>Selecione a plataforma</option>
+                </select>
+                <span asp-validation-for="Platform" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Salvar" class="btn btn-success">
+                <a href="@ViewData["ReturnUrl"]" id="back-button" class="btn btn-info">Voltar para a lista</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        let currentUrl = window.location.href;
+        let previousUrl = currentUrl.replace(new RegExp(/\/price\/edit\/.*/g), '/price/list');
+
+        $('#back-button').attr('href', previousUrl);
+    </script>
+}

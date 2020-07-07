@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System;
+using HWParts.Web.Controllers;
 
-namespace HWParts.Web.Controllers
+namespace HWParts.Web.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     [Authorize(Roles = ApplicationRoles.StaffRoles)]
     [Route("admin/{(case|graphics-card|memory|motherboard|power-supply|processor|storage)}/edit/{id:guid}/price")]
     public class ComponentPriceController : BaseController
