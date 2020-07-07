@@ -85,6 +85,11 @@ namespace HWParts.Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapAreaControllerRoute(
+                   name: "AdminArea",
+                   areaName: "Admin",
+                   pattern: "{controller=Admin}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
 
