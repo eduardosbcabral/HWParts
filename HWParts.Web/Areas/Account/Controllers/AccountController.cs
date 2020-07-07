@@ -1,31 +1,32 @@
 ﻿using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.ViewModels.Account;
 using HWParts.Core.Domain.Core.Notifications;
-using HWParts.Core.Domain.Entities;
 using HWParts.Core.Infrastructure.Identity.Models;
+using HWParts.Web.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities = HWParts.Core.Domain.Entities;
 
-namespace HWParts.Web.Controllers
+namespace HWParts.Web.Areas.Account.Controllers
 {
+    [Area("Account")]
     [AllowAnonymous]
     [Route("account")]
     public class AccountController : BaseController
     {
-        private readonly SignInManager<Account> _signInManager;
-        private readonly UserManager<Account> _userManager;
+        private readonly SignInManager<Entities.Account> _signInManager;
+        private readonly UserManager<Entities.Account> _userManager;
 
         private readonly IAccountAppService _accountAppService;
 
         public AccountController(
             INotificationHandler<DomainNotification> notifications,
-            UserManager<Account> userManager,
-            SignInManager<Account> signInManager,
+            UserManager<Entities.Account> userManager,
+            SignInManager<Entities.Account> signInManager,
             IAccountAppService accountAppService)
             : base(notifications)
         {
