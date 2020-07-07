@@ -3,15 +3,18 @@
     ViewData["Title"] = "Importar Gabinetes";
 }
 
+<partial name="_TitleAdminComponentPage" />
+
 @using (@Html.BeginForm(
-    "Import",
-    "AdminCase",
-    FormMethod.Post,
-    new { enctype = "multipart/form-data" }))
+   "Import",
+   "AdminCase",
+   FormMethod.Post,
+   new { enctype = "multipart/form-data" }))
 {
     @Html.TextBoxFor(x => x.File, new { type = "file" })
 
     <button type="submit" class="btn btn-block btn-primary">
         Importar
     </button>
+    <partial name="_ActionsAdminComponentForm" />
 }
