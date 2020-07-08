@@ -106,9 +106,6 @@ namespace HWParts.Web
 
             // Seed DB
             DataSeeds.Initialize(app.ApplicationServices).Wait();
-
-            //var context = app.ApplicationServices.GetRequiredService<HWPartsDbContext>();
-            //context.Database.EnsureCreated();
         }
     }
 }
