@@ -1,0 +1,30 @@
+﻿@*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">HWParts</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+            <partial name="_LoginPartial" />
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>*@
+
+<nav class="hw-navbar-wrapper">
+    <header class="hw-navbar hw-navbar-items-wrapper">
+        <div class="hw-navbar-itens">
+            <div class="hw-logo mx-auto flex items-center">
+                <a class="hw-logo-text text-primary" asp-controller="Home" asp-action="Index">HWParts</a>
+            </div>
+            <div class="flex items-center">
+                <partial name="_LoginPartial" />
+            </div>
+        </div>
+    </header>
+</nav>
