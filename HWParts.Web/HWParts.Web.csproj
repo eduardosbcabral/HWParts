@@ -39,7 +39,6 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Component\Data\" />
     <Folder Include="Areas\Component\Models\" />
-    <Folder Include="Controllers\Components\" />
     <Folder Include="wwwroot\assets\img\" />
     <Folder Include="wwwroot\lib\bootstrap\dist\" />
   </ItemGroup>

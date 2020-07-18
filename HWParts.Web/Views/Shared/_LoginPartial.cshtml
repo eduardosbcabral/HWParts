@@ -4,22 +4,28 @@
 @inject SignInManager<Account> SignInManager
 @inject UserManager<Account> UserManager
 
-<ul class="navbar-nav">
+<ul class="hw-navbar-items-list flex">
     @if (SignInManager.IsSignedIn(User))
     {
         if(User.IsInRole(ApplicationRoles.Super) ||
            User.IsInRole(ApplicationRoles.Admin))
         {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Admin" asp-action="Index">Admin</a>
+            <li>
+                <div class="hw-navbar-item">
+                    <a class="hw-navbar-item-link" asp-area="Admin" asp-controller="Admin" asp-action="Index">Admin</a>
+                </div>
             </li>
         }
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Account" asp-controller="Account" asp-action="Manage" title="Manage">@User.Identity.Name!</a>
+
+        <li>
+            <div class="hw-navbar-item">
+                <a class="hw-navbar-item-link" asp-area="Account" asp-controller="Account" asp-action="Manage" title="Manage">@User.Identity.Name!</a>
+            </div>
         </li>
-        <li class="nav-item">
+
+        <li>
             <form class="form-inline" asp-area="Account" asp-controller="Account" asp-action="Logout">
-                <button type="submit" class="nav-link btn btn-link text-dark">Sair</button>
+                <button type="submit" class="btn btn-link hw-navbar-item-link">Sair</button>
             </form>
         </li>
     }
