@@ -7,16 +7,6 @@
 <ul class="hw-navbar-items-list flex">
     @if (SignInManager.IsSignedIn(User))
     {
-        if(User.IsInRole(ApplicationRoles.Super) ||
-           User.IsInRole(ApplicationRoles.Admin))
-        {
-            <li>
-                <div class="hw-navbar-item">
-                    <a class="hw-navbar-item-link" asp-area="Admin" asp-controller="Admin" asp-action="Index">Admin</a>
-                </div>
-            </li>
-        }
-
         <li>
             <div class="hw-navbar-item">
                 <a class="hw-navbar-item-link" asp-area="Account" asp-controller="Account" asp-action="Manage" title="Manage">@User.Identity.Name!</a>
