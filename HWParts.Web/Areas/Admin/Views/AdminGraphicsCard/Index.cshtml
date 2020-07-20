@@ -12,48 +12,68 @@
 
 <br />
 
-@Html.PaginationElement(Model)
+<partial name="_PaginationPartial" model="@Model" />
 
-<table class="table">
-    <thead>
+<table class="hw-table">
+    <thead class="hw-table-head">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ModelObject.Brand)
+                <div class="hw-table-text">
+                    Imagem
+                </div>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ModelObject.Model)
+                <div class="hw-table-text">
+                    @Html.DisplayNameFor(model => model.ModelObject.Brand)
+                </div>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ModelObject.Platform)
+                <div class="hw-table-text">
+                    @Html.DisplayNameFor(model => model.ModelObject.Model)
+                </div>
+            </th>
+            <th>
+                <div class="hw-table-text">
+                    @Html.DisplayNameFor(model => model.ModelObject.Platform)
+                </div>
             </th>
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="hw-table-body">
         @foreach (var item in Model.Result)
         {
-            <tr>
-                <td>
+        <tr class="hw-table-row">
+            <td>
+                <img class="hw-table-row-image" src="@item.ImageUrlFirst" />
+            </td>
+            <td>
+                <p class="hw-table-row-text truncate">
                     @Html.DisplayFor(modelItem => item.Brand)
-                </td>
-                <td>
+                </p>
+            </td>
+            <td>
+                <p class="hw-table-row-text truncate">
                     @Html.DisplayFor(modelItem => item.Model)
-                </td>
-                <td>
+                </p>
+            </td>
+            <td>
+                <p class="hw-table-row-text truncate">
                     @Html.DisplayFor(modelItem => item.Platform)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">
-                        <span class="fas fa-edit"></span>
-                    </a>
-                    <a asp-action="Detail" asp-controller="GraphicsCard" asp-route-id="@item.Id" class="btn btn-primary">
-                        <span class="fas fa-search"></span>
-                    </a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">
-                        <span class="fas fa-trash-alt"></span>
-                    </a>
-                </td>
-            </tr>
+                </p>
+            </td>
+            <td>
+                <a asp-action="Detail" asp-controller="GraphicsCard" asp-area="Component" asp-route-id="@item.Id" class="hw-table-row-text-link hw-table-row-text-link-primary">
+                    <span class="fas fa-search"></span>
+                </a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="hw-table-row-text-link hw-table-row-text-link-warning">
+                    <span class="fas fa-edit"></span>
+                </a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="hw-table-row-text-link hw-table-row-text-link-danger">
+                    <span class="fas fa-trash-alt"></span>
+                </a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

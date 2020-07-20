@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace HWParts.Core.Application.ViewModels.Base
 {
@@ -19,7 +20,7 @@ namespace HWParts.Core.Application.ViewModels.Base
         //[MinLength(2)]
         //[MaxLength(100)]
         //[DisplayName("URL da imagem")]
-        public string ImageUrl => string.Join(";", ImagesUrls);
+        public string ImageUrl { get; set; }
 
         [Required(ErrorMessage = "A URL da imagem é obrigatória.")]
         [MinLength(1, ErrorMessage = "É necessário incluir pelo menos uma url.")]
@@ -38,6 +39,8 @@ namespace HWParts.Core.Application.ViewModels.Base
         public EPlatform Platform { get; set; }
 
         public IList<ComponentPriceViewModel> Prices { get; set; }
+
+        public string ImageUrlFirst => ImageUrl.Any() ? ImageUrl.Split(";").FirstOrDefault() : null;
 
         public ComponentBaseViewModel()
         {

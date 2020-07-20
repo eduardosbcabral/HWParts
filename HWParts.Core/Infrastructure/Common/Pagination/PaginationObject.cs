@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HWParts.Core.Infrastructure.Common.Pagination
 {
-    public class PaginationObject<T>
+    public class BasePaginationObject
     {
         public int CurrentPage { get; private set; }
         public int TotalPages { get; private set; }
@@ -11,6 +11,26 @@ namespace HWParts.Core.Infrastructure.Common.Pagination
         public int LastPage { get; private set; }
         public int PreviousPage { get; private set; }
         public int NextPage { get; private set; }
+
+        public BasePaginationObject(
+            int currentPage,
+            int totalPages,
+            int firstPage,
+            int lastPage,
+            int previousPage,
+            int nextPage)
+        {
+            CurrentPage = currentPage;
+            TotalPages = totalPages;
+            FirstPage = firstPage;
+            LastPage = lastPage;
+            PreviousPage = previousPage;
+            NextPage = nextPage;
+        }
+    }
+
+    public class PaginationObject<T> : BasePaginationObject
+    {
         public List<T> Result { get; private set; }
 
         public PaginationObject(
@@ -21,13 +41,8 @@ namespace HWParts.Core.Infrastructure.Common.Pagination
             int previousPage, 
             int nextPage,
             List<T> result)
+            : base(currentPage, totalPages, firstPage, lastPage, previousPage, nextPage)
         {
-            CurrentPage = currentPage;
-            TotalPages = totalPages;
-            FirstPage = firstPage;
-            LastPage = lastPage;
-            PreviousPage = previousPage;
-            NextPage = nextPage;
             Result = result;
         }
 
