@@ -1,0 +1,28 @@
+﻿.flex {
+    display: flex !important;
+}
+
+.flex-wrap {
+    -ms-flex-wrap: wrap !important;
+    flex-wrap: wrap !important;
+}
+
+.items-center {
+    align-items: center !important;
+    -webkit-box-align: center !important;
+}
+
+.items-end {
+    align-items: flex-end !important;
+    -webkit-box-align: end !important;
+}
+
+
+.mx-auto {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.mt-45 {
+    margin-top: 45px;
+}
