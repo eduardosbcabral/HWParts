@@ -1,0 +1,25 @@
+﻿<div class="hw-navtab-wrapper hw-navtab-floating">
+    <header class="hw-navtab">
+        <ul class="hw-navtab-itens">
+            <li class="mr-2">
+                <div class="flex items-center hw-navtab-item-wrapper">
+                    <div class="hw-navtab-item">
+                        <partial name="_TitleAdminComponentPage" />
+                    </div>
+                </div>
+            </li>
+
+            <partial name="_ActionsAdminComponentIndex" />
+
+            <li class="hw-navtab-list-item-end mr-2">
+                <div class="flex hw-navtab-item-wrapper">
+                    <div class="hw-navtab-item" style="padding-top: 0.2rem !important;">
+                        <partial name="_PaginationPartial" model="@Model" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </header>
+</div>
+
+<script src="~/js/navtab.js" asp-append-version="true"></script>
