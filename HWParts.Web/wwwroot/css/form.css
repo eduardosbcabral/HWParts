@@ -1,0 +1,30 @@
+﻿.hw-control-input {
+    font-size: .9rem !important;
+}
+
+.hw-control-input:focus {
+    border-color: rgb(115,103,240);
+    box-shadow: 0 0 0 0.2rem rgba(115,103,240,.25);
+    font-size: .9rem !important;
+}
+
+.hw-control-label {
+    font-size: .85rem;
+    color: rgba(0,0,0,.7);
+    margin-bottom: .1rem !important;
+}
+
+.hw-text-danger {
+    font-size: .85rem;
+}
+
+.hw-control-input.input-validation-error {
+    border-color: rgb(220, 53, 69) !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69,.25) !important;
+}
+
+.hw-btn-group button {
+    padding: 0.320rem .75rem !important;
+    border-top-left-radius: .25rem !important;
+    border-bottom-left-radius: .25rem !important;
+}
