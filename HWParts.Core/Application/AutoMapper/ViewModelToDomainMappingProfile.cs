@@ -17,45 +17,45 @@ namespace HWParts.Core.Application.AutoMapper
         public ViewModelToDomainMappingProfile()
         {
             CreateMap<MotherboardViewModel, RegisterMotherboardCommand>()
-                .ConstructUsing(c => new RegisterMotherboardCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+                .ConstructUsing(c => new RegisterMotherboardCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform.Value, c.Brand, c.Model));
             CreateMap<MotherboardViewModel, UpdateMotherboardCommand>()
-                .ConstructUsing(c => new UpdateMotherboardCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+                .ConstructUsing(c => new UpdateMotherboardCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform.Value, c.Brand, c.Model));
             CreateMap<ImportMotherboardsViewModel, ImportMotherboardsCommand>();
 
             CreateMap<GraphicsCardViewModel, RegisterGraphicsCardCommand>()
-                .ConstructUsing(c => new RegisterGraphicsCardCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+                .ConstructUsing(c => new RegisterGraphicsCardCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform.Value, c.Brand, c.Model));
             CreateMap<GraphicsCardViewModel, UpdateGraphicsCardCommand>()
-                .ConstructUsing(c => new UpdateGraphicsCardCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+                .ConstructUsing(c => new UpdateGraphicsCardCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform.Value, c.Brand, c.Model));
             CreateMap<ImportGraphicsCardsViewModel, ImportGraphicsCardsCommand>();
 
             CreateMap<MemoryViewModel, RegisterMemoryCommand>()
-                .ConstructUsing(c => new RegisterMemoryCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+                .ConstructUsing(c => new RegisterMemoryCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform.Value, c.Brand, c.Model));
             CreateMap<MemoryViewModel, UpdateMemoryCommand>()
-                .ConstructUsing(c => new UpdateMemoryCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+                .ConstructUsing(c => new UpdateMemoryCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform.Value, c.Brand, c.Model));
             CreateMap<ImportMemoriesViewModel, ImportMemoriesCommand>();
 
             CreateMap<ProcessorViewModel, RegisterProcessorCommand>()
-                .ConstructUsing(c => new RegisterProcessorCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+                .ConstructUsing(c => new RegisterProcessorCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform.Value, c.Brand, c.Model));
             CreateMap<ProcessorViewModel, UpdateProcessorCommand>()
-                .ConstructUsing(c => new UpdateProcessorCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+                .ConstructUsing(c => new UpdateProcessorCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform.Value, c.Brand, c.Model));
             CreateMap<ImportProcessorsViewModel, ImportProcessorsCommand>();
 
             CreateMap<StorageViewModel, RegisterStorageCommand>()
-                .ConstructUsing(c => new RegisterStorageCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+                .ConstructUsing(c => new RegisterStorageCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform.Value, c.Brand, c.Model));
             CreateMap<StorageViewModel, UpdateStorageCommand>()
-                .ConstructUsing(c => new UpdateStorageCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+                .ConstructUsing(c => new UpdateStorageCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform.Value, c.Brand, c.Model));
             CreateMap<ImportStoragesViewModel, ImportStoragesCommand>();
 
             CreateMap<CaseViewModel, RegisterCaseCommand>()
-                .ConstructUsing(c => new RegisterCaseCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+                .ConstructUsing(c => new RegisterCaseCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform.Value, c.Brand, c.Model));
             CreateMap<CaseViewModel, UpdateCaseCommand>()
-                .ConstructUsing(c => new UpdateCaseCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+                .ConstructUsing(c => new UpdateCaseCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform.Value, c.Brand, c.Model));
             CreateMap<ImportCasesViewModel, ImportCasesCommand>();
 
             CreateMap<PowerSupplyViewModel, RegisterPowerSupplyCommand>()
-                .ConstructUsing(c => new RegisterPowerSupplyCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+                .ConstructUsing(c => new RegisterPowerSupplyCommand(c.PlatformId, c.ImageUrl, c.Url, c.Platform.Value, c.Brand, c.Model));
             CreateMap<PowerSupplyViewModel, UpdatePowerSupplyCommand>()
-                .ConstructUsing(c => new UpdatePowerSupplyCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform, c.Brand, c.Model));
+                .ConstructUsing(c => new UpdatePowerSupplyCommand(c.Id, c.PlatformId, c.ImageUrl, c.Url, c.Platform.Value, c.Brand, c.Model));
             CreateMap<ImportPowerSuppliesViewModel, ImportPowerSuppliesCommand>();
 
             CreateMap<RegisterAccountViewModel, RegisterAccountCommand>();

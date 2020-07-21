@@ -36,11 +36,11 @@ namespace HWParts.Core.Application.ViewModels.Base
 
         [Required(ErrorMessage = "A plataforma é obrigatória.")]
         [DisplayName("Plataforma")]
-        public EPlatform Platform { get; set; }
+        public EPlatform? Platform { get; set; }
 
         public IList<ComponentPriceViewModel> Prices { get; set; }
 
-        public string ImageUrlFirst => ImageUrl.Any() ? ImageUrl.Split(";").FirstOrDefault() : null;
+        public string ImageUrlFirst => ImageUrl != null && ImageUrl.Any() ? ImageUrl.Split(";").FirstOrDefault() : string.Empty;
 
         public ComponentBaseViewModel()
         {
