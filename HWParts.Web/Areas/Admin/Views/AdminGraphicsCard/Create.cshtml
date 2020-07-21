@@ -7,56 +7,65 @@
 
 <partial name="_TitleAdminComponentPage" />
 
-<form asp-action="Create">
+<form asp-action="Create" autocomplete="off">
     <div class="form-horizontal">
         <hr />
 
-        @* Replacing classic Validation Summary to Custom ViewComponent as TagHelper *@
         <vc:summary />
 
-        <div class="form-group">
-            <label asp-for="Brand" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Brand" class="form-control" />
-                <span asp-validation-for="Brand" class="text-danger"></span>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Brand" class="col-md-12 control-label hw-control-label"></label>
+                    <div class="col-md-12">
+                        <input asp-for="Brand" class="form-control hw-control-input" />
+                        <span asp-validation-for="Brand" class="text-danger hw-text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Model" class="col-md-12 control-label hw-control-label"></label>
+                    <div class="col-md-12">
+                        <input asp-for="Model" class="form-control hw-control-input" />
+                        <span asp-validation-for="Model" class="text-danger hw-text-danger"></span>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="form-group">
-            <label asp-for="Model" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Model" class="form-control" />
-                <span asp-validation-for="Model" class="text-danger"></span>
+            <label asp-for="Platform" class="col-md-3 control-label hw-control-label"></label>
+            <div class="col-md-3">
+                <select asp-for="Platform" asp-items="@Html.GetEnumSelectList<EPlatform>()" class="form-control hw-control-input">
+                    <option selected="selected" value="">Selecione a plataforma</option>
+                </select>
+                <span asp-validation-for="Platform" class="text-danger hw-text-danger"></span>
             </div>
         </div>
 
-        <div class="form-group">
-            <label asp-for="PlatformId" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="PlatformId" class="form-control" />
-                <span asp-validation-for="PlatformId" class="text-danger"></span>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="PlatformId" class="col-md-12 control-label hw-control-label"></label>
+                    <div class="col-md-12">
+                        <input asp-for="PlatformId" class="form-control hw-control-input" />
+                        <span asp-validation-for="PlatformId" class="text-danger hw-text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Url" class="col-md-12 control-label hw-control-label"></label>
+                    <div class="col-md-12">
+                        <input asp-for="Url" class="form-control hw-control-input" />
+                        <span asp-validation-for="Url" class="text-danger hw-text-danger"></span>
+                    </div>
+                </div>
             </div>
         </div>
 
         @await Component.InvokeAsync("ImagesUrlsInput", Model)
-
-        <div class="form-group">
-            <label asp-for="Url" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Url" class="form-control" />
-                <span asp-validation-for="Url" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Platform" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <select asp-for="Platform" asp-items="@Html.GetEnumSelectList<EPlatform>()" class="form-control">
-                    <option>Selecione a plataforma</option>
-                </select>
-                <span asp-validation-for="Platform" class="text-danger"></span>
-            </div>
-        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
