@@ -3,12 +3,11 @@ using Newtonsoft.Json.Converters;
 
 namespace HWParts.Core.Domain.Enums
 {
-    [JsonConverter(typeof(StringEnumConverter))]
     public enum EPlatform
     {
-        NewEgg,
-        Kabum,
-        Terabyte,
-        Pichau
+        NewEgg = 0,
+        Kabum = 1,
+        Terabyte = 2,
+        Pichau = 3
     }
 }
