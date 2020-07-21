@@ -36,7 +36,8 @@ namespace HWParts.Web.Areas.Admin.Controllers
         [HttpGet("register")]
         public IActionResult Create()
         {
-            return View(new GraphicsCardViewModel());
+            var viewModel = new GraphicsCardViewModel();
+            return View(viewModel);
         }
 
         [HttpPost("register")]
