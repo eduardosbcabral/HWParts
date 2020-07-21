@@ -12,31 +12,9 @@ body {
     background-color: #F8F8F8;
 }
 
-
-
-.flex {
-    display: flex !important;
-}
-
-.flex-wrap {
-    -ms-flex-wrap: wrap !important;
-    flex-wrap: wrap !important;
-}
-
-.items-center {
-    align-items: center !important;
-    -webkit-box-align: center !important;
-}
-
 .content-wrapper {
     padding: 2.2rem;
 }
-
-.mx-auto {
-    margin-left: auto !important;
-    margin-right: auto !important;
-}
-
 
 .hw-navbar-wrapper {
     z-index: 41001;
