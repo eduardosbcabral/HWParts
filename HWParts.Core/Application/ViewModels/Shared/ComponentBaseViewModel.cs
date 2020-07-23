@@ -1,6 +1,7 @@
 ﻿using HWParts.Core.Application.ViewModels.ComponentPrice;
 using HWParts.Core.Domain.Enums;
 using Microsoft.EntityFrameworkCore.Internal;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +11,21 @@ namespace HWParts.Core.Application.ViewModels.Base
 {
     public class ComponentBaseViewModel
     {
+        [Key]
+        public Guid Id { get; set; }
+
+        [Required(ErrorMessage = "A marca é obrigatória.")]
+        [MinLength(2)]
+        [MaxLength(100)]
+        [DisplayName("Marca")]
+        public string Brand { get; set; }
+
+        [Required(ErrorMessage = "O modelo é obrigatório.")]
+        [MinLength(2)]
+        [MaxLength(100)]
+        [DisplayName("Modelo")]
+        public string Model { get; set; }
+
         [Required(ErrorMessage = "O ID da plataforma é obrigatório.")]
         [MinLength(2)]
         [MaxLength(100)]
@@ -41,6 +57,9 @@ namespace HWParts.Core.Application.ViewModels.Base
         public IList<ComponentPriceViewModel> Prices { get; set; }
 
         public string ImageUrlFirst => ImageUrl != null && ImageUrl.Any() ? ImageUrl.Split(";").FirstOrDefault() : string.Empty;
+
+        [DisplayName("Nome")]
+        public string FullName => $"{Brand} {Model}";
 
         public ComponentBaseViewModel()
         {
