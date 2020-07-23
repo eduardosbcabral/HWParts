@@ -57,8 +57,8 @@
 
     .hw-table-row:hover {
         z-index: 200;
-        -webkit-transform: translateY(-4px);
-        transform: translateY(-4px);
+        -webkit-transform: translateY(-1px);
+        transform: translateY(-1px);
         cursor: pointer;
     }
 
@@ -89,12 +89,20 @@
 
 .hw-table-row-text-link {
     color: #626262;
+    font-weight: 600;
+    font-size: .9rem;
 }
 
-.hw-table-row-text-link-primary:hover {
-    color: #007bff;
-    text-decoration: none;
-}
+    .hw-table-row-text-link:hover {
+        font-weight: 600;
+        color: #7367F0 !important;
+        text-decoration: none;
+    }
+
+    .hw-table-row-text-link-primary:hover {
+        color: #007bff;
+        text-decoration: none;
+    }
 
 .hw-table-row-text-link-warning:hover {
     color: #ffc107;
