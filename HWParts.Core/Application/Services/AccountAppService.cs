@@ -3,6 +3,7 @@ using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.ViewModels.Account;
 using HWParts.Core.Domain.Commands;
 using HWParts.Core.Domain.Core.Bus;
+using HWParts.Core.Domain.Entities;
 using HWParts.Core.Domain.Interfaces;
 using HWParts.Core.Infrastructure.Common.Pagination;
 using System.Threading.Tasks;
@@ -26,16 +27,14 @@ namespace HWParts.Core.Application.Services
             _accountRepository = accountRepository;
         }
 
-        public Task Register(RegisterAccountViewModel registerAccountViewModel)
+        public async Task Register(RegisterAccountCommand command)
         {
-            var command = _mapper.Map<RegisterAccountCommand>(registerAccountViewModel);
-            return Bus.SendCommand(command);
+            await Bus.SendCommand(command);
         }
 
-        public Task Login(LoginAccountViewModel loginAccountViewModel)
+        public async void Login(LoginAccountCommand command)
         {
-            var command = _mapper.Map<LoginAccountCommand>(loginAccountViewModel);
-            return Bus.SendCommand(command);
+            await Bus.SendCommand(command);
         }
 
         public Task ConfirmEmail(ConfirmEmailAccountViewModel confirmEmailAccountViewModel)

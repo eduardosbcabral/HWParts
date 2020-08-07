@@ -43,6 +43,7 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>()
             .AddScoped<INotificationHandler<MotherboardRegisteredEvent>, MotherboardEventHandler>()
             .AddScoped<INotificationHandler<MotherboardUpdatedEvent>, MotherboardEventHandler>()
+            .AddScoped<INotificationHandler<AccountRegisteredEvent>, AccountRegisteredEventHandler>()
 
             // Domain - Commands
             .AddScoped<IRequestHandler<RegisterMotherboardCommand, bool>, MotherboardCommandHandler>()

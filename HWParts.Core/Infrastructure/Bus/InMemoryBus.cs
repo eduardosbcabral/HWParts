@@ -1,4 +1,5 @@
-﻿using HWParts.Core.Domain.Core.Bus;
+﻿using FluentValidation.Results;
+using HWParts.Core.Domain.Core.Bus;
 using HWParts.Core.Domain.Core.Commands;
 using HWParts.Core.Domain.Core.Events;
 using MediatR;
@@ -22,10 +23,9 @@ namespace HWParts.Core.Infrastructure.Bus
             _mediator = mediator;
         }
 
-
-        public Task SendCommand<T>(T command) where T : Command
+        public async Task<ValidationResult> SendCommand<T>(T command) where T : Command
         {
-            return _mediator.Send(command);
+            return await _mediator.Send(command);
         }
 
         public Task RaiseEvent<T>(T @event) where T : Event

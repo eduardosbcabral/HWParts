@@ -6,7 +6,9 @@ namespace HWParts.Core.Domain.Validations
     {
         public RegisterAccountCommandValidation()
         {
-
+            ValidateUsername();
+            ValidateEmail();
+            ValidatePassword();
         }
     }
 }

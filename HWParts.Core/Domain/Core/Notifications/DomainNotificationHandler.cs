@@ -38,6 +38,16 @@ namespace HWParts.Core.Domain.Core.Notifications
             return GetNotifications().Any(x => x.Key == key);
         }
 
+        public virtual DomainNotification GetNotification(string key)
+        {
+            return GetNotifications().SingleOrDefault(x => x.Key == key);
+        }
+
+        public virtual DomainNotification GetNotificationByType<T>()
+        {
+            return GetNotifications().SingleOrDefault(x => x.GetType() == typeof(T));
+        }
+
         public void Dispose()
         {
             _notifications = new List<DomainNotification>();

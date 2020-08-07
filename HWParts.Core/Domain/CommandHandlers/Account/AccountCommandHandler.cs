@@ -1,15 +1,20 @@
-﻿using HWParts.Core.Application.ViewModels.Account;
+﻿using HWParts.Core.Application.Services;
+using HWParts.Core.Application.ViewModels.Account;
 using HWParts.Core.Domain.Commands;
 using HWParts.Core.Domain.Core.Bus;
 using HWParts.Core.Domain.Core.Notifications;
 using HWParts.Core.Domain.Entities;
+using HWParts.Core.Domain.Events;
 using HWParts.Core.Domain.Interfaces;
+using HWParts.Core.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.WebUtilities;
+using System;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -19,7 +24,7 @@ using System.Threading.Tasks;
 namespace HWParts.Core.Domain.CommandHandlers
 {
     public class AccountCommandHandler : CommandHandler,
-        IRequestHandler<RegisterAccountCommand, bool>,
+        IRequestHandler<RegisterAccountCommand, ValidationResult>,
         IRequestHandler<LoginAccountCommand, bool>,
         IRequestHandler<ConfirmEmailAccountCommand, bool>,
         IRequestHandler<ForgotPasswordAccountCommand, bool>,
@@ -33,6 +38,8 @@ namespace HWParts.Core.Domain.CommandHandlers
         private readonly LinkGenerator _linkGenerator;
         private readonly IEmailSender _emailSender;
 
+        private readonly HWPartsDbContext _context;
+
         public AccountCommandHandler(
             IUnitOfWork uow,
             IMediatorHandler bus,
@@ -41,7 +48,8 @@ namespace HWParts.Core.Domain.CommandHandlers
             SignInManager<Account> signInManager,
             LinkGenerator linkGenerator,
             IHttpContextAccessor httpContextAccessor,
-            IEmailSender emailSender) 
+            IEmailSender emailSender,
+            HWPartsDbContext context) 
             : base(uow, bus, notifications)
         {
             Bus = bus;
@@ -51,10 +59,11 @@ namespace HWParts.Core.Domain.CommandHandlers
             _linkGenerator = linkGenerator;
             _httpContextAccessor = httpContextAccessor;
             _emailSender = emailSender;
+            _context = context;
         }
 
         // Register
-        public async Task<bool> Handle(RegisterAccountCommand request, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(RegisterAccountCommand request, CancellationToken cancellationToken)
         {
             if (!request.IsValid())
             {
@@ -62,48 +71,62 @@ namespace HWParts.Core.Domain.CommandHandlers
                 return false;
             }
 
-            var user = new Account
+            using var transaction = _context.Database.BeginTransaction();
+            try
             {
-                UserName = request.Username,
-                Email = request.Email
-            };
+                var user = new Account(
+                   request.Username,
+                   request.Email
+                );
 
-            var result = await _userManager.CreateAsync(user, request.Password);
+                //var result = await _userManager.CreateAsync(user, request.Password);
 
-            if (!result.Succeeded)
+                //if (!result.Succeeded)
+                //{
+                //    foreach (var error in result.Errors)
+                //    {
+                //        await Bus.RaiseEvent(new DomainNotification("CreateUser", error.Description));
+                //    }
+
+                //    return false;
+                //}
+
+                //await _userManager.AddToRoleAsync(user, "Common");
+
+                //if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                //{
+                //    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                //    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+                //    var link = _linkGenerator.GetUriByAction(
+                //        _httpContextAccessor.HttpContext,
+                //        "ConfirmEmail",
+                //        "Account",
+                //        values: new ConfirmEmailAccountViewModel(user.Id, code),
+                //        _httpContextAccessor.HttpContext.Request.Scheme,
+                //        _httpContextAccessor.HttpContext.Request.Host);
+
+                //    await _emailSender.SendEmailAsync(user.Email, "Confirme seu email",
+                //        $"Por favor, confirme sua conta <a href='{HtmlEncoder.Default.Encode(link)}'>clicando aqui</a>.");
+
+                //    await Bus.RaiseEvent(new DomainNotification("RequireConfirmedAccount", string.Empty));
+                //    return false;
+                //}
+
+                //await _signInManager.SignInAsync(user, isPersistent: false);
+
+                transaction.Commit();
+
+                await Bus.RaiseEvent(new AccountRegisteredEvent(user.Id, user.UserName, user.Email, TokenService.GenerateToken(user)));
+
+                return true;
+            }
+            catch(Exception)
             {
-                foreach (var error in result.Errors)
-                {
-                    await Bus.RaiseEvent(new DomainNotification("CreateUser", error.Description));
-                }
-
+                await Bus.RaiseEvent(new DomainNotification("CreateUser", string.Empty));
+                transaction.Rollback();
                 return false;
             }
-
-            await _userManager.AddToRoleAsync(user, "Common");
-
-            if (_userManager.Options.SignIn.RequireConfirmedAccount)
-            {
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-
-                var link = _linkGenerator.GetUriByAction(
-                    _httpContextAccessor.HttpContext,
-                    "ConfirmEmail",
-                    "Account",
-                    values: new ConfirmEmailAccountViewModel(user.Id, code),
-                    _httpContextAccessor.HttpContext.Request.Scheme,
-                    _httpContextAccessor.HttpContext.Request.Host);
-
-                await _emailSender.SendEmailAsync(user.Email, "Confirme seu email",
-                    $"Por favor, confirme sua conta <a href='{HtmlEncoder.Default.Encode(link)}'>clicando aqui</a>.");
-
-                await Bus.RaiseEvent(new DomainNotification("RequireConfirmedAccount", string.Empty));
-                return false;
-            }
-
-            await _signInManager.SignInAsync(user, isPersistent: false);
-            return true;
         }
 
         // Login
@@ -116,9 +139,9 @@ namespace HWParts.Core.Domain.CommandHandlers
             }
 
             var result = await _signInManager.PasswordSignInAsync(
-                request.Username, 
-                request.Password, 
-                request.RememberMe, 
+                request.Username,
+                request.Password,
+                request.RememberMe,
                 lockoutOnFailure: false);
 
             if (!result.Succeeded)
