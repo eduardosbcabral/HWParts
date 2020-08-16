@@ -1,52 +1,52 @@
-﻿using AutoMapper;
-using HWParts.Core.Application.ViewModels.Motherboard;
-using HWParts.Core.Domain.Entities;
-using HWParts.Core.Domain.Interfaces;
-using HWParts.Core.Domain.Queries;
-using HWParts.Core.Infrastructure.Common.Pagination;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
+﻿//using AutoMapper;
+//using HWParts.Core.Application.ViewModels.Motherboard;
+//using HWParts.Core.Domain.Entities;
+//using HWParts.Core.Domain.Interfaces;
+//using HWParts.Core.Domain.Queries;
+//using HWParts.Core.Infrastructure.Common.Pagination;
+//using Microsoft.EntityFrameworkCore;
+//using System;
+//using System.Linq;
 
-namespace HWParts.Core.Infrastructure.Repositories
-{
-    public class MotherboardRepository : Repository<Motherboard>, IMotherboardRepository
-    {
-        private readonly IMapper _mapper;
+//namespace HWParts.Core.Infrastructure.Repositories
+//{
+//    public class MotherboardRepository : Repository<Motherboard>, IMotherboardRepository
+//    {
+//        private readonly IMapper _mapper;
 
-        public MotherboardRepository(HWPartsDbContext context, IMapper mapper)
-            : base(context)
-        => _mapper = mapper;
+//        public MotherboardRepository(HWPartsDbContext context, IMapper mapper)
+//            : base(context)
+//        => _mapper = mapper;
 
-        public Motherboard GetByPlatformId(string platformId)
-        {
-            return DbSet
-                .AsNoTracking()
-                .FirstOrDefault(MotherboardQueries.GetByPlatformId(platformId));
-        }
+//        public Motherboard GetByPlatformId(string platformId)
+//        {
+//            return DbSet
+//                .AsNoTracking()
+//                .FirstOrDefault(MotherboardQueries.GetByPlatformId(platformId));
+//        }
 
-        public PaginationObject<MotherboardViewModel> ListPaginated(int? page)
-        {
-            var motherboardsQuery = DbSet
-                .AsNoTracking()
-                .Pagination<Motherboard, MotherboardViewModel>(_mapper, page);
+//        public PaginationObject<MotherboardViewModel> ListPaginated(int? page)
+//        {
+//            var motherboardsQuery = DbSet
+//                .AsNoTracking()
+//                .Pagination<Motherboard, MotherboardViewModel>(_mapper, page);
 
-            return motherboardsQuery;
-        }
+//            return motherboardsQuery;
+//        }
 
-        public bool Exists(Guid id)
-        {
-            return DbSet
-                .AsNoTracking()
-                .Where(x => x.Id == id)
-                .Any();
-        }
+//        public bool Exists(Guid id)
+//        {
+//            return DbSet
+//                .AsNoTracking()
+//                .Where(x => x.Id == id)
+//                .Any();
+//        }
 
-        public override Motherboard GetById(Guid id)
-        {
-            return DbSet
-                .Include(x => x.Prices)
-                .SingleOrDefault(x => x.Id == id);
-        }
-    }
-}
+//        public override Motherboard GetById(Guid id)
+//        {
+//            return DbSet
+//                .Include(x => x.Prices)
+//                .SingleOrDefault(x => x.Id == id);
+//        }
+//    }
+//}

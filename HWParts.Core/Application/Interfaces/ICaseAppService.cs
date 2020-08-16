@@ -1,18 +1,17 @@
-using HWParts.Core.Application.ViewModels.Case;
-using HWParts.Core.Infrastructure.Common.Pagination;
-using System;
-using System.Threading.Tasks;
+//using HWParts.Core.Infrastructure.Common.Pagination;
+//using System;
+//using System.Threading.Tasks;
 
-namespace HWParts.Core.Application.Interfaces
-{
-    public interface ICaseAppService
-    {
-        void Register(CaseViewModel caseViewModel);
-        void Update(CaseViewModel caseViewModel);
-        void Remove(Guid id);
-        Task Import(ImportCasesViewModel viewModel);
+//namespace HWParts.Core.Application.Interfaces
+//{
+//    public interface ICaseAppService
+//    {
+//        void Register(CaseViewModel caseViewModel);
+//        void Update(CaseViewModel caseViewModel);
+//        void Remove(Guid id);
+//        Task Import(ImportCasesViewModel viewModel);
 
-        CaseViewModel GetById(Guid id);
-        PaginationObject<CaseViewModel> ListPaginated(int? page);
-    }
-}
+//        CaseViewModel GetById(Guid id);
+//        PaginationObject<CaseViewModel> ListPaginated(int? page);
+//    }
+//}

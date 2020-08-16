@@ -1,8 +1,6 @@
 ﻿using HWParts.Core.Domain.Configurations;
 using HWParts.Core.Domain.Entities;
 using HWParts.Core.Infrastructure;
-using HWParts.Core.Infrastructure.Identity.Authorization;
-using HWParts.Core.Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;

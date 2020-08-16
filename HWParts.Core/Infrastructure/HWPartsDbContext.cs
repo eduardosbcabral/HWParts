@@ -1,11 +1,7 @@
 ﻿using HWParts.Core.Domain.Entities;
-using HWParts.Core.Domain.Enums;
-using HWParts.Core.Infrastructure.Config;
 using HWParts.Core.Infrastructure.Config.Maps;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 
 namespace HWParts.Core.Infrastructure
 {
