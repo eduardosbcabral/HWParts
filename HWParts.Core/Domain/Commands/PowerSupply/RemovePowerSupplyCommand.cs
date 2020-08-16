@@ -8,7 +8,6 @@ namespace HWParts.Core.Domain.Commands
         public RemovePowerSupplyCommand(Guid id)
         {
             Id = id;
-            AggregateId = id;
         }
 
         public override bool IsValid()

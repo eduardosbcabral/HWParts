@@ -1,6 +1,7 @@
 ﻿using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.Services;
 using HWParts.Core.Domain.CommandHandlers;
+using HWParts.Core.Domain.CommandHandlers.Account;
 using HWParts.Core.Domain.Commands;
 using HWParts.Core.Domain.Core.Notifications;
 using HWParts.Core.Domain.EventHandlers;
@@ -76,7 +77,7 @@ namespace HWParts.Core.Infrastructure.IoC
             //.AddScoped<IRequestHandler<RemovePowerSupplyCommand, bool>, PowerSupplyCommandHandler>()
             //.AddScoped<IRequestHandler<ImportPowerSuppliesCommand, bool>, PowerSupplyCommandHandler>()
 
-            .AddScoped<IRequestHandler<RegisterAccountCommand, string>, AccountCommandHandler>()
+            .AddScoped<IRequestHandler<RegisterAccountCommand, bool>, RegisterAccountCommandHandler>()
             //.AddScoped<IRequestHandler<LoginAccountCommand, bool>, AccountCommandHandler>()
             //.AddScoped<IRequestHandler<ConfirmEmailAccountCommand, bool>, AccountCommandHandler>()
             //.AddScoped<IRequestHandler<ForgotPasswordAccountCommand, bool>, AccountCommandHandler>()

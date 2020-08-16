@@ -8,7 +8,6 @@ namespace HWParts.Core.Domain.Commands
         public RemoveProcessorCommand(Guid id)
         {
             Id = id;
-            AggregateId = id;
         }
 
         public override bool IsValid()
