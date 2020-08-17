@@ -1,7 +1,6 @@
 ﻿using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.Services;
 using HWParts.Core.Domain.CommandHandlers;
-using HWParts.Core.Domain.CommandHandlers.Account;
 using HWParts.Core.Domain.Commands;
 using HWParts.Core.Domain.Core.Notifications;
 using HWParts.Core.Domain.EventHandlers;

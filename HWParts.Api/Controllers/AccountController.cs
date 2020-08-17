@@ -3,6 +3,7 @@ using HWParts.Core.Domain.Commands;
 using HWParts.Web.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace HWParts.Api.Controllers
@@ -17,6 +18,7 @@ namespace HWParts.Api.Controllers
             _accountAppService = accountAppService;
 
         [HttpPost("register")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> Register([FromBody] RegisterAccountCommand command)
         {
             var result = await _accountAppService.Register(command);

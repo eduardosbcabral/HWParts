@@ -1,9 +1,10 @@
-﻿using HWParts.Core.Domain.Validations;
+﻿using FluentValidation.Results;
+using HWParts.Core.Domain.Validations;
 using MediatR;
 
 namespace HWParts.Core.Domain.Commands
 {
-    public class RegisterAccountCommand : IRequest<bool>
+    public class RegisterAccountCommand : AccountCommand, IRequest<bool>
     {
         public string Username { get; set; }
         public string Email { get; set; }
@@ -16,10 +17,15 @@ namespace HWParts.Core.Domain.Commands
             Password = password;
         }
 
-        //public override bool IsValid()
-        //{
-        //    ValidationResult = new RegisterAccountCommandValidation().Validate(this);
-        //    return ValidationResult.IsValid;
-        //}
+        public void Validate()
+        {
+            var validationResult = new RegisterAccountCommandValidation()
+                .Validate(this);
+
+            foreach(var error in validationResult.Errors)
+            {
+                AddNotification(error.PropertyName, error.ErrorMessage);
+            }
+        }
     }
 }
