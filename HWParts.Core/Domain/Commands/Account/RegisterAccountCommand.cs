@@ -1,13 +1,31 @@
-﻿using HWParts.Core.Domain.Validations;
+﻿using FluentValidation.Results;
+using HWParts.Core.Domain.Validations;
+using MediatR;
 
 namespace HWParts.Core.Domain.Commands
 {
-    public class RegisterAccountCommand : AccountCommand
+    public class RegisterAccountCommand : AccountCommand, IRequest<bool>
     {
-        public override bool IsValid()
+        public string Username { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+
+        public RegisterAccountCommand(string username, string email, string password)
         {
-            ValidationResult = new RegisterAccountCommandValidation().Validate(this);
-            return ValidationResult.IsValid;
+            Username = username;
+            Email = email;
+            Password = password;
+        }
+
+        public void Validate()
+        {
+            var validationResult = new RegisterAccountCommandValidation()
+                .Validate(this);
+
+            foreach(var error in validationResult.Errors)
+            {
+                AddNotification(error.PropertyName, error.ErrorMessage);
+            }
         }
     }
 }

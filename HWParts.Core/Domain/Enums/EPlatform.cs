@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-
-namespace HWParts.Core.Domain.Enums
+﻿namespace HWParts.Core.Domain.Enums
 {
     public enum EPlatform
     {

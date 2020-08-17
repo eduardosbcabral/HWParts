@@ -1,12 +1,12 @@
-﻿using HWParts.Core.Domain.Commands;
+﻿//using HWParts.Core.Domain.Commands;
 
-namespace HWParts.Core.Domain.Validations
-{
-    public class ForgotPasswordAccountCommandValidation : AccountValidation<ForgotPasswordAccountCommand>
-    {
-        public ForgotPasswordAccountCommandValidation()
-        {
+//namespace HWParts.Core.Domain.Validations
+//{
+//    public class ForgotPasswordAccountCommandValidation : AccountValidation<ForgotPasswordAccountCommand>
+//    {
+//        public ForgotPasswordAccountCommandValidation()
+//        {
 
-        }
-    }
-}
+//        }
+//    }
+//}

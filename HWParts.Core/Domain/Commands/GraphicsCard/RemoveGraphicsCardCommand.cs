@@ -8,7 +8,6 @@ namespace HWParts.Core.Domain.Commands
         public RemoveGraphicsCardCommand(Guid id)
         {
             Id = id;
-            AggregateId = id;
         }
 
         public override bool IsValid()

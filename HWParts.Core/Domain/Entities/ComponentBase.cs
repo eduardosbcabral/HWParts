@@ -1,7 +1,6 @@
 ﻿using HWParts.Core.Domain.Core.Entities;
 using HWParts.Core.Domain.Enums;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace HWParts.Core.Domain.Entities
