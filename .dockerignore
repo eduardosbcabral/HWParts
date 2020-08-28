@@ -3,6 +3,6 @@
 **/.gitignore
 **/.vs
 **/.vscode
-**/*.*proj.user
+**/*.*proj.user 
 **/bin
 **/obj  
