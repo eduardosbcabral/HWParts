@@ -19,9 +19,16 @@ namespace HWParts.Api.Controllers
 
         [HttpPost("register")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Register([FromBody] RegisterAccountCommand command)
         {
             var result = await _accountAppService.Register(command);
+
+            if (result.Invalid)
+            {
+                return BadRequest(result);
+            }
+
             return Ok(result);
         }
 

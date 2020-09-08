@@ -1,95 +1,58 @@
 ﻿using Flunt.Notifications;
 using HWParts.Core.Domain.Commands;
+using HWParts.Core.Domain.Core.Commands;
 using HWParts.Core.Domain.Entities;
-using HWParts.Core.Infrastructure;
+using HWParts.Core.Domain.Interfaces;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.WebUtilities;
-using System;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace HWParts.Core.Domain.CommandHandlers
 {
-    public class RegisterAccountCommandHandler : Notifiable, IRequestHandler<RegisterAccountCommand, bool>
+    public class RegisterAccountCommandHandler : Notifiable, IRequestHandler<RegisterAccountCommand, CommandResponse>
     {
-        private readonly UserManager<Account> _userManager;
-        private readonly HWPartsDbContext _context;
+        private readonly IAccountRepository _accountRepository;
 
-        public RegisterAccountCommandHandler(
-            UserManager<Account> userManager,
-            HWPartsDbContext context)
+        public RegisterAccountCommandHandler(IAccountRepository accountRepository)
         {
-            _userManager = userManager;
-            _context = context;
+            _accountRepository = accountRepository;
         }
 
-        public async Task<bool> Handle(RegisterAccountCommand command, CancellationToken cancellationToken)
+        public async Task<CommandResponse> Handle(RegisterAccountCommand command, CancellationToken cancellationToken)
         {
-            command.Validate();
-            if (command.Invalid)
-            {
-                AddNotifications(command);
-                return false;
-            }
+            var user = new Account(
+                command.Username,
+                command.Email);
 
-            using var transaction = _context.Database.BeginTransaction();
-            try
+            var result = await _accountRepository.CreateAsync(user, command.Password);
+            if (!result.Succeeded)
             {
-                var user = new Account(
-                    command.Username,
-                    command.Email);
-
-                var result = await _userManager.CreateAsync(user, command.Password);
-                if (!result.Succeeded)
+                var response = new ErrorCommandResponse("Erro ao cadastrar o usuário.");
+                foreach (var error in result.Errors)
                 {
-                    foreach (var error in result.Errors)
-                    {
-                        AddNotification("CreateUser", error.Description);
-                    }
-
-                    return false;
+                    response.AddNotification("CreateUser", error.Description);
                 }
 
-                await _userManager.AddToRoleAsync(user, "Common");
-                if (!result.Succeeded)
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        AddNotification("AddUserToRole", error.Description);
-                    }
+                return response;
+            }
 
-                    return false;
+            var addToRoleResult = await _accountRepository.AddToRoleAsync(user, "Common");
+            if (!addToRoleResult.Succeeded)
+            {
+                var response = new ErrorCommandResponse("Erro ao adicionar o cargo ao usuário.");
+                foreach (var error in addToRoleResult.Errors)
+                {
+                    response.AddNotification("AddUserToRole", error.Description);
                 }
 
-                return true;
-                //if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                //{
-                //    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                //    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-
-                //    var link = _linkGenerator.GetUriByAction(
-                //        _httpContextAccessor.HttpContext,
-                //        "ConfirmEmail",
-                //        "Account",
-                //        values: new ConfirmEmailAccountViewModel(user.Id, code),
-                //        _httpContextAccessor.HttpContext.Request.Scheme,
-                //        _httpContextAccessor.HttpContext.Request.Host);
-
-                //    await _emailSender.SendEmailAsync(user.Email, "Confirme seu email",
-                //        $"Por favor, confirme sua conta <a href='{HtmlEncoder.Default.Encode(link)}'>clicando aqui</a>.");
-
-                //    AddNotification("RequireConfirmedAccount", string.Empty);
-                //    return false;
-                //}
+                return response;
             }
-            catch (Exception)
+
+            return new SuccessCommandResponse(new
             {
-                AddNotification("CreateUser", string.Empty);
-                transaction.Rollback();
-                return false;
-            }
+                Message = "Usuário cadastrado com sucesso.",
+                user.Id
+            });
         }
     }
 }

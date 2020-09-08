@@ -1,30 +1,30 @@
-﻿//using AutoMapper;
-//using HWParts.Core.Application.ViewModels.Account;
-//using HWParts.Core.Domain.Entities;
-//using HWParts.Core.Domain.Interfaces;
-//using HWParts.Core.Infrastructure.Common.Pagination;
-//using Microsoft.EntityFrameworkCore;
+﻿using HWParts.Core.Domain.Entities;
+using HWParts.Core.Domain.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
-//namespace HWParts.Core.Infrastructure.Repositories
-//{
-//    public class AccountRepository : Repository<Account>, IAccountRepository
-//    {
-//        private readonly IMapper _mapper;
+namespace HWParts.Core.Infrastructure.Repositories
+{
+    public class AccountRepository : Repository<Account>, IAccountRepository
+    {
+        private readonly UserManager<Account> _userManager;
 
-//        public AccountRepository(
-//            HWPartsDbContext context,
-//            IMapper mapper)
-//            : base(context)
-//        {
-//            _mapper = mapper;
-//        }
+        public AccountRepository(
+            HWPartsDbContext context,
+            UserManager<Account> userManager)
+            : base(context)
+        {
+            _userManager = userManager;
+        }
 
-//        public PaginationObject<AccountViewModel> ListPaginated(int? page)
-//        {
-//            return Db
-//                .Users
-//                .AsNoTracking()
-//                .Pagination<Account, AccountViewModel>(_mapper, page);
-//        }
-//    }
-//}
+        public async Task<IdentityResult> CreateAsync(Account obj, string password)
+        {
+            return await _userManager.CreateAsync(obj, password);
+        }
+
+        public async Task<IdentityResult> AddToRoleAsync(Account obj, string role)
+        {
+            return await _userManager.AddToRoleAsync(obj, role);
+        }
+    }
+}

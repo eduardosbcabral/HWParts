@@ -18,8 +18,7 @@ namespace HWParts.Tests
 
             fakeCommand.Validate();
 
-            Assert.True(fakeCommand.Invalid);
-            Assert.Equal(1, fakeCommand.Notifications.Count);
+            Assert.True(false);
         }
 
         [Fact]
@@ -32,8 +31,7 @@ namespace HWParts.Tests
 
             fakeCommand.Validate();
 
-            Assert.True(fakeCommand.Invalid);
-            Assert.Equal(1, fakeCommand.Notifications.Count);
+            Assert.True(false);
         }
 
         [Fact]
@@ -46,8 +44,7 @@ namespace HWParts.Tests
 
             fakeCommand.Validate();
 
-            Assert.True(fakeCommand.Invalid);
-            Assert.Equal(1, fakeCommand.Notifications.Count);
+            Assert.True(false);
         }
 
         [Fact]
@@ -60,8 +57,7 @@ namespace HWParts.Tests
 
             fakeCommand.Validate();
 
-            Assert.True(fakeCommand.Valid);
-            Assert.Equal(0, fakeCommand.Notifications.Count);
+            Assert.True(false);
         }
     }
 }
