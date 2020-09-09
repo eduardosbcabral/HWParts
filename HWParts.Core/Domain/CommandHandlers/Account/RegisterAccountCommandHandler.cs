@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HWParts.Core.Domain.CommandHandlers
 {
-    public class RegisterAccountCommandHandler : Notifiable, IRequestHandler<RegisterAccountCommand, CommandResponse>
+    public class RegisterAccountCommandHandler : IRequestHandler<RegisterAccountCommand, CommandResponse>
     {
         private readonly IAccountRepository _accountRepository;
 

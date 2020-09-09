@@ -33,6 +33,7 @@ namespace HWParts.Core.Infrastructure.IoC
 
             // MediaTR
             .AddScoped(typeof(IPipelineBehavior<,>), typeof(FailFastRequestBehavior<,>))
+            .AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionalRequestBehavior<,>))
 
             // Application
             //.AddScoped<IMotherboardAppService, MotherboardAppService>()
