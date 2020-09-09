@@ -9,13 +9,15 @@ namespace HWParts.Core.Domain.Core.Commands
         {
             get
             {
+                dynamic resultObj = new ExpandoObject();
                 dynamic responseObj = new ExpandoObject();
-                if(base.Result != null)
+
+                if (base.Result != null)
                 {
-                    responseObj.Message = base.Result;
+                    responseObj.message = base.Result;
                 }
 
-                responseObj.Errors = Notifications.Select(x =>
+                responseObj.errors = Notifications.Select(x =>
                     {
                         dynamic obj = new ExpandoObject();
                         obj.description = x.Message;
@@ -28,7 +30,9 @@ namespace HWParts.Core.Domain.Core.Commands
                         return obj;
                     });
 
-                return responseObj;
+                resultObj.response = responseObj;
+
+                return resultObj;
             }
         }
 
