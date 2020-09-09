@@ -2,13 +2,10 @@
 {
     public class SuccessCommandResponse : CommandResponse, ICommandResponse
     {
-        public override object Result
+        public override object Result => new
         {
-            get => new
-            {
-                Response = base.Result
-            };
-        }
+            Response = base.Result
+        };
 
         public SuccessCommandResponse()
         {

@@ -30,7 +30,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                 var response = new ErrorCommandResponse("Erro ao cadastrar o usuário.");
                 foreach (var error in result.Errors)
                 {
-                    response.AddNotification("CreateUser", error.Description);
+                    response.AddNotification(null, error.Description);
                 }
 
                 return response;
@@ -42,7 +42,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                 var response = new ErrorCommandResponse("Erro ao adicionar o cargo ao usuário.");
                 foreach (var error in addToRoleResult.Errors)
                 {
-                    response.AddNotification("AddUserToRole", error.Description);
+                    response.AddNotification(null, error.Description);
                 }
 
                 return response;
