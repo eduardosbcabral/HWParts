@@ -26,10 +26,10 @@ namespace HWParts.Api.Controllers
 
             if (result.Invalid)
             {
-                return BadRequest(result);
+                return BadRequest(result.Result);
             }
 
-            return Ok(result);
+            return Ok(result.Result);
         }
 
         //[HttpGet("confirm-email")]

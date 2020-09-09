@@ -37,7 +37,7 @@ namespace HWParts.Core.Domain.Core.Commands
 
         private static Task<TResponse> Errors(IEnumerable<ValidationFailure> failures)
         {
-            var response = new CommandResponse();
+            var response = new ErrorCommandResponse();
 
             foreach (var failure in failures)
             {
