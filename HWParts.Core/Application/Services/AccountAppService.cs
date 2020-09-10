@@ -23,10 +23,10 @@ namespace HWParts.Core.Application.Services
             return await _mediator.Send(command);
         }
 
-        //public async void Login(LoginAccountCommand command)
-        //{
-        //    await Bus.SendCommand(command);
-        //}
+        public async Task<CommandResponse> Login(LoginAccountCommand command)
+        {
+            return await _mediator.Send(command);
+        }
 
         //public Task ConfirmEmail(ConfirmEmailAccountViewModel confirmEmailAccountViewModel)
         //{

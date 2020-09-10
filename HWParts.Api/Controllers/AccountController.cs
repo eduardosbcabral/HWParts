@@ -57,19 +57,18 @@ namespace HWParts.Api.Controllers
         //#endregion
 
         //#region Login/Related Endpoints
-        //[HttpPost("login")]
-        //public IActionResult Login([FromBody] LoginAccountCommand command)
-        //{
-        //    _accountAppService.Login(command);
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginAccountCommand command)
+        {
+            var response = await _accountAppService.Login(command);
 
-        //    if (!IsValidOperation())
-        //    {
-        //        return BadRequest();
-        //    }
+            if (response.Invalid)
+            {
+                return BadRequest(response.Result);
+            }
 
-        //    var domainEvent = GetNotification<AccountRegisteredEvent>();
-        //    return Ok(domainEvent);
-        //}
+            return Ok(response.Result);
+        }
 
         //[HttpPost("logout")]
         //[Authorize(Roles = ApplicationRoles.AllRoles)]
@@ -89,7 +88,7 @@ namespace HWParts.Api.Controllers
         //    {
         //        return View("Error");
         //    }
-            
+
         //    return View(new ResetPasswordAccountViewModel(code));
         //}
 

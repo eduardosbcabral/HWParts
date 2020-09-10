@@ -16,6 +16,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 using System.Reflection;
 
 namespace HWParts.Core.Infrastructure.IoC
@@ -86,7 +87,7 @@ namespace HWParts.Core.Infrastructure.IoC
             //.AddScoped<IRequestHandler<ImportPowerSuppliesCommand, bool>, PowerSupplyCommandHandler>()
 
             .AddScoped<IRequestHandler<RegisterAccountCommand, CommandResponse>, RegisterAccountCommandHandler>()
-            //.AddScoped<IRequestHandler<LoginAccountCommand, bool>, AccountCommandHandler>()
+            .AddScoped<IRequestHandler<LoginAccountCommand, CommandResponse>, LoginAccountCommandHandler>()
             //.AddScoped<IRequestHandler<ConfirmEmailAccountCommand, bool>, AccountCommandHandler>()
             //.AddScoped<IRequestHandler<ForgotPasswordAccountCommand, bool>, AccountCommandHandler>()
             //.AddScoped<IRequestHandler<ResetPasswordAccountCommand, bool>, AccountCommandHandler>()
@@ -119,8 +120,11 @@ namespace HWParts.Core.Infrastructure.IoC
             // Domain - Validators
             var assembly = Assembly.GetExecutingAssembly();
 
-            AssemblyScanner
+            var validators = AssemblyScanner
                 .FindValidatorsInAssembly(assembly)
+                .ToList();
+
+            validators
                 .ForEach(result => services.AddScoped(result.InterfaceType, result.ValidatorType));
         }
     }

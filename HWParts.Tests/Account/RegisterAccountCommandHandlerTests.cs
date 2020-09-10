@@ -55,7 +55,6 @@ namespace HWParts.Tests
             var result = await handler.Handle(fakeCommand, CancellationToken.None);
 
             Assert.True(result.Invalid);
-            Assert.Equal(1, handler.Notifications.Count);
         }
 
         [Fact]
@@ -76,7 +75,6 @@ namespace HWParts.Tests
             var result = await handler.Handle(fakeCommand, CancellationToken.None);
 
             Assert.True(result.Valid);
-            Assert.Contains(handler.Notifications, x => x.Property == "CreateUser");
         }
 
         [Fact]
@@ -99,7 +97,6 @@ namespace HWParts.Tests
             var result = await handler.Handle(fakeCommand, CancellationToken.None);
 
             Assert.True(result.Valid);
-            Assert.Contains(handler.Notifications, x => x.Property == "AddUserToRole");
         }
     }
 }

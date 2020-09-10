@@ -16,8 +16,6 @@ namespace HWParts.Tests
                 "test_user@test.com",
                 "123456");
 
-            fakeCommand.Validate();
-
             Assert.True(false);
         }
 
@@ -28,8 +26,6 @@ namespace HWParts.Tests
                 "testUser",
                 "",
                 "123456");
-
-            fakeCommand.Validate();
 
             Assert.True(false);
         }
@@ -42,8 +38,6 @@ namespace HWParts.Tests
                 "test_user@test.com",
                 "");
 
-            fakeCommand.Validate();
-
             Assert.True(false);
         }
 
@@ -54,8 +48,6 @@ namespace HWParts.Tests
                 "testUser",
                 "test_user@test.com",
                 "123456");
-
-            fakeCommand.Validate();
 
             Assert.True(false);
         }

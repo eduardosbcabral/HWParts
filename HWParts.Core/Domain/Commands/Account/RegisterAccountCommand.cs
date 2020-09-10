@@ -21,16 +21,5 @@ namespace HWParts.Core.Domain.Commands
             Email = email;
             Password = password;
         }
-
-        public void Validate()
-        {
-            var validationResult = new RegisterAccountCommandValidation()
-                .Validate(this);
-
-            foreach(var error in validationResult.Errors)
-            {
-                //AddNotification(error.PropertyName, error.ErrorMessage);
-            }
-        }
     }
 }

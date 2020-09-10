@@ -1,15 +1,11 @@
-﻿//using HWParts.Core.Domain.Validations;
+﻿using HWParts.Core.Domain.Validations;
 
-//namespace HWParts.Core.Domain.Commands
-//{
-//    public class LoginAccountCommand : AccountCommand
-//    {
-//        public bool RememberMe { get; set; }
-
-//        public override bool IsValid()
-//        {
-//            ValidationResult = new LoginAccountCommandValidation().Validate(this);
-//            return ValidationResult.IsValid;
-//        }
-//    }
-//}
+namespace HWParts.Core.Domain.Commands
+{
+    public class LoginAccountCommand : AccountCommand
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public bool RememberMe { get; set; }
+    }
+}
