@@ -19,25 +19,32 @@ namespace HWParts.Tests.Handlers.Accounts
 {
     public class RegisterAccountHandlerTests
     {
-        [Fact]
-        public async Task Should_not_have_notifications()
+        private readonly Mock<IAccountRepository> fakeAccountRepository;
+        private readonly RegisterAccount command;
+        private readonly IdentityResult identityResultSuccess;
+        private readonly IdentityResult identityResultFailure;
+
+        public RegisterAccountHandlerTests()
         {
-            var fakeAccountRepository = new Mock<IAccountRepository>();
-
-            var fakeIdentityResultSuccess = IdentityResult.Success;
-            fakeAccountRepository.Setup(x => x.CreateAsync(It.IsAny<Account>(), It.IsAny<string>()))
-                .Returns(Task.FromResult(fakeIdentityResultSuccess));
-            fakeAccountRepository.Setup(x => x.AddToRoleAsync(It.IsAny<Account>(), It.IsAny<string>()))
-                .Returns(Task.FromResult(fakeIdentityResultSuccess));
-
-            var handler = new RegisterAccountHandler(fakeAccountRepository.Object);
-
-            var fakeCommand = new RegisterAccount(
+            fakeAccountRepository = new Mock<IAccountRepository>();
+            command = new RegisterAccount(
                 "testUser",
                 "test_user@test.com",
                 "123456");
+            identityResultSuccess = IdentityResult.Success;
+            identityResultFailure = IdentityResult.Failed(new IdentityError());
+        }
 
-            var result = await handler.Handle(fakeCommand, CancellationToken.None);
+        [Fact]
+        public async Task Should_not_have_notifications()
+        {
+            fakeAccountRepository.Setup(x => x.CreateAsync(It.IsAny<Account>(), It.IsAny<string>()))
+                .Returns(Task.FromResult(identityResultSuccess));
+            fakeAccountRepository.Setup(x => x.AddToRoleAsync(It.IsAny<Account>(), It.IsAny<string>()))
+                .Returns(Task.FromResult(identityResultSuccess));
+
+            var handler = new RegisterAccountHandler(fakeAccountRepository.Object);
+            var result = await handler.Handle(command, CancellationToken.None);
 
             Assert.True(result.Valid);
             Assert.Empty(result.Notifications);
@@ -48,48 +55,32 @@ namespace HWParts.Tests.Handlers.Accounts
         [Fact]
         public async Task Should_have_notification_when_create_user_returns_failure()
         {
-            var fakeAccountRepository = new Mock<IAccountRepository>();
-
-            var identityResultFailed = IdentityResult.Failed(new IdentityError());
-            var handler = new RegisterAccountHandler(fakeAccountRepository.Object);
             fakeAccountRepository.Setup(x => x.CreateAsync(It.IsAny<Account>(), It.IsAny<string>()))
-                .Returns(Task.FromResult(identityResultFailed));
+                .Returns(Task.FromResult(identityResultFailure));
 
-            var fakeCommand = new RegisterAccount(
-                "testUser",
-                "test_user@test.com",
-                "123456");
-
-            var result = await handler.Handle(fakeCommand, CancellationToken.None);
+            var handler = new RegisterAccountHandler(fakeAccountRepository.Object);
+            var result = await handler.Handle(command, CancellationToken.None);
 
             Assert.True(result.Invalid);
             Assert.Equal("Erro ao cadastrar o usuário.", result.Message);
-            Assert.Single(result.Notifications);
+            Assert.NotEmpty(result.Notifications);
             Assert.IsType<ErrorCommandResponse>(result);
         }
 
         [Fact]
         public async Task Should_have_notification_when_add_to_role_returns_failure()
         {
-            var fakeAccountRepository = new Mock<IAccountRepository>();
-
-            var identityResultFailed = IdentityResult.Failed(new IdentityError());
-            var handler = new RegisterAccountHandler(fakeAccountRepository.Object);
             fakeAccountRepository.Setup(x => x.CreateAsync(It.IsAny<Account>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(IdentityResult.Success));
             fakeAccountRepository.Setup(x => x.AddToRoleAsync(It.IsAny<Account>(), It.IsAny<string>()))
-                .Returns(Task.FromResult(identityResultFailed));
+                .Returns(Task.FromResult(identityResultFailure));
 
-            var fakeCommand = new RegisterAccount(
-                "testUser",
-                "test_user@test.com",
-                "123456");
-
-            var result = await handler.Handle(fakeCommand, CancellationToken.None);
+            var handler = new RegisterAccountHandler(fakeAccountRepository.Object);
+            var result = await handler.Handle(command, CancellationToken.None);
 
             Assert.True(result.Invalid);
             Assert.Equal("Erro ao adicionar o cargo ao usuário.", result.Message);
-            Assert.Single(result.Notifications);
+            Assert.NotEmpty(result.Notifications);
             Assert.IsType<ErrorCommandResponse>(result);
         }
     }

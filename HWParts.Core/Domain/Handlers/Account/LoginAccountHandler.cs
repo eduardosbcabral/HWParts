@@ -29,17 +29,17 @@ namespace HWParts.Core.Domain.Handlers
 
             if (!result.Succeeded)
             {
+                if (result.RequiresTwoFactor)
+                {
+                    return new ErrorCommandResponse("Ocorreu um erro. É necessário validar a conta utilizando a verificação de dois passos.");
+                }
+
+                if (result.IsLockedOut)
+                {
+                    return new ErrorCommandResponse("Ocorreu um erro. Sua conta está bloqueada.");
+                }
+
                 return new ErrorCommandResponse("Tentativa de login inválida.");
-            }
-
-            if (result.RequiresTwoFactor)
-            {
-                return new ErrorCommandResponse("Ocorreu um erro. É necessário validar a conta utilizando a verificação de dois passos.");
-            }
-
-            if (result.IsLockedOut)
-            {
-                return new ErrorCommandResponse("Ocorreu um erro. Sua conta está bloqueada.");
             }
 
             var account = await _accountRepository.FindByNameAsyncSafe(request.UserName);

@@ -1,4 +1,8 @@
-﻿using System.Dynamic;
+﻿using Flunt.Notifications;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Dynamic;
 using System.Linq;
 
 namespace HWParts.Core.Domain.Core.Commands
@@ -13,20 +17,34 @@ namespace HWParts.Core.Domain.Core.Commands
                 resultObj.status = "error";
 
                 if (!string.IsNullOrEmpty(Message))
+                {
                     resultObj.message = Message;
+                }
 
-                resultObj.errors = Notifications.Select(x =>
+                if (Notifications.Any())
+                {
+                    var notifications = new List<Notification>(Notifications);
+
+                    if (!string.IsNullOrEmpty(Message))
                     {
-                        dynamic obj = new ExpandoObject();
-                        obj.description = x.Message;
+                        notifications.RemoveAt(0);
+                    }
 
-                        if (x.Property != null)
+                    resultObj.errors = notifications
+                        .Where(x => !string.IsNullOrEmpty(x.Message) || !string.IsNullOrEmpty(x.Property))
+                        .Select(x =>
                         {
-                            obj.property = x.Property;
-                        }
+                            dynamic obj = new ExpandoObject();
 
-                        return obj;
-                    });
+                            if (x.Property != null)
+                                obj.description = x.Message;
+
+                            if (x.Property != null)
+                                obj.property = x.Property;
+
+                            return obj;
+                        });
+                }
 
                 return resultObj;
             }
@@ -40,6 +58,7 @@ namespace HWParts.Core.Domain.Core.Commands
         public ErrorCommandResponse(string message)
             : base(message)
         {
+            AddNotification(string.Empty, message);
         }
     }
 }
