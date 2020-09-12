@@ -12,9 +12,14 @@ namespace HWParts.Core.Domain.Core.Commands
                 dynamic resultObj = new ExpandoObject();
                 dynamic responseObj = new ExpandoObject();
 
+                responseObj.status = "error";
+
                 if (base.Result != null)
                 {
                     responseObj.message = base.Result;
+
+                    if (!string.IsNullOrEmpty(base.ResponseType))
+                        responseObj.type = base.ResponseType;
                 }
 
                 responseObj.errors = Notifications.Select(x =>
@@ -43,6 +48,12 @@ namespace HWParts.Core.Domain.Core.Commands
 
         public ErrorCommandResponse(string result)
             : base(result)
+        {
+
+        }
+
+        public ErrorCommandResponse(string responseType, string result)
+            : base(responseType, result)
         {
 
         }

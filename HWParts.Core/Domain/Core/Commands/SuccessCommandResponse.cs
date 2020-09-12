@@ -1,11 +1,24 @@
-﻿namespace HWParts.Core.Domain.Core.Commands
+﻿using System.Dynamic;
+
+namespace HWParts.Core.Domain.Core.Commands
 {
     public class SuccessCommandResponse : CommandResponse, ICommandResponse
     {
-        public override object Result => new
+        public override object Result
         {
-            Response = base.Result
-        };
+            get
+            {
+                dynamic resultObj = new ExpandoObject();
+                resultObj.status = "success";
+
+                if (base.Result != null)
+                {
+                    resultObj.response = base.Result;
+                }
+
+                return resultObj;
+            }
+        }
 
         public SuccessCommandResponse()
         {
