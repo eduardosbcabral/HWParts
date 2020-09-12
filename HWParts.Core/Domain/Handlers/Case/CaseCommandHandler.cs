@@ -1,4 +1,4 @@
-//using HWParts.Core.Domain.CommandHandlers.Shared;
+//using HWParts.Core.Domain.Handlers.Shared;
 //using HWParts.Core.Domain.Commands;
 //using HWParts.Core.Domain.Core.Bus;
 //using HWParts.Core.Domain.Core.Notifications;
@@ -16,32 +16,33 @@
 //using System.Threading;
 //using System.Threading.Tasks;
 
-//namespace HWParts.Core.Domain.CommandHandlers
+//namespace HWParts.Core.Domain.Handlers
 //{
-//    public class StorageCommandHandler : CommandHandler,
-//        IRequestHandler<RegisterStorageCommand, bool>,
-//        IRequestHandler<UpdateStorageCommand, bool>,
-//        IRequestHandler<RemoveStorageCommand, bool>,
-//        IRequestHandler<ImportStoragesCommand, bool>
+//    public class CaseCommandHandler : CommandHandler,
+//        IRequestHandler<RegisterCaseCommand, bool>,
+//        IRequestHandler<UpdateCaseCommand, bool>,
+//        IRequestHandler<RemoveCaseCommand, bool>,
+//        IRequestHandler<ImportCasesCommand, bool>
 //    {
 //        private readonly IMediatorHandler Bus;
-//        private readonly IStorageRepository _storageRepository;
+//        private readonly ICaseRepository _caseRepository;
+
 //        private readonly HWPartsDbContext _context;
 
-//        public StorageCommandHandler(
+//        public CaseCommandHandler(
 //            IUnitOfWork uow,
 //            IMediatorHandler bus,
 //            INotificationHandler<DomainNotification> notifications,
-//            IStorageRepository storageRepository,
+//            ICaseRepository caseRepository,
 //            HWPartsDbContext context)
 //            : base(uow, bus, notifications)
 //        {
 //            Bus = bus;
-//            _storageRepository = storageRepository;
+//            _caseRepository = caseRepository;
 //            _context = context;
 //        }
 
-//        public Task<bool> Handle(RegisterStorageCommand request, CancellationToken cancellationToken)
+//        public Task<bool> Handle(RegisterCaseCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -49,7 +50,7 @@
 //                return Task.FromResult(false);
 //            }
 
-//            var storage = new Storage(
+//            var caseEntity = new Case(
 //                request.Brand,
 //                request.Model,
 //                request.PlatformId,
@@ -57,23 +58,23 @@
 //                request.Url,
 //                request.Platform);
 
-//            if (_storageRepository.GetByPlatformId(storage.PlatformId) != null)
+//            if (_caseRepository.GetByPlatformId(caseEntity.PlatformId) != null)
 //            {
 //                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
 //                return Task.FromResult(false);
 //            }
 
-//            _storageRepository.Add(storage);
+//            _caseRepository.Add(caseEntity);
 
 //            if (Commit())
 //            {
-//                Bus.RaiseEvent(new StorageRegisteredEvent(storage.Id, storage.Brand, storage.Model));
+//                Bus.RaiseEvent(new CaseRegisteredEvent(caseEntity.Id, caseEntity.Brand, caseEntity.Model));
 //            }
 
 //            return Task.FromResult(true);
 //        }
 
-//        public Task<bool> Handle(UpdateStorageCommand request, CancellationToken cancellationToken)
+//        public Task<bool> Handle(UpdateCaseCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -81,21 +82,21 @@
 //                return Task.FromResult(false);
 //            }
 
-//            if (!_storageRepository.Exists(request.Id))
+//            if (!_caseRepository.Exists(request.Id))
 //            {
 //                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente não existente."));
 //                return Task.FromResult(false);
 //            }
 
-//            var storage = _storageRepository.GetByPlatformId(request.PlatformId);
+//            var caseEntity = _caseRepository.GetByPlatformId(request.PlatformId);
 
-//            if (storage != null && storage.Id != request.Id)
+//            if (caseEntity != null && caseEntity.Id != request.Id)
 //            {
 //                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
 //                return Task.FromResult(false);
 //            }
 
-//            storage.Update(
+//            caseEntity.Update(
 //                request.PlatformId,
 //                request.ImageUrl,
 //                request.Url,
@@ -103,17 +104,17 @@
 //                request.Brand,
 //                request.Model);
 
-//            _storageRepository.Update(storage);
+//            _caseRepository.Update(caseEntity);
 
 //            if (Commit())
 //            {
-//                Bus.RaiseEvent(new StorageUpdatedEvent(storage.Id, storage.Brand, storage.Model));
+//                Bus.RaiseEvent(new CaseUpdatedEvent(caseEntity.Id, caseEntity.Brand, caseEntity.Model));
 //            }
 
 //            return Task.FromResult(true);
 //        }
 
-//        public Task<bool> Handle(RemoveStorageCommand request, CancellationToken cancellationToken)
+//        public Task<bool> Handle(RemoveCaseCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -121,17 +122,17 @@
 //                return Task.FromResult(false);
 //            }
 
-//            _storageRepository.Remove(request.Id);
+//            _caseRepository.Remove(request.Id);
 
 //            if (Commit())
 //            {
-//                Bus.RaiseEvent(new StorageRemovedEvent(request.Id));
+//                Bus.RaiseEvent(new CaseRemovedEvent(request.Id));
 //            }
 
 //            return Task.FromResult(true);
 //        }
 
-//        public async Task<bool> Handle(ImportStoragesCommand request, CancellationToken cancellationToken)
+//        public async Task<bool> Handle(ImportCasesCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -139,15 +140,15 @@
 //                return false;
 //            }
 
-//            var cases = new List<Storage>();
+//            var cases = new List<Case>();
 
 //            using (var reader = new StreamReader(request.File.OpenReadStream()))
 //            {
 //                var json = await reader.ReadToEndAsync();
 
-//                var componentsDeserialized = JsonConvert.DeserializeObject<List<dynamic>>(json);
+//                var processorsDeserialized = JsonConvert.DeserializeObject<List<dynamic>>(json);
 
-//                foreach (var item in componentsDeserialized)
+//                foreach (var item in processorsDeserialized)
 //                {
 //                    var brand = ImportFileHelper.BindParameter<string>("Brand", item);
 //                    var model = ImportFileHelper.BindParameter<string>("Model", item);
@@ -158,7 +159,7 @@
 
 //                    var imageUrlString = string.Join(";", imagesUrls);
 
-//                    var storageEntity = new Storage(
+//                    var caseEntity = new Case(
 //                        brand,
 //                        model,
 //                        platformId,
@@ -166,26 +167,26 @@
 //                        url,
 //                        platform);
 
-//                    var existsOnDb = _context.Storages
-//                            .Any(x => x.PlatformId == storageEntity.PlatformId);
+//                    var existsOnDb = _context.Cases
+//                            .Any(x => x.PlatformId == caseEntity.PlatformId);
 
 //                    if (!existsOnDb)
 //                    {
-//                        var existsOnCurrentList = cases.Any(x => x.PlatformId == storageEntity.PlatformId);
+//                        var existsOnCurrentList = cases.Any(x => x.PlatformId == caseEntity.PlatformId);
 
 //                        if (!existsOnCurrentList)
 //                        {
-//                            cases.Add(storageEntity);
+//                            cases.Add(caseEntity);
 //                        }
 //                    }
 //                    else
 //                    {
 //                        try
 //                        {
-//                            var storageFromDb = _context.Storages
-//                                .SingleOrDefault(x => x.PlatformId == storageEntity.PlatformId);
+//                            var caseFromDb = _context.Cases
+//                                .SingleOrDefault(x => x.PlatformId == caseEntity.PlatformId);
 
-//                            storageFromDb.Update(platformId, imageUrlString, url, platform, brand, model);
+//                            caseFromDb.Update(platformId, imageUrlString, url, platform, brand, model);
 //                        }
 //                        catch (Exception)
 //                        {
@@ -200,7 +201,7 @@
 
 //            if (Commit())
 //            {
-//                await Bus.RaiseEvent(new StoragesImportedEvent());
+//                await Bus.RaiseEvent(new CasesImportedEvent());
 //            }
 
 //            return true;

@@ -9,7 +9,7 @@
 //using System.Threading;
 //using System.Threading.Tasks;
 
-//namespace HWParts.Core.Domain.CommandHandlers
+//namespace HWParts.Core.Domain.Handlers
 //{
 //    public class ComponentPriceCommandHandler : CommandHandler,
 //        IRequestHandler<RegisterComponentPriceCommand, bool>,

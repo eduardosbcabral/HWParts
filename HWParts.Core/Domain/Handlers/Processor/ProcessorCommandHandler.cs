@@ -1,4 +1,4 @@
-﻿//using HWParts.Core.Domain.CommandHandlers.Shared;
+//using HWParts.Core.Domain.Handlers.Shared;
 //using HWParts.Core.Domain.Commands;
 //using HWParts.Core.Domain.Core.Bus;
 //using HWParts.Core.Domain.Core.Notifications;
@@ -8,7 +8,6 @@
 //using HWParts.Core.Domain.Interfaces;
 //using HWParts.Core.Infrastructure;
 //using MediatR;
-//using Microsoft.EntityFrameworkCore.Internal;
 //using Newtonsoft.Json;
 //using System;
 //using System.Collections.Generic;
@@ -17,32 +16,32 @@
 //using System.Threading;
 //using System.Threading.Tasks;
 
-//namespace HWParts.Core.Domain.CommandHandlers
+//namespace HWParts.Core.Domain.Handlers
 //{
-//    public class GraphicsCardCommandHandler : CommandHandler,
-//        IRequestHandler<RegisterGraphicsCardCommand, bool>,
-//        IRequestHandler<UpdateGraphicsCardCommand, bool>,
-//        IRequestHandler<RemoveGraphicsCardCommand, bool>,
-//        IRequestHandler<ImportGraphicsCardsCommand, bool>
+//    public class ProcessorCommandHandler : CommandHandler,
+//        IRequestHandler<RegisterProcessorCommand, bool>,
+//        IRequestHandler<UpdateProcessorCommand, bool>,
+//        IRequestHandler<RemoveProcessorCommand, bool>,
+//        IRequestHandler<ImportProcessorsCommand, bool>
 //    {
 //        private readonly IMediatorHandler Bus;
-//        private readonly IGraphicsCardRepository _graphicsCardRepository;
+//        private readonly IProcessorRepository _processorRepository;
 //        private readonly HWPartsDbContext _context;
 
-//        public GraphicsCardCommandHandler(
+//        public ProcessorCommandHandler(
 //            IUnitOfWork uow,
 //            IMediatorHandler bus,
 //            INotificationHandler<DomainNotification> notifications,
-//            IGraphicsCardRepository graphicsCardRepository,
+//            IProcessorRepository processorRepository,
 //            HWPartsDbContext context)
 //            : base(uow, bus, notifications)
 //        {
 //            Bus = bus;
-//            _graphicsCardRepository = graphicsCardRepository;
+//            _processorRepository = processorRepository;
 //            _context = context;
 //        }
 
-//        public Task<bool> Handle(RegisterGraphicsCardCommand request, CancellationToken cancellationToken)
+//        public Task<bool> Handle(RegisterProcessorCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -50,7 +49,7 @@
 //                return Task.FromResult(false);
 //            }
 
-//            var graphicsCard = new GraphicsCard(
+//            var processor = new Processor(
 //                request.Brand,
 //                request.Model,
 //                request.PlatformId,
@@ -58,23 +57,23 @@
 //                request.Url,
 //                request.Platform);
 
-//            if (_graphicsCardRepository.GetByPlatformId(graphicsCard.PlatformId) != null)
+//            if (_processorRepository.GetByPlatformId(processor.PlatformId) != null)
 //            {
 //                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
 //                return Task.FromResult(false);
 //            }
 
-//            _graphicsCardRepository.Add(graphicsCard);
+//            _processorRepository.Add(processor);
 
 //            if (Commit())
 //            {
-//                Bus.RaiseEvent(new GraphicsCardRegisteredEvent(graphicsCard.Id, graphicsCard.Brand, graphicsCard.Model));
+//                Bus.RaiseEvent(new ProcessorRegisteredEvent(processor.Id, processor.Brand, processor.Model));
 //            }
 
 //            return Task.FromResult(true);
 //        }
 
-//        public Task<bool> Handle(UpdateGraphicsCardCommand request, CancellationToken cancellationToken)
+//        public Task<bool> Handle(UpdateProcessorCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -82,21 +81,21 @@
 //                return Task.FromResult(false);
 //            }
 
-//            if (!_graphicsCardRepository.Exists(request.Id))
+//            if (!_processorRepository.Exists(request.Id))
 //            {
 //                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente não existente."));
 //                return Task.FromResult(false);
 //            }
 
-//            var graphicsCard = _graphicsCardRepository.GetByPlatformId(request.PlatformId);
+//            var processor = _processorRepository.GetByPlatformId(request.PlatformId);
 
-//            if (graphicsCard != null && graphicsCard.Id != request.Id)
+//            if (processor != null && processor.Id != request.Id)
 //            {
 //                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
 //                return Task.FromResult(false);
 //            }
 
-//            graphicsCard.Update(
+//            processor.Update(
 //                request.PlatformId,
 //                request.ImageUrl,
 //                request.Url,
@@ -104,17 +103,17 @@
 //                request.Brand,
 //                request.Model);
 
-//            _graphicsCardRepository.Update(graphicsCard);
+//            _processorRepository.Update(processor);
 
 //            if (Commit())
 //            {
-//                Bus.RaiseEvent(new GraphicsCardUpdatedEvent(graphicsCard.Id, graphicsCard.Brand, graphicsCard.Model));
+//                Bus.RaiseEvent(new ProcessorUpdatedEvent(processor.Id, processor.Brand, processor.Model));
 //            }
 
 //            return Task.FromResult(true);
 //        }
 
-//        public Task<bool> Handle(RemoveGraphicsCardCommand request, CancellationToken cancellationToken)
+//        public Task<bool> Handle(RemoveProcessorCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -122,17 +121,17 @@
 //                return Task.FromResult(false);
 //            }
 
-//            _graphicsCardRepository.Remove(request.Id);
+//            _processorRepository.Remove(request.Id);
 
 //            if (Commit())
 //            {
-//                Bus.RaiseEvent(new GraphicsCardRemovedEvent(request.Id));
+//                Bus.RaiseEvent(new ProcessorRemovedEvent(request.Id));
 //            }
 
 //            return Task.FromResult(true);
 //        }
 
-//        public async Task<bool> Handle(ImportGraphicsCardsCommand request, CancellationToken cancellationToken)
+//        public async Task<bool> Handle(ImportProcessorsCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -140,7 +139,7 @@
 //                return false;
 //            }
 
-//            var cases = new List<GraphicsCard>();
+//            var cases = new List<Processor>();
 
 //            using (var reader = new StreamReader(request.File.OpenReadStream()))
 //            {
@@ -159,7 +158,7 @@
 
 //                    var imageUrlString = string.Join(";", imagesUrls);
 
-//                    var graphicsCardEntity = new GraphicsCard(
+//                    var processorEntity = new Processor(
 //                        brand,
 //                        model,
 //                        platformId,
@@ -167,26 +166,26 @@
 //                        url,
 //                        platform);
 
-//                    var existsOnDb = _context.GraphicsCards
-//                            .Any(x => x.PlatformId == graphicsCardEntity.PlatformId);
+//                    var existsOnDb = _context.Processors
+//                            .Any(x => x.PlatformId == processorEntity.PlatformId);
 
 //                    if (!existsOnDb)
 //                    {
-//                        var existsOnCurrentList = cases.Any(x => x.PlatformId == graphicsCardEntity.PlatformId);
+//                        var existsOnCurrentList = cases.Any(x => x.PlatformId == processorEntity.PlatformId);
 
 //                        if (!existsOnCurrentList)
 //                        {
-//                            cases.Add(graphicsCardEntity);
+//                            cases.Add(processorEntity);
 //                        }
 //                    }
 //                    else
 //                    {
 //                        try
 //                        {
-//                            var graphicsCardsFromDb = _context.GraphicsCards
-//                                .SingleOrDefault(x => x.PlatformId == graphicsCardEntity.PlatformId);
+//                            var processorFromDb = _context.Processors
+//                                .SingleOrDefault(x => x.PlatformId == processorEntity.PlatformId);
 
-//                            graphicsCardsFromDb.Update(platformId, imageUrlString, url, platform, brand, model);
+//                            processorFromDb.Update(platformId, imageUrlString, url, platform, brand, model);
 //                        }
 //                        catch (Exception)
 //                        {
@@ -201,7 +200,7 @@
 
 //            if (Commit())
 //            {
-//                await Bus.RaiseEvent(new GraphicsCardsImportedEvent());
+//                await Bus.RaiseEvent(new ProcessorsImportedEvent());
 //            }
 
 //            return true;

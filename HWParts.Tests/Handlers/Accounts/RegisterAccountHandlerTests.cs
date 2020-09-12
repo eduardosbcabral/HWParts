@@ -1,4 +1,4 @@
-﻿using HWParts.Core.Domain.CommandHandlers;
+﻿using HWParts.Core.Domain.Handlers;
 using HWParts.Core.Domain.Commands;
 using HWParts.Core.Domain.Core.Commands;
 using HWParts.Core.Domain.Entities;
@@ -30,7 +30,7 @@ namespace HWParts.Tests.Handlers.Accounts
             fakeAccountRepository.Setup(x => x.AddToRoleAsync(It.IsAny<Account>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(fakeIdentityResultSuccess));
 
-            var handler = new RegisterAccountCommandHandler(fakeAccountRepository.Object);
+            var handler = new RegisterAccountHandler(fakeAccountRepository.Object);
 
             var fakeCommand = new RegisterAccount(
                 "testUser",
@@ -51,7 +51,7 @@ namespace HWParts.Tests.Handlers.Accounts
             var fakeAccountRepository = new Mock<IAccountRepository>();
 
             var identityResultFailed = IdentityResult.Failed(new IdentityError());
-            var handler = new RegisterAccountCommandHandler(fakeAccountRepository.Object);
+            var handler = new RegisterAccountHandler(fakeAccountRepository.Object);
             fakeAccountRepository.Setup(x => x.CreateAsync(It.IsAny<Account>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(identityResultFailed));
 
@@ -74,7 +74,7 @@ namespace HWParts.Tests.Handlers.Accounts
             var fakeAccountRepository = new Mock<IAccountRepository>();
 
             var identityResultFailed = IdentityResult.Failed(new IdentityError());
-            var handler = new RegisterAccountCommandHandler(fakeAccountRepository.Object);
+            var handler = new RegisterAccountHandler(fakeAccountRepository.Object);
             fakeAccountRepository.Setup(x => x.CreateAsync(It.IsAny<Account>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(IdentityResult.Success));
             fakeAccountRepository.Setup(x => x.AddToRoleAsync(It.IsAny<Account>(), It.IsAny<string>()))

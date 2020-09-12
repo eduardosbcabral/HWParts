@@ -7,13 +7,13 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HWParts.Core.Domain.CommandHandlers
+namespace HWParts.Core.Domain.Handlers
 {
-    public class RegisterAccountCommandHandler : IRequestHandler<RegisterAccount, CommandResponse>
+    public class RegisterAccountHandler : IRequestHandler<RegisterAccount, CommandResponse>
     {
         private readonly IAccountRepository _accountRepository;
 
-        public RegisterAccountCommandHandler(IAccountRepository accountRepository)
+        public RegisterAccountHandler(IAccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
         }

@@ -1,4 +1,4 @@
-//using HWParts.Core.Domain.CommandHandlers.Shared;
+﻿//using HWParts.Core.Domain.Handlers.Shared;
 //using HWParts.Core.Domain.Commands;
 //using HWParts.Core.Domain.Core.Bus;
 //using HWParts.Core.Domain.Core.Notifications;
@@ -16,32 +16,32 @@
 //using System.Threading;
 //using System.Threading.Tasks;
 
-//namespace HWParts.Core.Domain.CommandHandlers
+//namespace HWParts.Core.Domain.Handlers
 //{
-//    public class PowerSupplyCommandHandler : CommandHandler,
-//        IRequestHandler<RegisterPowerSupplyCommand, bool>,
-//        IRequestHandler<UpdatePowerSupplyCommand, bool>,
-//        IRequestHandler<RemovePowerSupplyCommand, bool>,
-//        IRequestHandler<ImportPowerSuppliesCommand, bool>
+//    public class MotherboardCommandHandler : CommandHandler,
+//        IRequestHandler<RegisterMotherboardCommand, bool>,
+//        IRequestHandler<UpdateMotherboardCommand, bool>,
+//        IRequestHandler<RemoveMotherboardCommand, bool>,
+//        IRequestHandler<ImportMotherboardsCommand, bool>
 //    {
 //        private readonly IMediatorHandler Bus;
-//        private readonly IPowerSupplyRepository _powerSupplyRepository;
+//        private readonly IMotherboardRepository _motherboardRepository;
 //        private readonly HWPartsDbContext _context;
 
-//        public PowerSupplyCommandHandler(
+//        public MotherboardCommandHandler(
 //            IUnitOfWork uow,
 //            IMediatorHandler bus,
 //            INotificationHandler<DomainNotification> notifications,
-//            IPowerSupplyRepository powerSupplyRepository,
+//            IMotherboardRepository motherboardRepository,
 //            HWPartsDbContext context)
 //            : base(uow, bus, notifications)
 //        {
 //            Bus = bus;
-//            _powerSupplyRepository = powerSupplyRepository;
+//            _motherboardRepository = motherboardRepository;
 //            _context = context;
 //        }
 
-//        public Task<bool> Handle(RegisterPowerSupplyCommand request, CancellationToken cancellationToken)
+//        public Task<bool> Handle(RegisterMotherboardCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -49,7 +49,7 @@
 //                return Task.FromResult(false);
 //            }
 
-//            var powerSupply = new PowerSupply(
+//            var motherboard = new Motherboard(
 //                request.Brand,
 //                request.Model,
 //                request.PlatformId,
@@ -57,23 +57,23 @@
 //                request.Url,
 //                request.Platform);
 
-//            if (_powerSupplyRepository.GetByPlatformId(powerSupply.PlatformId) != null)
+//            if (_motherboardRepository.GetByPlatformId(motherboard.PlatformId) != null)
 //            {
 //                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
 //                return Task.FromResult(false);
 //            }
 
-//            _powerSupplyRepository.Add(powerSupply);
+//            _motherboardRepository.Add(motherboard);
 
 //            if (Commit())
 //            {
-//                Bus.RaiseEvent(new PowerSupplyRegisteredEvent(powerSupply.Id, powerSupply.Brand, powerSupply.Model));
+//                Bus.RaiseEvent(new MotherboardRegisteredEvent(motherboard.Id, motherboard.Brand, motherboard.Model));
 //            }
 
 //            return Task.FromResult(true);
 //        }
 
-//        public Task<bool> Handle(UpdatePowerSupplyCommand request, CancellationToken cancellationToken)
+//        public Task<bool> Handle(UpdateMotherboardCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -81,21 +81,21 @@
 //                return Task.FromResult(false);
 //            }
 
-//            if (!_powerSupplyRepository.Exists(request.Id))
+//            if (!_motherboardRepository.Exists(request.Id))
 //            {
 //                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente não existente."));
 //                return Task.FromResult(false);
 //            }
 
-//            var powerSupply = _powerSupplyRepository.GetByPlatformId(request.PlatformId);
+//            var motherboard = _motherboardRepository.GetByPlatformId(request.PlatformId);
 
-//            if (powerSupply != null && powerSupply.Id != request.Id)
+//            if (motherboard != null && motherboard.Id != request.Id)
 //            {
 //                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
 //                return Task.FromResult(false);
 //            }
 
-//            powerSupply.Update(
+//            motherboard.Update(
 //                request.PlatformId,
 //                request.ImageUrl,
 //                request.Url,
@@ -103,17 +103,17 @@
 //                request.Brand,
 //                request.Model);
 
-//            _powerSupplyRepository.Update(powerSupply);
+//            _motherboardRepository.Update(motherboard);
 
 //            if (Commit())
 //            {
-//                Bus.RaiseEvent(new PowerSupplyUpdatedEvent(powerSupply.Id, powerSupply.Brand, powerSupply.Model));
+//                Bus.RaiseEvent(new MotherboardUpdatedEvent(motherboard.Id, motherboard.Brand, motherboard.Model));
 //            }
 
 //            return Task.FromResult(true);
 //        }
 
-//        public Task<bool> Handle(RemovePowerSupplyCommand request, CancellationToken cancellationToken)
+//        public Task<bool> Handle(RemoveMotherboardCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -121,17 +121,17 @@
 //                return Task.FromResult(false);
 //            }
 
-//            _powerSupplyRepository.Remove(request.Id);
+//            _motherboardRepository.Remove(request.Id);
 
 //            if (Commit())
 //            {
-//                Bus.RaiseEvent(new PowerSupplyRemovedEvent(request.Id));
+//                Bus.RaiseEvent(new MotherboardRemovedEvent(request.Id));
 //            }
 
 //            return Task.FromResult(true);
 //        }
 
-//        public async Task<bool> Handle(ImportPowerSuppliesCommand request, CancellationToken cancellationToken)
+//        public async Task<bool> Handle(ImportMotherboardsCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -139,7 +139,7 @@
 //                return false;
 //            }
 
-//            var cases = new List<PowerSupply>();
+//            var cases = new List<Motherboard>();
 
 //            using (var reader = new StreamReader(request.File.OpenReadStream()))
 //            {
@@ -158,7 +158,7 @@
 
 //                    var imageUrlString = string.Join(";", imagesUrls);
 
-//                    var powerSupplyEntity = new PowerSupply(
+//                    var motherboardEntity = new Motherboard(
 //                        brand,
 //                        model,
 //                        platformId,
@@ -166,26 +166,26 @@
 //                        url,
 //                        platform);
 
-//                    var existsOnDb = _context.PowerSupplies
-//                            .Any(x => x.PlatformId == powerSupplyEntity.PlatformId);
+//                    var existsOnDb = _context.Motherboards
+//                            .Any(x => x.PlatformId == motherboardEntity.PlatformId);
 
 //                    if (!existsOnDb)
 //                    {
-//                        var existsOnCurrentList = cases.Any(x => x.PlatformId == powerSupplyEntity.PlatformId);
+//                        var existsOnCurrentList = cases.Any(x => x.PlatformId == motherboardEntity.PlatformId);
 
 //                        if (!existsOnCurrentList)
 //                        {
-//                            cases.Add(powerSupplyEntity);
+//                            cases.Add(motherboardEntity);
 //                        }
 //                    }
 //                    else
 //                    {
 //                        try
 //                        {
-//                            var powerSupplyFromDb = _context.PowerSupplies
-//                                .SingleOrDefault(x => x.PlatformId == powerSupplyEntity.PlatformId);
+//                            var motherboardFromDb = _context.Motherboards
+//                                .SingleOrDefault(x => x.PlatformId == motherboardEntity.PlatformId);
 
-//                            powerSupplyFromDb.Update(platformId, imageUrlString, url, platform, brand, model);
+//                            motherboardFromDb.Update(platformId, imageUrlString, url, platform, brand, model);
 //                        }
 //                        catch (Exception)
 //                        {
@@ -200,7 +200,7 @@
 
 //            if (Commit())
 //            {
-//                await Bus.RaiseEvent(new PowerSuppliesImportedEvent());
+//                await Bus.RaiseEvent(new MotherboardsImportedEvent());
 //            }
 
 //            return true;

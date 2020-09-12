@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace HWParts.Core.Domain.CommandHandlers.Shared
+namespace HWParts.Core.Domain.Handlers.Shared
 {
     public class ImportFileHelper
     {

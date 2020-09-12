@@ -1,4 +1,4 @@
-﻿//using HWParts.Core.Domain.CommandHandlers.Shared;
+//using HWParts.Core.Domain.Handlers.Shared;
 //using HWParts.Core.Domain.Commands;
 //using HWParts.Core.Domain.Core.Bus;
 //using HWParts.Core.Domain.Core.Notifications;
@@ -16,32 +16,32 @@
 //using System.Threading;
 //using System.Threading.Tasks;
 
-//namespace HWParts.Core.Domain.CommandHandlers
+//namespace HWParts.Core.Domain.Handlers
 //{
-//    public class MemoryCommandHandler : CommandHandler,
-//        IRequestHandler<RegisterMemoryCommand, bool>,
-//        IRequestHandler<UpdateMemoryCommand, bool>,
-//        IRequestHandler<RemoveMemoryCommand, bool>,
-//        IRequestHandler<ImportMemoriesCommand, bool>
+//    public class PowerSupplyCommandHandler : CommandHandler,
+//        IRequestHandler<RegisterPowerSupplyCommand, bool>,
+//        IRequestHandler<UpdatePowerSupplyCommand, bool>,
+//        IRequestHandler<RemovePowerSupplyCommand, bool>,
+//        IRequestHandler<ImportPowerSuppliesCommand, bool>
 //    {
 //        private readonly IMediatorHandler Bus;
-//        private readonly IMemoryRepository _memoryRepository;
+//        private readonly IPowerSupplyRepository _powerSupplyRepository;
 //        private readonly HWPartsDbContext _context;
 
-//        public MemoryCommandHandler(
+//        public PowerSupplyCommandHandler(
 //            IUnitOfWork uow,
 //            IMediatorHandler bus,
 //            INotificationHandler<DomainNotification> notifications,
-//            IMemoryRepository memoryRepository,
+//            IPowerSupplyRepository powerSupplyRepository,
 //            HWPartsDbContext context)
 //            : base(uow, bus, notifications)
 //        {
 //            Bus = bus;
-//            _memoryRepository = memoryRepository;
+//            _powerSupplyRepository = powerSupplyRepository;
 //            _context = context;
 //        }
 
-//        public Task<bool> Handle(RegisterMemoryCommand request, CancellationToken cancellationToken)
+//        public Task<bool> Handle(RegisterPowerSupplyCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -49,7 +49,7 @@
 //                return Task.FromResult(false);
 //            }
 
-//            var memory = new Memory(
+//            var powerSupply = new PowerSupply(
 //                request.Brand,
 //                request.Model,
 //                request.PlatformId,
@@ -57,23 +57,23 @@
 //                request.Url,
 //                request.Platform);
 
-//            if (_memoryRepository.GetByPlatformId(memory.PlatformId) != null)
+//            if (_powerSupplyRepository.GetByPlatformId(powerSupply.PlatformId) != null)
 //            {
 //                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
 //                return Task.FromResult(false);
 //            }
 
-//            _memoryRepository.Add(memory);
+//            _powerSupplyRepository.Add(powerSupply);
 
 //            if (Commit())
 //            {
-//                Bus.RaiseEvent(new MemoryRegisteredEvent(memory.Id, memory.Brand, memory.Model));
+//                Bus.RaiseEvent(new PowerSupplyRegisteredEvent(powerSupply.Id, powerSupply.Brand, powerSupply.Model));
 //            }
 
 //            return Task.FromResult(true);
 //        }
 
-//        public Task<bool> Handle(UpdateMemoryCommand request, CancellationToken cancellationToken)
+//        public Task<bool> Handle(UpdatePowerSupplyCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -81,21 +81,21 @@
 //                return Task.FromResult(false);
 //            }
 
-//            if (!_memoryRepository.Exists(request.Id))
+//            if (!_powerSupplyRepository.Exists(request.Id))
 //            {
 //                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente não existente."));
 //                return Task.FromResult(false);
 //            }
 
-//            var memory = _memoryRepository.GetByPlatformId(request.PlatformId);
+//            var powerSupply = _powerSupplyRepository.GetByPlatformId(request.PlatformId);
 
-//            if (memory != null && memory.Id != request.Id)
+//            if (powerSupply != null && powerSupply.Id != request.Id)
 //            {
 //                Bus.RaiseEvent(new DomainNotification(request.MessageType, "Componente com o ID da plaforma existente."));
 //                return Task.FromResult(false);
 //            }
 
-//            memory.Update(
+//            powerSupply.Update(
 //                request.PlatformId,
 //                request.ImageUrl,
 //                request.Url,
@@ -103,17 +103,17 @@
 //                request.Brand,
 //                request.Model);
 
-//            _memoryRepository.Update(memory);
+//            _powerSupplyRepository.Update(powerSupply);
 
 //            if (Commit())
 //            {
-//                Bus.RaiseEvent(new MemoryUpdatedEvent(memory.Id, memory.Brand, memory.Model));
+//                Bus.RaiseEvent(new PowerSupplyUpdatedEvent(powerSupply.Id, powerSupply.Brand, powerSupply.Model));
 //            }
 
 //            return Task.FromResult(true);
 //        }
 
-//        public Task<bool> Handle(RemoveMemoryCommand request, CancellationToken cancellationToken)
+//        public Task<bool> Handle(RemovePowerSupplyCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -121,17 +121,17 @@
 //                return Task.FromResult(false);
 //            }
 
-//            _memoryRepository.Remove(request.Id);
+//            _powerSupplyRepository.Remove(request.Id);
 
 //            if (Commit())
 //            {
-//                Bus.RaiseEvent(new MemoryRemovedEvent(request.Id));
+//                Bus.RaiseEvent(new PowerSupplyRemovedEvent(request.Id));
 //            }
 
 //            return Task.FromResult(true);
 //        }
 
-//        public async Task<bool> Handle(ImportMemoriesCommand request, CancellationToken cancellationToken)
+//        public async Task<bool> Handle(ImportPowerSuppliesCommand request, CancellationToken cancellationToken)
 //        {
 //            if (!request.IsValid())
 //            {
@@ -139,7 +139,7 @@
 //                return false;
 //            }
 
-//            var cases = new List<Memory>();
+//            var cases = new List<PowerSupply>();
 
 //            using (var reader = new StreamReader(request.File.OpenReadStream()))
 //            {
@@ -158,7 +158,7 @@
 
 //                    var imageUrlString = string.Join(";", imagesUrls);
 
-//                    var memoryEntity = new Memory(
+//                    var powerSupplyEntity = new PowerSupply(
 //                        brand,
 //                        model,
 //                        platformId,
@@ -166,26 +166,26 @@
 //                        url,
 //                        platform);
 
-//                    var existsOnDb = _context.Memories
-//                            .Any(x => x.PlatformId == memoryEntity.PlatformId);
+//                    var existsOnDb = _context.PowerSupplies
+//                            .Any(x => x.PlatformId == powerSupplyEntity.PlatformId);
 
 //                    if (!existsOnDb)
 //                    {
-//                        var existsOnCurrentList = cases.Any(x => x.PlatformId == memoryEntity.PlatformId);
+//                        var existsOnCurrentList = cases.Any(x => x.PlatformId == powerSupplyEntity.PlatformId);
 
 //                        if (!existsOnCurrentList)
 //                        {
-//                            cases.Add(memoryEntity);
+//                            cases.Add(powerSupplyEntity);
 //                        }
 //                    }
 //                    else
 //                    {
 //                        try
 //                        {
-//                            var memoriesFromDb = _context.Memories
-//                                .SingleOrDefault(x => x.PlatformId == memoryEntity.PlatformId);
+//                            var powerSupplyFromDb = _context.PowerSupplies
+//                                .SingleOrDefault(x => x.PlatformId == powerSupplyEntity.PlatformId);
 
-//                            memoriesFromDb.Update(platformId, imageUrlString, url, platform, brand, model);
+//                            powerSupplyFromDb.Update(platformId, imageUrlString, url, platform, brand, model);
 //                        }
 //                        catch (Exception)
 //                        {
@@ -200,7 +200,7 @@
 
 //            if (Commit())
 //            {
-//                await Bus.RaiseEvent(new MemoriesImportedEvent());
+//                await Bus.RaiseEvent(new PowerSuppliesImportedEvent());
 //            }
 
 //            return true;

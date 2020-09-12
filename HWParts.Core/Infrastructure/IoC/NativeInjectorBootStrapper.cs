@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.Services;
-using HWParts.Core.Domain.CommandHandlers;
+using HWParts.Core.Domain.Handlers;
 using HWParts.Core.Domain.Commands;
 using HWParts.Core.Domain.Core.Commands;
 using HWParts.Core.Domain.Core.Notifications;
@@ -86,8 +86,8 @@ namespace HWParts.Core.Infrastructure.IoC
             //.AddScoped<IRequestHandler<RemovePowerSupplyCommand, bool>, PowerSupplyCommandHandler>()
             //.AddScoped<IRequestHandler<ImportPowerSuppliesCommand, bool>, PowerSupplyCommandHandler>()
 
-            .AddScoped<IRequestHandler<RegisterAccount, CommandResponse>, RegisterAccountCommandHandler>()
-            .AddScoped<IRequestHandler<LoginAccount, CommandResponse>, LoginAccountCommandHandler>()
+            .AddScoped<IRequestHandler<RegisterAccount, CommandResponse>, RegisterAccountHandler>()
+            .AddScoped<IRequestHandler<LoginAccount, CommandResponse>, LoginAccountHandler>()
             //.AddScoped<IRequestHandler<ConfirmEmailAccountCommand, bool>, AccountCommandHandler>()
             //.AddScoped<IRequestHandler<ForgotPasswordAccountCommand, bool>, AccountCommandHandler>()
             //.AddScoped<IRequestHandler<ResetPasswordAccountCommand, bool>, AccountCommandHandler>()

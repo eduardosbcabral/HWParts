@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using HWParts.Core.Application.Services;
 using HWParts.Core.Application.ViewModels.Account;
-using HWParts.Core.Domain.CommandHandlers.Responses.Accounts;
+using HWParts.Core.Domain.Handlers.Responses.Accounts;
 using HWParts.Core.Domain.Commands;
 using HWParts.Core.Domain.Core.Commands;
 using HWParts.Core.Domain.Interfaces;
@@ -9,13 +9,13 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HWParts.Core.Domain.CommandHandlers
+namespace HWParts.Core.Domain.Handlers
 {
-    public class LoginAccountCommandHandler : IRequestHandler<LoginAccount, CommandResponse>
+    public class LoginAccountHandler : IRequestHandler<LoginAccount, CommandResponse>
     {
         private readonly IAccountRepository _accountRepository;
 
-        public LoginAccountCommandHandler(IAccountRepository accountRepository)
+        public LoginAccountHandler(IAccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
         }
@@ -53,7 +53,7 @@ namespace HWParts.Core.Domain.CommandHandlers
     }
 }
 
-namespace HWParts.Core.Domain.CommandHandlers.Responses.Accounts
+namespace HWParts.Core.Domain.Handlers.Responses.Accounts
 {
     public class LoginAccountSuccess
     {
