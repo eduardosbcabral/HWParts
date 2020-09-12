@@ -6,7 +6,7 @@ namespace HWParts.Core.Domain.Commands
 {
     public class RegisterAccountCommand : AccountCommand
     {
-        public string Username { get; set; }
+        public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
 
@@ -17,7 +17,7 @@ namespace HWParts.Core.Domain.Commands
 
         public RegisterAccountCommand(string username, string email, string password)
         {
-            Username = username;
+            UserName = username;
             Email = email;
             Password = password;
         }

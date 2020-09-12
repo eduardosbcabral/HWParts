@@ -21,7 +21,7 @@ namespace HWParts.Core.Domain.CommandHandlers
         public async Task<CommandResponse> Handle(RegisterAccountCommand command, CancellationToken cancellationToken)
         {
             var user = new Account(
-                command.Username,
+                command.UserName,
                 command.Email);
 
             var result = await _accountRepository.CreateAsync(user, command.Password);
