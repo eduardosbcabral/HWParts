@@ -22,20 +22,19 @@ namespace HWParts.Core.Domain.Core.Commands
             try
             {
                 var response = await next();
-                if (response.Valid)
-                {
-                    await Commit(transaction);
-                    return response;
-                }
 
-                await Rollback(transaction);
+                if (response.Valid)
+                    await Commit(transaction);
+                else
+                    await Rollback(transaction);
+
                 return response;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 await Rollback(transaction);
                 var response = new ErrorCommandResponse();
-                response.AddNotification(null, "Ocorreu um erro na requisição.");
+                response.AddNotification(ex.GetType.ToString(), "Ocorreu um erro na requisição.");
                 return (TResponse)(CommandResponse)response;
             }
         }
