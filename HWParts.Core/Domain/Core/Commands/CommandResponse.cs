@@ -4,8 +4,8 @@ namespace HWParts.Core.Domain.Core.Commands
 {
     public class CommandResponse : Notifiable
     {
-        public string ResponseType { get; set; }
         public virtual object Result { get; set; }
+        public string Message { get; set; }
 
         public CommandResponse()
         {
@@ -14,10 +14,12 @@ namespace HWParts.Core.Domain.Core.Commands
 
         public CommandResponse(object result) => Result = result;
 
-        public CommandResponse(string responseType, object result)
+        public CommandResponse(string message) => Message = message;
+
+        public CommandResponse(object result, string message)
         {
-            ResponseType = responseType;
             Result = result;
+            Message = message;
         }
     }
 }

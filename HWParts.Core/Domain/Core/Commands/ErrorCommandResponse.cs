@@ -10,19 +10,12 @@ namespace HWParts.Core.Domain.Core.Commands
             get
             {
                 dynamic resultObj = new ExpandoObject();
-                dynamic responseObj = new ExpandoObject();
+                resultObj.status = "error";
 
-                responseObj.status = "error";
+                if (!string.IsNullOrEmpty(Message))
+                    resultObj.message = Message;
 
-                if (base.Result != null)
-                {
-                    responseObj.message = base.Result;
-
-                    if (!string.IsNullOrEmpty(base.ResponseType))
-                        responseObj.type = base.ResponseType;
-                }
-
-                responseObj.errors = Notifications.Select(x =>
+                resultObj.errors = Notifications.Select(x =>
                     {
                         dynamic obj = new ExpandoObject();
                         obj.description = x.Message;
@@ -35,8 +28,6 @@ namespace HWParts.Core.Domain.Core.Commands
                         return obj;
                     });
 
-                resultObj.response = responseObj;
-
                 return resultObj;
             }
         }
@@ -46,16 +37,9 @@ namespace HWParts.Core.Domain.Core.Commands
 
         }
 
-        public ErrorCommandResponse(string result)
-            : base(result)
+        public ErrorCommandResponse(string message)
+            : base(message)
         {
-
-        }
-
-        public ErrorCommandResponse(string responseType, string result)
-            : base(responseType, result)
-        {
-
         }
     }
 }

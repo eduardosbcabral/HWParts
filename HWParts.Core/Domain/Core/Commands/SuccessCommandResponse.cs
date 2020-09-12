@@ -9,12 +9,16 @@ namespace HWParts.Core.Domain.Core.Commands
             get
             {
                 dynamic resultObj = new ExpandoObject();
+
+                if(base.Result != null)
+                {
+                    resultObj.data = base.Result;
+                }
+
                 resultObj.status = "success";
 
-                if (base.Result != null)
-                {
-                    resultObj.response = base.Result;
-                }
+                if (!string.IsNullOrEmpty(Message))
+                    resultObj.message = Message;
 
                 return resultObj;
             }
@@ -25,10 +29,9 @@ namespace HWParts.Core.Domain.Core.Commands
 
         }
 
-        public SuccessCommandResponse(object result)
-            : base(result)
+        public SuccessCommandResponse(string message, object result)
+            : base(result, message)
         {
-
         }
     }
 }
