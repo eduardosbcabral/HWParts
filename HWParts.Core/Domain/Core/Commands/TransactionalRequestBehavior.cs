@@ -34,7 +34,7 @@ namespace HWParts.Core.Domain.Core.Commands
             {
                 await Rollback(transaction);
                 var response = new ErrorCommandResponse();
-                response.AddNotification(ex.GetType.ToString(), "Ocorreu um erro na requisição.");
+                response.AddNotification(ex.GetType().ToString(), "Ocorreu um erro na requisição.");
                 return (TResponse)(CommandResponse)response;
             }
         }
