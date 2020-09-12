@@ -13,7 +13,7 @@ namespace HWParts.Core.Domain.Validations
 
         protected void ValidateUsername()
         {
-            RuleFor(c => c.Username)
+            RuleFor(c => c.UserName)
                 .NotEmpty().WithMessage("Nome de usuário é obrigatório.");
         }
 

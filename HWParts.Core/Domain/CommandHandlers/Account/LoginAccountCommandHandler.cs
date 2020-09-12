@@ -23,7 +23,7 @@ namespace HWParts.Core.Domain.CommandHandlers
         public async Task<CommandResponse> Handle(LoginAccount request, CancellationToken cancellationToken)
         {
             var result = await _accountRepository.PasswordSignInAsync(
-                request.Username,
+                request.UserName,
                 request.Password,
                 request.RememberMe);
 
@@ -42,7 +42,7 @@ namespace HWParts.Core.Domain.CommandHandlers
                 return new ErrorCommandResponse("Ocorreu um erro. Sua conta está bloqueada.");
             }
 
-            var account = await _accountRepository.FindByNameAsyncSafe(request.Username);
+            var account = await _accountRepository.FindByNameAsyncSafe(request.UserName);
 
             var token = TokenService.GenerateToken(account.UserName);
 
