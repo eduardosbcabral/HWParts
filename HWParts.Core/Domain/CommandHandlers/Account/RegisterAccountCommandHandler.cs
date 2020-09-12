@@ -48,11 +48,12 @@ namespace HWParts.Core.Domain.CommandHandlers
                 return response;
             }
 
-            return new SuccessCommandResponse(new
-            {
-                Message = "Usuário cadastrado com sucesso.",
-                user.Id
-            });
+            return new SuccessCommandResponse(
+                "Usuário cadastrado com sucesso.",
+                new
+                {
+                    user.Id
+                });
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using HWParts.Core.Domain.CommandHandlers;
 using HWParts.Core.Domain.Commands;
+using HWParts.Core.Domain.Core.Commands;
 using HWParts.Core.Domain.Entities;
 using HWParts.Core.Domain.Interfaces;
 using HWParts.Core.Infrastructure;
@@ -14,12 +15,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace HWParts.Tests
+namespace HWParts.Tests.Handlers.Accounts
 {
-    public class RegisterAccountCommandHandlerTests
+    public class RegisterAccountHandlerTests
     {
         [Fact]
-        public async Task Handler_return_success()
+        public async Task Should_not_have_notifications()
         {
             var fakeAccountRepository = new Mock<IAccountRepository>();
 
@@ -39,26 +40,13 @@ namespace HWParts.Tests
             var result = await handler.Handle(fakeCommand, CancellationToken.None);
 
             Assert.True(result.Valid);
+            Assert.Empty(result.Notifications);
+            Assert.Equal("Usuário cadastrado com sucesso.", result.Message);
+            Assert.IsType<SuccessCommandResponse>(result);
         }
 
         [Fact]
-        public async Task Handler_return_false_when_command_is_invalid()
-        {
-            var fakeAccountRepository = new Mock<IAccountRepository>();
-            var handler = new RegisterAccountCommandHandler(fakeAccountRepository.Object);
-
-            var fakeCommand = new RegisterAccountCommand(
-                "testUser",
-                "test_user@test.com",
-                "");
-
-            var result = await handler.Handle(fakeCommand, CancellationToken.None);
-
-            Assert.True(result.Invalid);
-        }
-
-        [Fact]
-        public async Task Handler_return_false_when_create_user_returns_error()
+        public async Task Should_have_notification_when_create_user_returns_failure()
         {
             var fakeAccountRepository = new Mock<IAccountRepository>();
 
@@ -74,11 +62,14 @@ namespace HWParts.Tests
 
             var result = await handler.Handle(fakeCommand, CancellationToken.None);
 
-            Assert.True(result.Valid);
+            Assert.True(result.Invalid);
+            Assert.Equal("Erro ao cadastrar o usuário.", result.Message);
+            Assert.Single(result.Notifications);
+            Assert.IsType<ErrorCommandResponse>(result);
         }
 
         [Fact]
-        public async Task Handler_return_false_when_add_to_role_returns_error()
+        public async Task Should_have_notification_when_add_to_role_returns_failure()
         {
             var fakeAccountRepository = new Mock<IAccountRepository>();
 
@@ -96,7 +87,10 @@ namespace HWParts.Tests
 
             var result = await handler.Handle(fakeCommand, CancellationToken.None);
 
-            Assert.True(result.Valid);
+            Assert.True(result.Invalid);
+            Assert.Equal("Erro ao adicionar o cargo ao usuário.", result.Message);
+            Assert.Single(result.Notifications);
+            Assert.IsType<ErrorCommandResponse>(result);
         }
     }
 }

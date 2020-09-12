@@ -3,14 +3,14 @@ using HWParts.Core.Domain.Commands;
 using HWParts.Core.Domain.Validations;
 using Xunit;
 
-namespace HWParts.Tests.Accounts.Commands
+namespace HWParts.Tests.Commands.Accounts
 {
-    public class RegisterAccountCommandTests
+    public class RegisterAccountTests
     {
         private readonly RegisterAccountCommand command;
         private readonly RegisterAccountCommandValidation validator;
 
-        public RegisterAccountCommandTests()
+        public RegisterAccountTests()
         {
             validator = new RegisterAccountCommandValidation();
             command = new RegisterAccountCommand(
