@@ -86,8 +86,8 @@ namespace HWParts.Core.Infrastructure.IoC
             //.AddScoped<IRequestHandler<RemovePowerSupplyCommand, bool>, PowerSupplyCommandHandler>()
             //.AddScoped<IRequestHandler<ImportPowerSuppliesCommand, bool>, PowerSupplyCommandHandler>()
 
-            .AddScoped<IRequestHandler<RegisterAccountCommand, CommandResponse>, RegisterAccountCommandHandler>()
-            .AddScoped<IRequestHandler<LoginAccountCommand, CommandResponse>, LoginAccountCommandHandler>()
+            .AddScoped<IRequestHandler<RegisterAccount, CommandResponse>, RegisterAccountCommandHandler>()
+            .AddScoped<IRequestHandler<LoginAccount, CommandResponse>, LoginAccountCommandHandler>()
             //.AddScoped<IRequestHandler<ConfirmEmailAccountCommand, bool>, AccountCommandHandler>()
             //.AddScoped<IRequestHandler<ForgotPasswordAccountCommand, bool>, AccountCommandHandler>()
             //.AddScoped<IRequestHandler<ResetPasswordAccountCommand, bool>, AccountCommandHandler>()

@@ -18,12 +18,12 @@ namespace HWParts.Core.Application.Services
             _mediator = mediator;
         }
 
-        public async Task<CommandResponse> Register(RegisterAccountCommand command)
+        public async Task<CommandResponse> Register(RegisterAccount command)
         {
             return await _mediator.Send(command);
         }
 
-        public async Task<CommandResponse> Login(LoginAccountCommand command)
+        public async Task<CommandResponse> Login(LoginAccount command)
         {
             return await _mediator.Send(command);
         }

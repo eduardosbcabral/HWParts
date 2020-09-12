@@ -2,7 +2,7 @@
 
 namespace HWParts.Core.Domain.Commands
 {
-    public class LoginAccountCommand : AccountCommand
+    public class LoginAccount : AccountCommand
     {
         public string Username { get; set; }
         public string Password { get; set; }

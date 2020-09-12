@@ -8,7 +8,7 @@ namespace HWParts.Core.Domain.CommandHandlers
         {
         }
 
-        public void NotifyValidationErrors(RegisterAccountCommand command)
+        public void NotifyValidationErrors(RegisterAccount command)
         {
 
         }

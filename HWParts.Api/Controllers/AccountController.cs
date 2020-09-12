@@ -20,7 +20,7 @@ namespace HWParts.Api.Controllers
         [HttpPost("register")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Register([FromBody] RegisterAccountCommand command)
+        public async Task<IActionResult> Register([FromBody] RegisterAccount command)
         {
             var result = await _accountAppService.Register(command);
 
@@ -58,7 +58,7 @@ namespace HWParts.Api.Controllers
 
         //#region Login/Related Endpoints
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginAccountCommand command)
+        public async Task<IActionResult> Login([FromBody] LoginAccount command)
         {
             var response = await _accountAppService.Login(command);
 

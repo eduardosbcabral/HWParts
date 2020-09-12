@@ -3,9 +3,9 @@ using HWParts.Core.Domain.Commands;
 
 namespace HWParts.Core.Domain.Validations
 {
-    public class LoginAccountCommandValidation : AbstractValidator<LoginAccountCommand>
+    public class LoginAccountValidation : AbstractValidator<LoginAccount>
     {
-        public LoginAccountCommandValidation()
+        public LoginAccountValidation()
         {
             ValidateUsername();
             ValidatePassword();

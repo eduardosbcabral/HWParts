@@ -32,7 +32,7 @@ namespace HWParts.Tests.Handlers.Accounts
 
             var handler = new RegisterAccountCommandHandler(fakeAccountRepository.Object);
 
-            var fakeCommand = new RegisterAccountCommand(
+            var fakeCommand = new RegisterAccount(
                 "testUser",
                 "test_user@test.com",
                 "123456");
@@ -55,7 +55,7 @@ namespace HWParts.Tests.Handlers.Accounts
             fakeAccountRepository.Setup(x => x.CreateAsync(It.IsAny<Account>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(identityResultFailed));
 
-            var fakeCommand = new RegisterAccountCommand(
+            var fakeCommand = new RegisterAccount(
                 "testUser",
                 "test_user@test.com",
                 "123456");
@@ -80,7 +80,7 @@ namespace HWParts.Tests.Handlers.Accounts
             fakeAccountRepository.Setup(x => x.AddToRoleAsync(It.IsAny<Account>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(identityResultFailed));
 
-            var fakeCommand = new RegisterAccountCommand(
+            var fakeCommand = new RegisterAccount(
                 "testUser",
                 "test_user@test.com",
                 "123456");

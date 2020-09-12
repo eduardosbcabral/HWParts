@@ -15,7 +15,7 @@ namespace HWParts.Tests
         [Fact]
         public async Task Register_account_returns_success()
         {
-            var fakeCommand = new RegisterAccountCommand("TestUser", "test_user@test.com", "123456");
+            var fakeCommand = new RegisterAccount("TestUser", "test_user@test.com", "123456");
 
             CommandResponse commandResponse = new SuccessCommandResponse();
 
@@ -37,7 +37,7 @@ namespace HWParts.Tests
         [Fact]
         public async Task Register_account_returns_false()
         {
-            var fakeCommand = new RegisterAccountCommand("TestUser", "test_user@test.com", "123456");
+            var fakeCommand = new RegisterAccount("TestUser", "test_user@test.com", "123456");
 
             CommandResponse commandResponse = new ErrorCommandResponse();
             commandResponse.AddNotification(null);

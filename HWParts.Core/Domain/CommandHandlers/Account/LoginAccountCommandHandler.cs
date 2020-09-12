@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace HWParts.Core.Domain.CommandHandlers
 {
-    public class LoginAccountCommandHandler : IRequestHandler<LoginAccountCommand, CommandResponse>
+    public class LoginAccountCommandHandler : IRequestHandler<LoginAccount, CommandResponse>
     {
         private readonly IAccountRepository _accountRepository;
 
@@ -20,7 +20,7 @@ namespace HWParts.Core.Domain.CommandHandlers
             _accountRepository = accountRepository;
         }
 
-        public async Task<CommandResponse> Handle(LoginAccountCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse> Handle(LoginAccount request, CancellationToken cancellationToken)
         {
             var result = await _accountRepository.PasswordSignInAsync(
                 request.Username,

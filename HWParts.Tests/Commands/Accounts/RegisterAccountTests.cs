@@ -7,13 +7,13 @@ namespace HWParts.Tests.Commands.Accounts
 {
     public class RegisterAccountTests
     {
-        private readonly RegisterAccountCommand command;
-        private readonly RegisterAccountCommandValidation validator;
+        private readonly RegisterAccount command;
+        private readonly RegisterAccountValidation validator;
 
         public RegisterAccountTests()
         {
-            validator = new RegisterAccountCommandValidation();
-            command = new RegisterAccountCommand(
+            validator = new RegisterAccountValidation();
+            command = new RegisterAccount(
                 "testUser",
                 "test_user@test.com",
                 "123456");

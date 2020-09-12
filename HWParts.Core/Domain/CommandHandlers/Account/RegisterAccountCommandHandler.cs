@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HWParts.Core.Domain.CommandHandlers
 {
-    public class RegisterAccountCommandHandler : IRequestHandler<RegisterAccountCommand, CommandResponse>
+    public class RegisterAccountCommandHandler : IRequestHandler<RegisterAccount, CommandResponse>
     {
         private readonly IAccountRepository _accountRepository;
 
@@ -18,7 +18,7 @@ namespace HWParts.Core.Domain.CommandHandlers
             _accountRepository = accountRepository;
         }
 
-        public async Task<CommandResponse> Handle(RegisterAccountCommand command, CancellationToken cancellationToken)
+        public async Task<CommandResponse> Handle(RegisterAccount command, CancellationToken cancellationToken)
         {
             var user = new Account(
                 command.UserName,

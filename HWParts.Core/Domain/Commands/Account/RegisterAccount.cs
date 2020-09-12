@@ -4,18 +4,18 @@ using MediatR;
 
 namespace HWParts.Core.Domain.Commands
 {
-    public class RegisterAccountCommand : AccountCommand
+    public class RegisterAccount : AccountCommand
     {
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public RegisterAccountCommand()
+        public RegisterAccount()
         {
 
         }
 
-        public RegisterAccountCommand(string username, string email, string password)
+        public RegisterAccount(string username, string email, string password)
         {
             UserName = username;
             Email = email;
