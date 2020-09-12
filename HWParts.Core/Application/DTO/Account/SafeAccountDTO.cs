@@ -1,6 +1,6 @@
 ﻿namespace HWParts.Core.Application.ViewModels.Account
 {
-    public class SafeAccountViewModel
+    public class SafeAccountDTO
     {
         public string Id { get; set; }
         public string UserName { get; set; }

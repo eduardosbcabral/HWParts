@@ -12,6 +12,6 @@ namespace HWParts.Core.Domain.Interfaces
         Task<SignInResult> PasswordSignInAsync(string username, string password, bool rememberMe);
         Task<Account> FindByNameAsync(string username);
 
-        Task<SafeAccountViewModel> FindByNameAsyncSafe(string username);
+        Task<SafeAccountDTO> FindByNameAsyncSafe(string username);
     }
 }

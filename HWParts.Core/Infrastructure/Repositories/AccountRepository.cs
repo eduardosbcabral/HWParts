@@ -50,9 +50,9 @@ namespace HWParts.Core.Infrastructure.Repositories
             return await _userManager.FindByNameAsync(username);
         }
 
-        public async Task<SafeAccountViewModel> FindByNameAsyncSafe(string username)
+        public async Task<SafeAccountDTO> FindByNameAsyncSafe(string username)
         {
-            return _mapper.Map<SafeAccountViewModel>(await _userManager.FindByNameAsync(username));
+            return _mapper.Map<SafeAccountDTO>(await _userManager.FindByNameAsync(username));
         }
     }
 }

@@ -46,19 +46,19 @@ namespace HWParts.Core.Domain.CommandHandlers
 
             var token = TokenService.GenerateToken(account.UserName);
 
-            return new SuccessCommandResponse(new LoginAccountSuccessResponseCommand(token, account));
+            return new SuccessCommandResponse(new LoginAccountSuccess(token, account));
         }
     }
 }
 
 namespace HWParts.Core.Domain.CommandHandlers.Responses.Accounts
 {
-    public class LoginAccountSuccessResponseCommand
+    public class LoginAccountSuccess
     {
-        public SafeAccountViewModel Account { get; private set; }
+        public SafeAccountDTO Account { get; private set; }
         public string Token { get; private set; }
 
-        public LoginAccountSuccessResponseCommand(string token, SafeAccountViewModel account)
+        public LoginAccountSuccess(string token, SafeAccountDTO account)
         {
             Token = token;
             Account = account;

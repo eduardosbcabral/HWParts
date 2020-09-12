@@ -8,7 +8,7 @@ namespace HWParts.Core.Application.AutoMapper
     {
         public DomainToViewModelMappingProfile()
         {
-            CreateMap<Account, SafeAccountViewModel>();
+            CreateMap<Account, SafeAccountDTO>();
         }
     }
 }
