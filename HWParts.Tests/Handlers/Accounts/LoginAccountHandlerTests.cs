@@ -50,9 +50,7 @@ namespace HWParts.Tests.Handlers.Accounts
             var result = await handler.Handle(command, CancellationToken.None);
 
             Assert.True(result.Valid);
-            Assert.Empty(result.Notifications);
             Assert.Equal("Login realizado com sucesso.", result.Message);
-            Assert.IsType<SuccessCommandResponse>(result);
         }
 
         [Fact]
@@ -66,8 +64,6 @@ namespace HWParts.Tests.Handlers.Accounts
 
             Assert.True(result.Invalid);
             Assert.Equal("Tentativa de login inválida.", result.Message);
-            Assert.NotEmpty(result.Notifications);
-            Assert.IsType<ErrorCommandResponse>(result);
         }
 
         [Fact]
@@ -81,8 +77,6 @@ namespace HWParts.Tests.Handlers.Accounts
 
             Assert.True(result.Invalid);
             Assert.Equal("Ocorreu um erro. É necessário validar a conta utilizando a verificação de dois passos.", result.Message);
-            Assert.NotEmpty(result.Notifications);
-            Assert.IsType<ErrorCommandResponse>(result);
         }
 
         [Fact]
@@ -96,8 +90,6 @@ namespace HWParts.Tests.Handlers.Accounts
 
             Assert.True(result.Invalid);
             Assert.Equal("Ocorreu um erro. Sua conta está bloqueada.", result.Message);
-            Assert.NotEmpty(result.Notifications);
-            Assert.IsType<ErrorCommandResponse>(result);
         }
     }
 }

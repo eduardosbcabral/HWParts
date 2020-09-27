@@ -28,14 +28,10 @@ namespace HWParts.Tests
             var requestResult = await accountController.Register(fakeCommand);
             
             Assert.IsType<OkObjectResult>(requestResult);
-
-            var response = requestResult.GetValue<SuccessCommandResponse>();
-            Assert.NotNull(response);
-            Assert.IsType<SuccessCommandResponse>(response);
         }
 
         [Fact]
-        public async Task Register_account_returns_false()
+        public async Task Register_account_returns_bad_request()
         {
             var fakeCommand = new RegisterAccount("TestUser", "test_user@test.com", "123456");
 
@@ -51,10 +47,6 @@ namespace HWParts.Tests
             var requestResult = await accountController.Register(fakeCommand);
 
             Assert.IsType<BadRequestObjectResult>(requestResult);
-
-            var response = requestResult.GetValue<ErrorCommandResponse>();
-            Assert.NotNull(response);
-            Assert.IsType<ErrorCommandResponse>(response);
         }
     }
 }
