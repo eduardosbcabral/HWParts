@@ -47,8 +47,9 @@ namespace HWParts.Api.Controllers
             return Ok(result.Result);
         }
 
-        //#region Login/Related Endpoints
         [HttpPost("login")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Login([FromBody] LoginAccount command)
         {
             var response = await _accountAppService.Login(command);
@@ -71,74 +72,34 @@ namespace HWParts.Api.Controllers
         //}
         //#endregion
 
-        //#region ResetPassword/Related Endpoints
-        //[HttpGet("reset-password")]
-        //public ActionResult ResetPassword(string code)
-        //{
-        //    if(code is null)
-        //    {
-        //        return View("Error");
-        //    }
+        [HttpPost("reset-password")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult> ResetPassword([FromBody] ResetPasswordAccount command)
+        {
+            var response = await _accountAppService.ResetPassword(command);
 
-        //    return View(new ResetPasswordAccountViewModel(code));
-        //}
+            if (response.Invalid)
+            {
+                return BadRequest(response.Result);
+            }
 
-        //[HttpPost("reset-password")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> ResetPassword(ResetPasswordAccountViewModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(model);
-        //    }
+            return Ok(response.Result);
+        }
 
-        //    await _accountAppService.ResetPassword(model);
+        [HttpPost("forgot-password")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordAccount command)
+        {
+            var response = await _accountAppService.ForgotPassword(command);
 
-        //    if (HasNotification("AccountNotFound"))
-        //    {
-        //        return RedirectToAction(nameof(ResetPasswordConfirmation));
-        //    }
+            if (response.Invalid)
+            {
+                return BadRequest(response.Result);
+            }
 
-        //    if (HasNotification("ErrorResetPasswordAccount"))
-        //    {
-        //        return View();
-        //    }
-
-        //    return RedirectToAction(nameof(ResetPasswordConfirmation));
-        //}
-
-        //[HttpGet("reset-password-confirmation")]
-        //public IActionResult ResetPasswordConfirmation()
-        //{
-        //    return View();
-        //}
-
-        //[HttpGet("forgot-password")]
-        //public IActionResult ForgotPassword()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost("forgot-password")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> ForgotPassword(ForgotPasswordAccountViewModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(model);
-        //    }
-
-        //    await _accountAppService.ForgotPassword(model);
-
-        //    // Don't reveal that user does not exists or is not confirmed
-        //    return View("ForgotPasswordConfirmation");
-        //}
-
-        //[HttpGet("forgot-password-confirmation")]
-        //public IActionResult ForgotPasswordConfirmation()
-        //{
-        //    return View();
-        //}
-        //#endregion
+            return Ok(response.Result);
+        }
     }
 }

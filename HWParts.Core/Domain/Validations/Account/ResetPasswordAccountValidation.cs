@@ -3,19 +3,13 @@ using HWParts.Core.Domain.Commands;
 
 namespace HWParts.Core.Domain.Validations
 {
-    public class RegisterAccountValidation : AbstractValidator<RegisterAccount>
+    public class ResetPasswordAccountValidation : AbstractValidator<ResetPasswordAccount>
     {
-        public RegisterAccountValidation()
+        public ResetPasswordAccountValidation()
         {
-            ValidateUsername();
             ValidateEmail();
             ValidatePassword();
-        }
-
-        protected void ValidateUsername()
-        {
-            RuleFor(c => c.UserName)
-                .NotEmpty().WithMessage("Nome de usuário é obrigatório.");
+            ValidateCode();
         }
 
         protected void ValidateEmail()
@@ -29,6 +23,12 @@ namespace HWParts.Core.Domain.Validations
         {
             RuleFor(c => c.Password)
                 .NotEmpty().WithMessage("Senha é obrigatória.");
+        }
+
+        protected void ValidateCode()
+        {
+            RuleFor(c => c.Code)
+                .NotEmpty().WithMessage("'{PropertyName}' é obrigatório.");
         }
     }
 }

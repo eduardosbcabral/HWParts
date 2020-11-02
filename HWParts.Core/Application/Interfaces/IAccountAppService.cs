@@ -9,8 +9,8 @@ namespace HWParts.Core.Application.Interfaces
         Task<CommandResponse> Register(RegisterAccount command);
         Task<CommandResponse> Login(LoginAccount command);
         Task<CommandResponse> ConfirmEmail(ConfirmEmailAccount command);
-        //Task ForgotPassword(ForgotPasswordAccountViewModel forgotPasswordAccountViewModel);
-        //Task ResetPassword(ResetPasswordAccountViewModel resetPasswordAccountViewModel);
+        Task<CommandResponse> ForgotPassword(ForgotPasswordAccount command);
+        Task<CommandResponse> ResetPassword(ResetPasswordAccount command);
 
         //PaginationObject<AccountViewModel> ListPaginated(int? page);
     }

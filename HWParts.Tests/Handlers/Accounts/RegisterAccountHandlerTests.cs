@@ -42,6 +42,8 @@ namespace HWParts.Tests.Handlers.Accounts
                 .Returns(Task.FromResult(identityResultSuccess));
             fakeAccountRepository.Setup(x => x.AddToRoleAsync(It.IsAny<Account>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(identityResultSuccess));
+            fakeAccountRepository.Setup(x => x.RequireConfirmedAccount())
+                .Returns(false);
 
             var handler = new RegisterAccountHandler(fakeAccountRepository.Object);
             var result = await handler.Handle(command, CancellationToken.None);

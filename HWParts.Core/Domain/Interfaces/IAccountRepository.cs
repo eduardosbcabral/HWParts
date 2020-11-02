@@ -16,7 +16,14 @@ namespace HWParts.Core.Domain.Interfaces
         Task<Account> FindByNameAsync(string username);
         Task<Account> FindByIdAsync(string id);
         Task<SafeAccountDTO> FindByNameAsyncSafe(string username);
+        Task<Account> FindByEmailAsync(string email);
         Task<IdentityResult> ConfirmEmailAsync(Account account, string code);
         Task<string> GenerateEmailConfirmationTokenAsync(Account account);
+        Task<bool> IsEmailConfirmedAsync(Account user);
+        Task<string> GeneratePasswordResetTokenAsync(Account user);
+        Task<IdentityResult> ResetPasswordAsync(Account user, string code, string password);
+
+        // UserManager attributes
+        bool RequireConfirmedAccount();
     }
 }

@@ -33,17 +33,15 @@ namespace HWParts.Core.Application.Services
             return await _mediator.Send(command);
         }
 
-        //public Task ForgotPassword(ForgotPasswordAccountViewModel forgotPasswordAccountViewModel)
-        //{
-        //    var command = _mapper.Map<ForgotPasswordAccountCommand>(forgotPasswordAccountViewModel);
-        //    return Bus.SendCommand(command);
-        //}
+        public async Task<CommandResponse> ForgotPassword(ForgotPasswordAccount command)
+        {
+            return await _mediator.Send(command);
+        }
 
-        //public Task ResetPassword(ResetPasswordAccountViewModel resetPasswordAccountViewModel)
-        //{
-        //    var command = _mapper.Map<ResetPasswordAccountCommand>(resetPasswordAccountViewModel);
-        //    return Bus.SendCommand(command);
-        //}
+        public async Task<CommandResponse> ResetPassword(ResetPasswordAccount command)
+        {
+            return await _mediator.Send(command);
+        }
 
         //#region Queries
         //public PaginationObject<AccountViewModel> ListPaginated(int? page)

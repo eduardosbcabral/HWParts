@@ -1,47 +1,26 @@
 ﻿using FluentValidation.TestHelper;
 using HWParts.Core.Domain.Commands;
 using HWParts.Core.Domain.Validations;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using Xunit;
 
 namespace HWParts.Tests.Commands.Accounts
 {
-    public class RegisterAccountTests
+    public class ResetPasswordAccountTests
     {
-        private readonly RegisterAccount command;
-        private readonly RegisterAccountValidation validator;
+        private readonly ResetPasswordAccount command;
+        private readonly ResetPasswordAccountValidation validator;
 
-        public RegisterAccountTests()
+        public ResetPasswordAccountTests()
         {
-            validator = new RegisterAccountValidation();
-            command = new RegisterAccount(
-                "testUser",
-                "test_user@test.com",
-                "123456");
-        }
-
-        [Fact]
-        public void Should_have_error_when_username_is_empty()
-        {
-            command.UserName = string.Empty;
-            var result = validator.TestValidate(command);
-            result.ShouldHaveValidationErrorFor(x => x.UserName)
-                .WithErrorMessage("Nome de usuário é obrigatório.");
-        }
-
-        [Fact]
-        public void Should_have_error_when_username_is_null()
-        {
-            command.UserName = null;
-            var result = validator.TestValidate(command);
-            result.ShouldHaveValidationErrorFor(x => x.UserName)
-                .WithErrorMessage("Nome de usuário é obrigatório.");
-        }
-
-        [Fact]
-        public void Should_not_have_error_when_username_is_specified()
-        {
-            var result = validator.TestValidate(command);
-            result.ShouldNotHaveValidationErrorFor(x => x.UserName);
+            validator = new ResetPasswordAccountValidation();
+            command = new ResetPasswordAccount(
+                "teste@teste.com.br",
+                "password",
+                "code"
+            );
         }
 
         [Fact]
@@ -72,13 +51,6 @@ namespace HWParts.Tests.Commands.Accounts
         }
 
         [Fact]
-        public void Should_not_have_error_when_email_is_specified()
-        {
-            var result = validator.TestValidate(command);
-            result.ShouldNotHaveValidationErrorFor(x => x.Email);
-        }
-
-        [Fact]
         public void Should_have_error_when_password_is_empty()
         {
             command.Password = string.Empty;
@@ -97,10 +69,21 @@ namespace HWParts.Tests.Commands.Accounts
         }
 
         [Fact]
-        public void Should_not_have_error_when_password_is_specified()
+        public void Should_have_error_when_code_is_empty()
         {
+            command.Code = string.Empty;
             var result = validator.TestValidate(command);
-            result.ShouldNotHaveValidationErrorFor(x => x.Password);
+            result.ShouldHaveValidationErrorFor(x => x.Code)
+                .WithErrorMessage("'Code' é obrigatório.");
+        }
+
+        [Fact]
+        public void Should_have_error_when_code_is_null()
+        {
+            command.Code = null;
+            var result = validator.TestValidate(command);
+            result.ShouldHaveValidationErrorFor(x => x.Code)
+                .WithErrorMessage("'Code' é obrigatório.");
         }
 
         [Fact]

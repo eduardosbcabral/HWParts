@@ -70,5 +70,30 @@ namespace HWParts.Core.Infrastructure.Repositories
         {
             return await UserManager.GenerateEmailConfirmationTokenAsync(account);
         }
+
+        public async Task<Account> FindByEmailAsync(string email)
+        {
+            return await UserManager.FindByEmailAsync(email);
+        }
+
+        public bool RequireConfirmedAccount()
+        {
+            return UserManager.Options.SignIn.RequireConfirmedAccount;
+        }
+
+        public async Task<bool> IsEmailConfirmedAsync(Account user)
+        {
+            return await UserManager.IsEmailConfirmedAsync(user);
+        }
+
+        public async Task<string> GeneratePasswordResetTokenAsync(Account user)
+        {
+            return await UserManager.GeneratePasswordResetTokenAsync(user);
+        }
+
+        public async Task<IdentityResult> ResetPasswordAsync(Account user, string code, string password)
+        {
+            return await UserManager.ResetPasswordAsync(user, code, password);
+        }
     }
 }

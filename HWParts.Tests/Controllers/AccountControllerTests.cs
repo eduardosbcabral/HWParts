@@ -122,5 +122,79 @@ namespace HWParts.Tests.Controllers
 
             Assert.IsType<BadRequestObjectResult>(requestResult);
         }
+
+        [Fact]
+        public async Task Forgot_password_account_returns_success()
+        {
+            var fakeCommand = new ForgotPasswordAccount("test@test.com");
+
+            CommandResponse commandResponse = new SuccessCommandResponse();
+
+            var fakeAccountService = new Mock<IAccountAppService>();
+            fakeAccountService.Setup(x => x.ForgotPassword(fakeCommand))
+                .Returns(Task.FromResult(commandResponse));
+
+            var accountController = new AccountController(fakeAccountService.Object);
+
+            var requestResult = await accountController.ForgotPassword(fakeCommand);
+
+            Assert.IsType<OkObjectResult>(requestResult);
+        }
+
+        [Fact]
+        public async Task Forgot_password_account_returns_bad_request()
+        {
+            var fakeCommand = new ForgotPasswordAccount("test@test.com");
+
+            CommandResponse commandResponse = new ErrorCommandResponse();
+            commandResponse.AddNotification(null);
+
+            var fakeAccountService = new Mock<IAccountAppService>();
+            fakeAccountService.Setup(x => x.ForgotPassword(fakeCommand))
+                .Returns(Task.FromResult(commandResponse));
+
+            var accountController = new AccountController(fakeAccountService.Object);
+
+            var requestResult = await accountController.ForgotPassword(fakeCommand);
+
+            Assert.IsType<BadRequestObjectResult>(requestResult);
+        }
+
+        [Fact]
+        public async Task Reset_password_account_returns_success()
+        {
+            var fakeCommand = new ResetPasswordAccount("test@test.com", "password", "code");
+
+            CommandResponse commandResponse = new SuccessCommandResponse();
+
+            var fakeAccountService = new Mock<IAccountAppService>();
+            fakeAccountService.Setup(x => x.ResetPassword(fakeCommand))
+                .Returns(Task.FromResult(commandResponse));
+
+            var accountController = new AccountController(fakeAccountService.Object);
+
+            var requestResult = await accountController.ResetPassword(fakeCommand);
+
+            Assert.IsType<OkObjectResult>(requestResult);
+        }
+
+        [Fact]
+        public async Task Reset_password_account_returns_bad_request()
+        {
+            var fakeCommand = new ResetPasswordAccount("test@test.com", "password", "code");
+
+            CommandResponse commandResponse = new ErrorCommandResponse();
+            commandResponse.AddNotification(null);
+
+            var fakeAccountService = new Mock<IAccountAppService>();
+            fakeAccountService.Setup(x => x.ResetPassword(fakeCommand))
+                .Returns(Task.FromResult(commandResponse));
+
+            var accountController = new AccountController(fakeAccountService.Object);
+
+            var requestResult = await accountController.ResetPassword(fakeCommand);
+
+            Assert.IsType<BadRequestObjectResult>(requestResult);
+        }
     }
 }

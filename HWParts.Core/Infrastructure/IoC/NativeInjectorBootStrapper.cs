@@ -5,8 +5,6 @@ using HWParts.Core.Domain.Handlers;
 using HWParts.Core.Domain.Commands;
 using HWParts.Core.Domain.Core.Commands;
 using HWParts.Core.Domain.Core.Notifications;
-using HWParts.Core.Domain.EventHandlers;
-using HWParts.Core.Domain.Events;
 using HWParts.Core.Domain.Interfaces;
 using HWParts.Core.Infrastructure.Identity.Authorization;
 using HWParts.Core.Infrastructure.Identity.Models;
@@ -15,7 +13,6 @@ using HWParts.Core.Infrastructure.UoW;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Linq;
 using System.Reflection;
 
@@ -89,8 +86,8 @@ namespace HWParts.Core.Infrastructure.IoC
             .AddScoped<IRequestHandler<RegisterAccount, CommandResponse>, RegisterAccountHandler>()
             .AddScoped<IRequestHandler<LoginAccount, CommandResponse>, LoginAccountHandler>()
             .AddScoped<IRequestHandler<ConfirmEmailAccount, CommandResponse>, ConfirmEmailAccountHandler>()
-            //.AddScoped<IRequestHandler<ForgotPasswordAccountCommand, bool>, AccountCommandHandler>()
-            //.AddScoped<IRequestHandler<ResetPasswordAccountCommand, bool>, AccountCommandHandler>()
+            .AddScoped<IRequestHandler<ForgotPasswordAccount, CommandResponse>, ForgotPasswordAccountHandler>()
+            .AddScoped<IRequestHandler<ResetPasswordAccount, CommandResponse>, ResetPasswordAccountHandler>()
 
             //.AddScoped<IRequestHandler<RegisterComponentPriceCommand, bool>, ComponentPriceCommandHandler>()
             //.AddScoped<IRequestHandler<UpdateComponentPriceCommand, bool>, ComponentPriceCommandHandler>()

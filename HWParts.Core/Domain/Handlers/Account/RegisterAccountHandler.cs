@@ -54,7 +54,7 @@ namespace HWParts.Core.Domain.Handlers
             // TOKEN RETURN FOR DEVELOPMENT PURPOSES (REMOVE THIS IN PRODUCTION)
             string token = "Está configurado para não confirmar conta após registro.";
 
-            if (_accountRepository.UserManager.Options.SignIn.RequireConfirmedAccount)
+            if (_accountRepository.RequireConfirmedAccount())
             {
                 var code = await _accountRepository.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
