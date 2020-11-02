@@ -6,13 +6,13 @@ namespace HWParts.Core.Domain.Validations
     {
         public UpdateCaseCommandValidation()
         {
-            ValidateId();
-            ValidateBrand();
-            ValidateModel();
-            ValidatePlatformId();
-            ValidateImageUrl();
-            ValidateUrl();
-            ValidatePlatform();
+            //ValidateId();
+            //ValidateBrand();
+            //ValidateModel();
+            //ValidatePlatformId();
+            //ValidateImageUrl();
+            //ValidateUrl();
+            //ValidatePlatform();
         }
     }
 }

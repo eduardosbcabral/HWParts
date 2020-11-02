@@ -32,29 +32,20 @@ namespace HWParts.Api.Controllers
             return Ok(result.Result);
         }
 
-        //[HttpGet("confirm-email")]
-        //public async Task<IActionResult> ConfirmEmail(ConfirmEmailAccountViewModel model)
-        //{
-        //    if (model == null)
-        //    {
-        //        return View("Error");
-        //    }
+        [HttpPost("confirm-email")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> ConfirmEmail([FromBody] ConfirmEmailAccount command)
+        {
+            var result = await _accountAppService.ConfirmEmail(command);
 
-        //    await _accountAppService.ConfirmEmail(model);
+            if (result.Invalid)
+            {
+                return BadRequest(result.Result);
+            }
 
-        //    if (HasNotification("AccountNotFound"))
-        //    {
-        //        return View("Error");
-        //    }
-
-        //    if (HasNotification("ConfirmEmail"))
-        //    {
-        //        return View("Error");
-        //    }
-
-        //    return View("ConfirmEmail", model.Email);
-        //}
-        //#endregion
+            return Ok(result.Result);
+        }
 
         //#region Login/Related Endpoints
         [HttpPost("login")]

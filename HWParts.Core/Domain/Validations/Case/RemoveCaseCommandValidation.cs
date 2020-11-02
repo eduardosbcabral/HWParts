@@ -6,7 +6,7 @@ namespace HWParts.Core.Domain.Validations
     {
         public RemoveCaseCommandValidation()
         {
-            ValidateId();
+            //ValidateId();
         }
     }
 }

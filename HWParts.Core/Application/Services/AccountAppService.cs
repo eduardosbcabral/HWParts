@@ -28,11 +28,10 @@ namespace HWParts.Core.Application.Services
             return await _mediator.Send(command);
         }
 
-        //public Task ConfirmEmail(ConfirmEmailAccountViewModel confirmEmailAccountViewModel)
-        //{
-        //    var command = _mapper.Map<ConfirmEmailAccountCommand>(confirmEmailAccountViewModel);
-        //    return Bus.SendCommand(command);
-        //}
+        public async Task<CommandResponse> ConfirmEmail(ConfirmEmailAccount command)
+        {
+            return await _mediator.Send(command);
+        }
 
         //public Task ForgotPassword(ForgotPasswordAccountViewModel forgotPasswordAccountViewModel)
         //{

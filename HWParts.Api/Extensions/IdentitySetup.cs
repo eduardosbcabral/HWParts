@@ -19,7 +19,7 @@ namespace HWParts.Web.Extensions
 
             services.AddIdentity<Account, IdentityRole>(options =>
                 {
-                    options.SignIn.RequireConfirmedAccount = false;
+                    options.SignIn.RequireConfirmedAccount = true;
                     options.Password.RequireDigit = false;
                     options.Password.RequiredLength = 4;
                     options.Password.RequireNonAlphanumeric = false;
@@ -27,7 +27,8 @@ namespace HWParts.Web.Extensions
                     options.Password.RequireLowercase = false;
                     options.User.RequireUniqueEmail = true;
                 })
-                .AddEntityFrameworkStores<HWPartsDbContext>();
+                .AddEntityFrameworkStores<HWPartsDbContext>()
+                .AddTokenProvider<DataProtectorTokenProvider<Account>>(TokenOptions.DefaultProvider);
         }
         public static void AddAuthSetup(this IServiceCollection services, IConfiguration configuration)
         {

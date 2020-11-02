@@ -29,6 +29,11 @@ namespace HWParts.Core.Domain.Core.Commands
 
         }
 
+        public SuccessCommandResponse(string message)
+            : base(message)
+        {
+        }
+
         public SuccessCommandResponse(string message, object result)
             : base(result, message)
         {

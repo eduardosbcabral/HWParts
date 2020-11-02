@@ -1,9 +1,12 @@
-﻿using Flunt.Notifications;
-using HWParts.Core.Domain.Commands;
+﻿using HWParts.Core.Domain.Commands;
 using HWParts.Core.Domain.Core.Commands;
 using HWParts.Core.Domain.Entities;
+using HWParts.Core.Domain.Handlers.Responses;
 using HWParts.Core.Domain.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Primitives;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -48,12 +51,36 @@ namespace HWParts.Core.Domain.Handlers
                 return response;
             }
 
+            // TOKEN RETURN FOR DEVELOPMENT PURPOSES (REMOVE THIS IN PRODUCTION)
+            string token = "Está configurado para não confirmar conta após registro.";
+
+            if (_accountRepository.UserManager.Options.SignIn.RequireConfirmedAccount)
+            {
+                var code = await _accountRepository.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                token = code;
+            }
+
             return new SuccessCommandResponse(
                 "Usuário cadastrado com sucesso.",
-                new
-                {
-                    user.Id
-                });
+                new RegisterAccountSuccess(user.Id, token));
+        }
+    }
+}
+
+namespace HWParts.Core.Domain.Handlers.Responses
+{
+    public class RegisterAccountSuccess
+    {
+        public string Id { get; private set; }
+
+        // TOKEN RETURN FOR DEVELOPMENT PURPOSES (REMOVE THIS IN PRODUCTION)
+        public string TokenEmail { get; private set; }
+
+        public RegisterAccountSuccess(string id, string token)
+        {
+            Id = id;
+            TokenEmail = token;
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using HWParts.Core.Application.Services;
 using HWParts.Core.Application.ViewModels.Account;
-using HWParts.Core.Domain.Handlers.Responses.Accounts;
 using HWParts.Core.Domain.Commands;
 using HWParts.Core.Domain.Core.Commands;
 using HWParts.Core.Domain.Interfaces;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using HWParts.Core.Domain.Handlers.Responses;
 
 namespace HWParts.Core.Domain.Handlers
 {
@@ -53,7 +53,7 @@ namespace HWParts.Core.Domain.Handlers
     }
 }
 
-namespace HWParts.Core.Domain.Handlers.Responses.Accounts
+namespace HWParts.Core.Domain.Handlers.Responses
 {
     public class LoginAccountSuccess
     {

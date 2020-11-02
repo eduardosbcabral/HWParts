@@ -6,9 +6,9 @@ namespace HWParts.Core.Application.Interfaces
 {
     public interface IAccountAppService
     {
-        Task<CommandResponse> Register(RegisterAccount registerAccountViewModel);
+        Task<CommandResponse> Register(RegisterAccount command);
         Task<CommandResponse> Login(LoginAccount command);
-        //Task ConfirmEmail(ConfirmEmailAccountViewModel confirmEmailAccountViewModel);
+        Task<CommandResponse> ConfirmEmail(ConfirmEmailAccount command);
         //Task ForgotPassword(ForgotPasswordAccountViewModel forgotPasswordAccountViewModel);
         //Task ResetPassword(ResetPasswordAccountViewModel resetPasswordAccountViewModel);
 

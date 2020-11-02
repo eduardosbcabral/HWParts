@@ -1,14 +1,9 @@
 ﻿using HWParts.Core.Application.ViewModels.Account;
 using HWParts.Core.Domain.Commands;
-using HWParts.Core.Domain.Core.Commands;
 using HWParts.Core.Domain.Handlers;
-using HWParts.Core.Domain.Handlers.Responses.Accounts;
 using HWParts.Core.Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;

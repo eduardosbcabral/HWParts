@@ -1,8 +1,4 @@
-﻿using FluentValidation.Results;
-using HWParts.Core.Domain.Validations;
-using MediatR;
-
-namespace HWParts.Core.Domain.Commands
+﻿namespace HWParts.Core.Domain.Commands
 {
     public class RegisterAccount : AccountCommand
     {

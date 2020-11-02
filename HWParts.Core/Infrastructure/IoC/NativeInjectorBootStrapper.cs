@@ -76,7 +76,7 @@ namespace HWParts.Core.Infrastructure.IoC
             //.AddScoped<IRequestHandler<RemoveStorageCommand, bool>, StorageCommandHandler>()
             //.AddScoped<IRequestHandler<ImportStoragesCommand, bool>, StorageCommandHandler>()
 
-            //.AddScoped<IRequestHandler<RegisterCaseCommand, bool>, CaseCommandHandler>()
+            .AddScoped<RequestHandler<RegisterCaseCommand, CommandResponse>, RegisterCase>()
             //.AddScoped<IRequestHandler<UpdateCaseCommand, bool>, CaseCommandHandler>()
             //.AddScoped<IRequestHandler<RemoveCaseCommand, bool>, CaseCommandHandler>()
             //.AddScoped<IRequestHandler<ImportCasesCommand, bool>, CaseCommandHandler>()
@@ -88,7 +88,7 @@ namespace HWParts.Core.Infrastructure.IoC
 
             .AddScoped<IRequestHandler<RegisterAccount, CommandResponse>, RegisterAccountHandler>()
             .AddScoped<IRequestHandler<LoginAccount, CommandResponse>, LoginAccountHandler>()
-            //.AddScoped<IRequestHandler<ConfirmEmailAccountCommand, bool>, AccountCommandHandler>()
+            .AddScoped<IRequestHandler<ConfirmEmailAccount, CommandResponse>, ConfirmEmailAccountHandler>()
             //.AddScoped<IRequestHandler<ForgotPasswordAccountCommand, bool>, AccountCommandHandler>()
             //.AddScoped<IRequestHandler<ResetPasswordAccountCommand, bool>, AccountCommandHandler>()
 
@@ -102,7 +102,7 @@ namespace HWParts.Core.Infrastructure.IoC
             //.AddScoped<IMemoryRepository, MemoryRepository>()
             //.AddScoped<IProcessorRepository, ProcessorRepository>()
             //.AddScoped<IStorageRepository, StorageRepository>()
-            //.AddScoped<ICaseRepository, CaseRepository>()
+            .AddScoped<ICaseRepository, CaseRepository>()
             //.AddScoped<IPowerSupplyRepository, PowerSupplyRepository>()
             .AddScoped<IAccountRepository, AccountRepository>()
             //.AddScoped<IComponentPriceRepository, ComponentPriceRepository>()
