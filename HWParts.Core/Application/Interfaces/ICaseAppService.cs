@@ -1,17 +1,10 @@
-//using HWParts.Core.Infrastructure.Common.Pagination;
-//using System;
-//using System.Threading.Tasks;
+using HWParts.Core.Domain.Commands;
+using HWParts.Core.Domain.Core.Commands;
 
-//namespace HWParts.Core.Application.Interfaces
-//{
-//    public interface ICaseAppService
-//    {
-//        void Register(CaseViewModel caseViewModel);
-//        void Update(CaseViewModel caseViewModel);
-//        void Remove(Guid id);
-//        Task Import(ImportCasesViewModel viewModel);
-
-//        CaseViewModel GetById(Guid id);
-//        PaginationObject<CaseViewModel> ListPaginated(int? page);
-//    }
-//}
+namespace HWParts.Core.Application.Interfaces
+{
+    public interface ICaseAppService
+    {
+        CommandResponse Register(RegisterCaseCommand command);
+    }
+}

@@ -10,7 +10,7 @@ namespace HWParts.Core.Application.Services
 {
     public static class TokenService
     {
-        public static string GenerateToken(Account account)
+        public static string GenerateToken(string username)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(JwtSettings.Secret);
@@ -18,7 +18,7 @@ namespace HWParts.Core.Application.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, account.UserName.ToString()),
+                    new Claim(ClaimTypes.Name, username),
                     //new Claim(ClaimTypes.Role, account.Role.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(24),

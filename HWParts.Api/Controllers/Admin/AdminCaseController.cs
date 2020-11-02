@@ -1,157 +1,136 @@
-//using HWParts.Core.Application.Interfaces;
-//using HWParts.Core.Application.ViewModels.Case;
-//using HWParts.Core.Domain.Commands;
-//using HWParts.Core.Domain.Core.Notifications;
-//using HWParts.Core.Infrastructure.Identity.Models;
-//using MediatR;
-//using Microsoft.AspNetCore.Authorization;
-//using Microsoft.AspNetCore.Mvc;
-//using System;
-//using System.Threading.Tasks;
-//using HWParts.Web.Controllers;
+using HWParts.Core.Application.Interfaces;
+using HWParts.Core.Domain.Commands;
+using HWParts.Core.Infrastructure.Identity.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-//namespace HWParts.Api.Controllers
-//{
-//    [Area("Admin")]
-//    [Authorize(Roles = ApplicationRoles.StaffRoles)]
-//    [Route("admin/case")]
-//    public class AdminCaseController : BaseController
-//    {
-//        private readonly ICaseAppService _caseAppService;
+namespace HWParts.Api.Controllers
+{
+    [Authorize(Roles = ApplicationRoles.StaffRoles)]
+    [Route("admin/case")]
+    public class AdminCaseController : ControllerBase
+    {
+        private readonly ICaseAppService _caseAppService;
 
-//        public AdminCaseController(
-//            INotificationHandler<DomainNotification> notifications,
-//            ICaseAppService caseAppService) 
-//            : base(notifications)
-//        {
-//            _caseAppService = caseAppService;
-//        }
+        public AdminCaseController(ICaseAppService caseAppService)
+        {
+            _caseAppService = caseAppService;
+        }
 
-//        [HttpGet("list")]
-//        public IActionResult Index(int? page)
-//        {
-//            var paginationObject = _caseAppService.ListPaginated(page);
-//            return View(paginationObject);
-//        }
+        //[HttpGet("list")]
+        //public IActionResult Index(int? page)
+        //{
+        //    var paginationObject = _caseAppService.ListPaginated(page);
+        //    return View(paginationObject);
+        //}
 
-//        [HttpGet("register")]
-//        public IActionResult Create()
-//        {
-//            return View(new CaseViewModel());
-//        }
+        [HttpPost("register")]
+        public IActionResult Create([FromBody] RegisterCaseCommand command)
+        {
+            var response = _caseAppService.Register(command);
 
-//        [HttpPost("register")]
-//        public IActionResult Create(CaseViewModel caseViewModel)
-//        {
-//            if (!ModelState.IsValid)
-//            {
-//                return View(caseViewModel);
-//            }
+            if (response.Invalid)
+            {
+                return BadRequest(response.Result);
+            }
 
-//            _caseAppService.Register(caseViewModel);
+            return Ok(response.Result);
+        }
 
-//            if (IsValidOperation())
-//            {
-//                ViewBag.Success = "Gabinete registrado.";
-//            }
+        //[HttpGet("edit/{id:guid}")]
+        //public IActionResult Edit(Guid? id)
+        //{
+        //    if (id is null)
+        //    {
+        //        return NotFound();
+        //    }
 
-//            return View(caseViewModel);
-//        }
+        //    var caseViewModel = _caseAppService.GetById(id.Value);
 
-//        [HttpGet("edit/{id:guid}")]
-//        public IActionResult Edit(Guid? id)
-//        {
-//            if (id is null)
-//            {
-//                return NotFound();
-//            }
+        //    if (caseViewModel is null)
+        //    {
+        //        return NotFound();
+        //    }
 
-//            var caseViewModel = _caseAppService.GetById(id.Value);
+        //    return View(caseViewModel);
+        //}
 
-//            if (caseViewModel is null)
-//            {
-//                return NotFound();
-//            }
+        //[HttpPost("edit/{id:guid}")]
+        //public IActionResult Edit(CaseViewModel caseViewModel)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(caseViewModel);
+        //    }
 
-//            return View(caseViewModel);
-//        }
+        //    _caseAppService.Update(caseViewModel);
 
-//        [HttpPost("edit/{id:guid}")]
-//        public IActionResult Edit(CaseViewModel caseViewModel)
-//        {
-//            if (!ModelState.IsValid)
-//            {
-//                return View(caseViewModel);
-//            }
+        //    if (IsValidOperation())
+        //    {
+        //        ViewBag.Success = "Gabinete atualizado.";
+        //    }
 
-//            _caseAppService.Update(caseViewModel);
+        //    return View(caseViewModel);
+        //}
 
-//            if (IsValidOperation())
-//            {
-//                ViewBag.Success = "Gabinete atualizado.";
-//            }
+        //[HttpGet("remove/{id:guid}")]
+        //public IActionResult Delete(Guid? id)
+        //{
+        //    if (id is null)
+        //    {
+        //        return NotFound();
+        //    }
 
-//            return View(caseViewModel);
-//        }
+        //    var caseViewModel = _caseAppService.GetById(id.Value);
 
-//        [HttpGet("remove/{id:guid}")]
-//        public IActionResult Delete(Guid? id)
-//        {
-//            if (id is null)
-//            {
-//                return NotFound();
-//            }
+        //    if (caseViewModel is null)
+        //    {
+        //        return NotFound();
+        //    }
 
-//            var caseViewModel = _caseAppService.GetById(id.Value);
+        //    return View(caseViewModel);
+        //}
 
-//            if (caseViewModel is null)
-//            {
-//                return NotFound();
-//            }
+        //[HttpPost("remove/{id:guid}")]
+        //public IActionResult DeleteConfirmed(Guid id)
+        //{
+        //    _caseAppService.Remove(id);
 
-//            return View(caseViewModel);
-//        }
+        //    if (!IsValidOperation())
+        //    {
+        //        return Delete(id);
+        //    }
 
-//        [HttpPost("remove/{id:guid}")]
-//        public IActionResult DeleteConfirmed(Guid id)
-//        {
-//            _caseAppService.Remove(id);
+        //    ViewBag.Success = "Gabinete removido.";
 
-//            if (!IsValidOperation())
-//            {
-//                return Delete(id);
-//            }
+        //    return RedirectToAction(nameof(Index));
+        //}
 
-//            ViewBag.Success = "Gabinete removido.";
+        //[HttpGet("import")]
+        //public IActionResult Import()
+        //{
+        //    return View();
+        //}
 
-//            return RedirectToAction(nameof(Index));
-//        }
+        //[HttpPost("import")]
+        //public async Task<IActionResult> Import(ImportCasesViewModel viewModel)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(viewModel);
+        //    }
 
-//        [HttpGet("import")]
-//        public IActionResult Import()
-//        {
-//            return View();
-//        }
-
-//        [HttpPost("import")]
-//        public async Task<IActionResult> Import(ImportCasesViewModel viewModel)
-//        {
-//            if (!ModelState.IsValid)
-//            {
-//                return View(viewModel);
-//            }
-
-//            await _caseAppService.Import(viewModel);
+        //    await _caseAppService.Import(viewModel);
 
 
-//            if(!IsValidOperation())
-//            {
-//                return View(viewModel);
-//            }
+        //    if (!IsValidOperation())
+        //    {
+        //        return View(viewModel);
+        //    }
 
-//            ViewBag.Success = "Gabinete Importados.";
+        //    ViewBag.Success = "Gabinete Importados.";
 
-//            return RedirectToAction(nameof(Index));
-//        }
-//    }
-//}
+        //    return RedirectToAction(nameof(Index));
+        //}
+    }
+}

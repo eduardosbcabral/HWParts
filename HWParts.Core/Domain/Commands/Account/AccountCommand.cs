@@ -1,9 +1,8 @@
-﻿using Flunt.Notifications;
-using MediatR;
+﻿using HWParts.Core.Domain.Core.Commands;
 
 namespace HWParts.Core.Domain.Commands
 {
-    public abstract class AccountCommand : Notifiable
+    public abstract class AccountCommand : CommandBase
     {
     }
 }

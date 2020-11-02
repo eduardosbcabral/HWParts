@@ -19,5 +19,10 @@ namespace HWParts.Core.Domain.Entities
             UserName = username;
             Email = email;
         }
+
+        public void HideIdentityFields()
+        {
+
+        }
     }
 }

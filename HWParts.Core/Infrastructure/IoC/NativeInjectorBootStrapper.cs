@@ -1,17 +1,23 @@
-﻿using HWParts.Core.Application.Interfaces;
+﻿using FluentValidation;
+using HWParts.Core.Application.Interfaces;
 using HWParts.Core.Application.Services;
-using HWParts.Core.Domain.CommandHandlers;
+using HWParts.Core.Domain.Handlers;
 using HWParts.Core.Domain.Commands;
+using HWParts.Core.Domain.Core.Commands;
 using HWParts.Core.Domain.Core.Notifications;
 using HWParts.Core.Domain.EventHandlers;
 using HWParts.Core.Domain.Events;
 using HWParts.Core.Domain.Interfaces;
 using HWParts.Core.Infrastructure.Identity.Authorization;
 using HWParts.Core.Infrastructure.Identity.Models;
+using HWParts.Core.Infrastructure.Repositories;
 using HWParts.Core.Infrastructure.UoW;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Linq;
+using System.Reflection;
 
 namespace HWParts.Core.Infrastructure.IoC
 {
@@ -25,6 +31,10 @@ namespace HWParts.Core.Infrastructure.IoC
 
             // ASP.NET Authorization Polices
             .AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>()
+
+            // MediaTR
+            .AddScoped(typeof(IPipelineBehavior<,>), typeof(FailFastRequestBehavior<,>))
+            .AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionalRequestBehavior<,>))
 
             // Application
             //.AddScoped<IMotherboardAppService, MotherboardAppService>()
@@ -66,7 +76,7 @@ namespace HWParts.Core.Infrastructure.IoC
             //.AddScoped<IRequestHandler<RemoveStorageCommand, bool>, StorageCommandHandler>()
             //.AddScoped<IRequestHandler<ImportStoragesCommand, bool>, StorageCommandHandler>()
 
-            //.AddScoped<IRequestHandler<RegisterCaseCommand, bool>, CaseCommandHandler>()
+            .AddScoped<RequestHandler<RegisterCaseCommand, CommandResponse>, RegisterCase>()
             //.AddScoped<IRequestHandler<UpdateCaseCommand, bool>, CaseCommandHandler>()
             //.AddScoped<IRequestHandler<RemoveCaseCommand, bool>, CaseCommandHandler>()
             //.AddScoped<IRequestHandler<ImportCasesCommand, bool>, CaseCommandHandler>()
@@ -76,9 +86,9 @@ namespace HWParts.Core.Infrastructure.IoC
             //.AddScoped<IRequestHandler<RemovePowerSupplyCommand, bool>, PowerSupplyCommandHandler>()
             //.AddScoped<IRequestHandler<ImportPowerSuppliesCommand, bool>, PowerSupplyCommandHandler>()
 
-            .AddScoped<IRequestHandler<RegisterAccountCommand, bool>, RegisterAccountCommandHandler>()
-            //.AddScoped<IRequestHandler<LoginAccountCommand, bool>, AccountCommandHandler>()
-            //.AddScoped<IRequestHandler<ConfirmEmailAccountCommand, bool>, AccountCommandHandler>()
+            .AddScoped<IRequestHandler<RegisterAccount, CommandResponse>, RegisterAccountHandler>()
+            .AddScoped<IRequestHandler<LoginAccount, CommandResponse>, LoginAccountHandler>()
+            .AddScoped<IRequestHandler<ConfirmEmailAccount, CommandResponse>, ConfirmEmailAccountHandler>()
             //.AddScoped<IRequestHandler<ForgotPasswordAccountCommand, bool>, AccountCommandHandler>()
             //.AddScoped<IRequestHandler<ResetPasswordAccountCommand, bool>, AccountCommandHandler>()
 
@@ -92,11 +102,12 @@ namespace HWParts.Core.Infrastructure.IoC
             //.AddScoped<IMemoryRepository, MemoryRepository>()
             //.AddScoped<IProcessorRepository, ProcessorRepository>()
             //.AddScoped<IStorageRepository, StorageRepository>()
-            //.AddScoped<ICaseRepository, CaseRepository>()
+            .AddScoped<ICaseRepository, CaseRepository>()
             //.AddScoped<IPowerSupplyRepository, PowerSupplyRepository>()
-            //.AddScoped<IAccountRepository, AccountRepository>()
+            .AddScoped<IAccountRepository, AccountRepository>()
             //.AddScoped<IComponentPriceRepository, ComponentPriceRepository>()
             //.AddScoped<IComponentBaseRepository, ComponentBaseRepository>()
+
 
             .AddScoped<IUnitOfWork, UnitOfWork>()
             .AddScoped<HWPartsDbContext>()
@@ -105,6 +116,16 @@ namespace HWParts.Core.Infrastructure.IoC
 
             // Infra - Identity
             .AddScoped<IUser, AspNetUser>();
+
+            // Domain - Validators
+            var assembly = Assembly.GetExecutingAssembly();
+
+            var validators = AssemblyScanner
+                .FindValidatorsInAssembly(assembly)
+                .ToList();
+
+            validators
+                .ForEach(result => services.AddScoped(result.InterfaceType, result.ValidatorType));
         }
     }
 }

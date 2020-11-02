@@ -19,50 +19,47 @@ namespace HWParts.Api.Controllers
 
         [HttpPost("register")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Register([FromBody] RegisterAccountCommand command)
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Register([FromBody] RegisterAccount command)
         {
             var result = await _accountAppService.Register(command);
-            return Ok(result);
+
+            if (result.Invalid)
+            {
+                return BadRequest(result.Result);
+            }
+
+            return Ok(result.Result);
         }
 
-        //[HttpGet("confirm-email")]
-        //public async Task<IActionResult> ConfirmEmail(ConfirmEmailAccountViewModel model)
-        //{
-        //    if (model == null)
-        //    {
-        //        return View("Error");
-        //    }
+        [HttpPost("confirm-email")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> ConfirmEmail([FromBody] ConfirmEmailAccount command)
+        {
+            var result = await _accountAppService.ConfirmEmail(command);
 
-        //    await _accountAppService.ConfirmEmail(model);
+            if (result.Invalid)
+            {
+                return BadRequest(result.Result);
+            }
 
-        //    if (HasNotification("AccountNotFound"))
-        //    {
-        //        return View("Error");
-        //    }
-
-        //    if (HasNotification("ConfirmEmail"))
-        //    {
-        //        return View("Error");
-        //    }
-
-        //    return View("ConfirmEmail", model.Email);
-        //}
-        //#endregion
+            return Ok(result.Result);
+        }
 
         //#region Login/Related Endpoints
-        //[HttpPost("login")]
-        //public IActionResult Login([FromBody] LoginAccountCommand command)
-        //{
-        //    _accountAppService.Login(command);
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginAccount command)
+        {
+            var response = await _accountAppService.Login(command);
 
-        //    if (!IsValidOperation())
-        //    {
-        //        return BadRequest();
-        //    }
+            if (response.Invalid)
+            {
+                return BadRequest(response.Result);
+            }
 
-        //    var domainEvent = GetNotification<AccountRegisteredEvent>();
-        //    return Ok(domainEvent);
-        //}
+            return Ok(response.Result);
+        }
 
         //[HttpPost("logout")]
         //[Authorize(Roles = ApplicationRoles.AllRoles)]
@@ -82,7 +79,7 @@ namespace HWParts.Api.Controllers
         //    {
         //        return View("Error");
         //    }
-            
+
         //    return View(new ResetPasswordAccountViewModel(code));
         //}
 
